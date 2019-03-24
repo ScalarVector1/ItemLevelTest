@@ -12,7 +12,7 @@ namespace ItemLevelTest.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
-            Main.tileStone[Type] = true;
+            //Main.tileStone[Type] = true;
             Main.tileSpelunker[Type] = true;
             dustType = mod.DustType("Oredust");
             minPick = 65;

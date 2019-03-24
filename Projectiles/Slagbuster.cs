@@ -27,6 +27,27 @@ namespace ItemLevelTest.Projectiles
 
         }
 
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        {     
+            Texture2D texture = mod.GetTexture("Projectiles/Slagbuster");
+            spriteBatch.Draw
+            (
+                texture,
+                new Vector2
+                (
+                    projectile.position.X - Main.screenPosition.X + projectile.width * 0.5f,
+                    projectile.position.Y - Main.screenPosition.Y + projectile.height - texture.Height * 0.5f 
+                ),
+                new Rectangle(0, 0, texture.Width, texture.Height),
+                Color.White,
+                projectile.rotation,
+                texture.Size() * 0.5f,
+                projectile.scale,
+                SpriteEffects.None,
+                0f
+            );
+        }
+
         public override void AI()
         {
             projectile.rotation = projectile.velocity.ToRotation();
@@ -67,15 +88,11 @@ namespace ItemLevelTest.Projectiles
                 {
                     yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
                 }
-
-                //Dust.NewDust(new Vector2(projectile.Center.X - (projectile.width) / 2, projectile.Center.Y - projectile.height / 2), projectile.width, projectile.height, mod.DustType("Sworddust"));
-                //Dust.NewDust(new Vector2(projectile.Center.X - (projectile.width) / 2, projectile.Center.Y - projectile.height / 2), projectile.width, projectile.height, 6);
                 Dust.NewDustPerfect(new Vector2(projectile.Center.X, projectile.Center.Y), 6, new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(20, 24) * 0.1f);
                 if (Main.rand.Next(3) == 0)
                 {
                     Dust.NewDustPerfect(new Vector2(projectile.Center.X, projectile.Center.Y), mod.DustType("Slagdust"), new Vector2(xvel * 1.1f , yvel * 1.1f), 0, default(Color), Main.rand.Next(15, 18) * 0.1f);
                 }
-                //Dust.NewDustPerfect(new Vector2(projectile.Center.X, projectile.Center.Y), mod.DustType("Sworddust"), new Vector2(0, Main.rand.Next(-45, 45) * 0.1f), 0, default(Color), Main.rand.Next(130, 150) * 0.01f);
                 Main.PlaySound(SoundID.Item38, projectile.Center);
                 Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), new Vector2(0, 0), mod.ProjectileType("Slagboom"), 65, 8.5f, projectile.owner);
             }

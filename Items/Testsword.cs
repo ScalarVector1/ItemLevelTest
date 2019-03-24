@@ -345,7 +345,26 @@ namespace ItemLevelTest.Items
                         Main.PlaySound(SoundID.Item20, player.Center);
                         Main.PlaySound(SoundID.Item62, player.Center);
                         Main.PlaySound(SoundID.Item68, player.Center);
-                        cd = 210;
+
+                        for (int dustcounter = 100; dustcounter >= 0; dustcounter--)
+                        {
+                            float yvel = 0;
+                            float xvel = 0;
+                            float hyp = 0;
+                            hyp = Main.rand.Next(0, 70) * 0.1f;
+                            xvel = Main.rand.Next(-400, 400) * .01f;
+                            if (Main.rand.Next(2) == 0)
+                            {
+                                yvel = (float)Math.Sqrt(hyp - xvel * xvel);
+                            }
+                            else
+                            {
+                                yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
+                            }
+                            Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(8, 10) * 0.1f);
+                        }
+
+                            cd = 210;
                         
                         return true;   
                         
