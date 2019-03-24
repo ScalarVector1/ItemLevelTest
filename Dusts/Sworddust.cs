@@ -12,7 +12,7 @@ namespace ItemLevelTest.Dusts
 			dust.noGravity = true;
 			dust.noLight = true;
 			dust.scale *= 2.1f;
-            dust.color.G = 220;
+            dust.color.G = 240;
             dust.color.B = 0;
             dust.color.R = 255;
         }
