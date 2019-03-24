@@ -361,7 +361,7 @@ namespace ItemLevelTest.Items
                             {
                                 yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
                             }
-                            Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(8, 10) * 0.1f);
+                            Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(4, 6) * 0.1f);
                         }
 
                             cd = 210;
