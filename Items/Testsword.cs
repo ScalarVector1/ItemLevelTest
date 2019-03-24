@@ -139,7 +139,7 @@ namespace ItemLevelTest.Items
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip4")
                 {
-                    line.text = "+" + critscale + "Critical strike chance (" + critscale * level + ")";
+                    line.text = "+" + critscale + " Critical strike chance (" + critscale * level + ")";
                     line.overrideColor = new Color(255, 218, 75);
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip5")
@@ -232,7 +232,7 @@ namespace ItemLevelTest.Items
                     }
                     else if (ab3 == 1)
                     {
-                        line.text = "Ultimate: DEV/NULL";
+                        line.text = "Ultimate: Aura of Cinders (10/s)";
                         line.overrideColor = new Color(255, Main.DiscoG, 45);
                     }
                     else if (ab3 == 2)
@@ -464,6 +464,10 @@ ref float knockBack)
                 ab2 = 1;
             }
 
+            if (level >= 8)
+            {
+                ab3 = 1;
+            }
 
             if ( level <= 1)
             {
@@ -474,7 +478,21 @@ ref float knockBack)
 
         public override void HoldItem(Player player)
         {
+            
             CDUI.ability = ab2;
+            if (ab3 == 1)
+            {
+                if(Main.rand.Next(5) == 0)
+                {
+                    Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("Slagaura"), 1, 0, Main.myPlayer);
+                }
+                else
+                {
+                    Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("Slagaura"), 0, 0, Main.myPlayer);
+                }
+                   
+            }
+                
         }
 
 
