@@ -12,9 +12,16 @@ namespace ItemLevelTest.Dusts
 			dust.noGravity = true;
 			dust.noLight = true;
 			dust.scale *= 2.1f;
+           
 		}
+        public override Color? GetAlpha(Dust dust, Color color)
+        {
+            return Color.White;
+        }
 
-		public override bool Update(Dust dust)
+
+
+        public override bool Update(Dust dust)
 		{
             dust.position.Y += dust.velocity.Y;
             dust.position.X += dust.velocity.X;

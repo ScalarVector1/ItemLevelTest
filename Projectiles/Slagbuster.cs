@@ -27,26 +27,7 @@ namespace ItemLevelTest.Projectiles
 
         }
 
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-        {     
-            Texture2D texture = mod.GetTexture("Projectiles/Slagbuster");
-            spriteBatch.Draw
-            (
-                texture,
-                new Vector2
-                (
-                    projectile.position.X - Main.screenPosition.X + projectile.width * 0.5f,
-                    projectile.position.Y - Main.screenPosition.Y + projectile.height - texture.Height * 0.5f 
-                ),
-                new Rectangle(0, 0, texture.Width, texture.Height),
-                Color.White,
-                projectile.rotation,
-                texture.Size() * 0.5f,
-                projectile.scale,
-                SpriteEffects.None,
-                0f
-            );
-        }
+
 
         public override void AI()
         {
