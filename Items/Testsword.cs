@@ -18,6 +18,8 @@ namespace ItemLevelTest.Items
         int spdscale = 2;
         int critscale = 1;
         float kbscale = 0.5f;
+        int spawned = 0;
+        int timer = 0;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Leveling Sword");
@@ -48,11 +50,25 @@ namespace ItemLevelTest.Items
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
+        public override void GetWeaponDamage(Player player, ref int damage)
+        {
+            damage = 10 + level * dmgscale;
+        }
+        public override void GetWeaponCrit(Player player, ref int crit)
+        {
+            crit = item.crit = 0 + level * critscale;
+        }
+        public override void GetWeaponKnockback(Player player, ref float knockback)
+        {
+            knockback = level * kbscale;
+        }
+        
+
 
         public void Leveler()
         {
             Player player = Main.player[Main.myPlayer];
-            item.damage = 10 + level * dmgscale;
+            //item.damage = 10 + level * dmgscale;
             if (item.useTime - 2 >= 2)
             {
                 item.useTime = 50 - level * spdscale;
@@ -64,8 +80,8 @@ namespace ItemLevelTest.Items
                 item.useAnimation = 2;
             }
             item.value = 10000 + level * 1000;
-            item.knockBack = level * kbscale;
-            item.crit = 0 + level * critscale;
+            //item.knockBack = level * kbscale;
+            //item.crit = 0 + level * critscale;
             if (level >= 10)
             {
                 for (int dustcounter = 0; dustcounter <= 60; dustcounter++)
@@ -164,12 +180,14 @@ namespace ItemLevelTest.Items
                     if (level < 10)
                     {
                         line.text = "Level: " + level;
+                        line.overrideColor = new Color(96, 176, 72);
                     }
                     else
                     {
                         line.text = "Level: MAX";
+                        line.overrideColor = new Color(96, 176, 162);
                     }
-                    line.overrideColor = new Color(96, 176, 72);
+                    
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip6")
                 {
@@ -391,6 +409,16 @@ namespace ItemLevelTest.Items
                         return false;
                     }
                 }
+                if(ab2 == 3)
+                {
+                    
+                    Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
+                    Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward2"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
+                    Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward3"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
+                    Main.PlaySound(SoundID.Item62, player.Center);
+                    
+                    return true;
+                }
                 else
                 {
                     
@@ -438,7 +466,7 @@ ref float knockBack)
         }
         public override void RightClick(Player player)
         {
-            Main.PlaySound(SoundID.Item79, player.Center);//ui popup code here or within first if (maybe?)
+            Main.PlaySound(SoundID.Item79, player.Center);//ui popup code here 
 
             if (level >= 2)
             {
@@ -461,7 +489,7 @@ ref float knockBack)
             else if (level >= 5 && ab2 == 2)
             {
                 
-                ab2 = 1;
+                ab2 = 3;
             }
 
             if (level >= 8)
@@ -559,6 +587,8 @@ ref float knockBack)
                 }
                 CDUI.visible = true;
             }
+  
+
             else
             {
                 CDUI.visible = false;
