@@ -234,6 +234,11 @@ namespace ItemLevelTest.Items
                         line.text = "Active: Slagburst (" + ((10 + level * dmgscale) / 3) * 6 + "/s)";
                         line.overrideColor = new Color(255, 100, 45);
                     }
+                    else if (ab2 == 3)
+                    {
+                        line.text = "Active: Slag Ward (" + ((10 + level * dmgscale) * 5)  + ")";
+                        line.overrideColor = new Color(255, 100, 45);
+                    }
                 }
 
                 if (line.mod == "Terraria" && line.Name == "Tooltip9")
@@ -411,13 +416,31 @@ namespace ItemLevelTest.Items
                 }
                 if(ab2 == 3)
                 {
-                    
+                    if (cd == 0)
+                    {
                     Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
                     Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward2"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
                     Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward3"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
-                    Main.PlaySound(SoundID.Item62, player.Center);
-                    
+                    player.AddBuff(mod.BuffType("Slagward"), 900);
+                        for (int dustcounter = 0;dustcounter <= 30; dustcounter++)
+                        {
+                            //Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Slagdust2"), new Vector2(0,0), 0, default(Color), Main.rand.Next(10, 20) * 0.1f);
+                            Dust dust = Dust.NewDustDirect(player.Center, 0, 0, mod.DustType<Dusts.Slagdust2>(), Scale: 1.009f * 0.1f);
+                            dust.customData = player;
+                        }
+                       
+
+                        Main.PlaySound(SoundID.Item62, player.Center);
+                    cd = 1800;
                     return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                   
+                    
+                   
                 }
                 else
                 {
@@ -490,6 +513,12 @@ ref float knockBack)
             {
                 
                 ab2 = 3;
+            }
+
+            else if (level >= 5 && ab2 == 3)
+            {
+
+                ab2 = 1;
             }
 
             if (level >= 8)

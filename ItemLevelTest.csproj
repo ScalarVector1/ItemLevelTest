@@ -33,17 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Buffs\Slagmelt.cs" />
     <Compile Include="Dusts\Sworddust - Copy.cs" />
     <Compile Include="Dusts\Sworddust.cs" />
     <Compile Include="ItemLevelTest.cs" />
     <Compile Include="Items\Testsword.cs" />
     <Compile Include="Items\Venrido.cs" />
     <Compile Include="LegendWorld.cs" />
+    <Compile Include="Projectiles\Slagward.cs" />
+    <Compile Include="Projectiles\Slagaura.cs" />
     <Compile Include="Projectiles\Slagburst.cs" />
     <Compile Include="Projectiles\Slagbuster.cs" />
     <Compile Include="Tiles\Swordtiles.cs" />
     <Compile Include="Items\Swordmats.cs" />
     <Compile Include="UI\Class1.cs" />
+    <Compile Include="NPC\Debuffhandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">

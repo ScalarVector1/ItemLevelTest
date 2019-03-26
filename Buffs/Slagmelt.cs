@@ -23,7 +23,25 @@ namespace ItemLevelTest.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<Debuffhandler>(mod).slagmelt = true;
+            npc.GetGlobalNPC<Buffhandler>(mod).slagmelt = true;
+        }
+    }
+
+    public class Slagward : ModBuff
+    {
+        public override void SetDefaults()
+        {
+            DisplayName.SetDefault("Slag ward");
+            Description.SetDefault("Increase defense by 20");
+            Main.debuff[Type] = false;
+            Main.buffNoSave[Type] = true;
+        }
+
+
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.GetModPlayer<Buffhandlerplayer>(mod).ward = true;
         }
     }
 }
