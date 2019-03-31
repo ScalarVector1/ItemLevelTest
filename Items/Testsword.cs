@@ -421,14 +421,22 @@ namespace ItemLevelTest.Items
                     Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
                     Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward2"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
                     Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(0, 0), mod.ProjectileType("Slagward3"), 10 + level * dmgscale * 5, 5, Main.myPlayer);
-                    player.AddBuff(mod.BuffType("Slagward"), 900);
+                    Projectile.NewProjectile(new Vector2(player.MountedCenter.X + 2, player.MountedCenter.Y + 2), new Vector2(0, -1), mod.ProjectileType("Shield"),0, 0, Main.myPlayer);
+                        player.AddBuff(mod.BuffType("Slagward"), 900);
                         for (int dustcounter = 0;dustcounter <= 30; dustcounter++)
                         {
                             //Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Slagdust2"), new Vector2(0,0), 0, default(Color), Main.rand.Next(10, 20) * 0.1f);
                             Dust dust = Dust.NewDustDirect(player.Center, 0, 0, mod.DustType<Dusts.Slagdust2>(), Scale: 1.009f * 0.1f);
                             dust.customData = player;
                         }
-                       
+
+                        for (int dustcounter = 0; dustcounter <= 80; dustcounter++)
+                        {
+                            Dust.NewDustPerfect(new Vector2(player.Center.X + (float)Math.Cos((Math.PI * 2 / 80) * dustcounter) * 80 , player.Center.Y + (float)Math.Sin((Math.PI * 2 / 80)*dustcounter) * 80 ), mod.DustType("Sworddust3"), new Vector2(Main.rand.Next(0 , 10) * .01f,-1), 0, default(Color), Main.rand.Next(10, 20) * 0.1f);
+                            
+                        }
+
+
 
                         Main.PlaySound(SoundID.Item62, player.Center);
                     cd = 1800;

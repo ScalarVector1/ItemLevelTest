@@ -34,12 +34,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Buffs\Slagmelt.cs" />
+    <Compile Include="Dusts\Scarftest.cs" />
     <Compile Include="Dusts\Sworddust - Copy.cs" />
     <Compile Include="Dusts\Sworddust.cs" />
     <Compile Include="ItemLevelTest.cs" />
+    <Compile Include="Items\Scarf.cs" />
     <Compile Include="Items\Testsword.cs" />
     <Compile Include="Items\Venrido.cs" />
     <Compile Include="LegendWorld.cs" />
+    <Compile Include="Projectiles\Shield.cs" />
     <Compile Include="Projectiles\Slagward.cs" />
     <Compile Include="Projectiles\Slagaura.cs" />
     <Compile Include="Projectiles\Slagburst.cs" />

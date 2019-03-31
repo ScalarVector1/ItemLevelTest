@@ -51,4 +51,33 @@ namespace ItemLevelTest.Dusts
 
 
     }
+
+    public class Sworddust3 : Oredust
+    {
+        public override bool Update(Dust dust)
+        {
+            dust.position.Y += dust.velocity.Y;
+            dust.rotation += dust.velocity.X;
+
+
+            dust.scale *= 0.98f;
+
+            float light = 0.02f * dust.scale;
+
+            if (dust.scale <= 2.5 + .55)
+            {
+                Lighting.AddLight(dust.position, (0.55f + (2.65f - (dust.scale + 0.25f)) / 9) * dust.scale * 0.5f, (0.5f - (2.5f - dust.scale) / 9) * dust.scale * 0.5f, (0.45f - (2.5f - dust.scale) / 9) * dust.scale * 0.5f);
+            }
+            else
+            {
+                Lighting.AddLight(dust.position, 0.55f + 2.65f / 9, 2.65f / 9, 0 / 9);
+            }
+
+            if (dust.scale < 0.55f)
+            {
+                dust.active = false;
+            }
+            return false;
+        }
+    }
 }
