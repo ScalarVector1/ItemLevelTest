@@ -16,7 +16,7 @@ namespace ItemLevelTest.Projectiles
         }
         public override void SetDefaults()
         {
-            projectile.damage = 2;
+            projectile.damage = 0;
             projectile.width = 300;
             projectile.height = 300;
             projectile.friendly = true;

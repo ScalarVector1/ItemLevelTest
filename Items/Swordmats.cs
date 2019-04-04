@@ -11,8 +11,8 @@ namespace ItemLevelTest.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("[PH] Swordspirit1");
-            Tooltip.SetDefault("[PH] Craft at sword altar");
+            DisplayName.SetDefault("Koranthi's Spirit");
+            Tooltip.SetDefault("A Fragment of the Forge's Master Herself");
 
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 7));
             ItemID.Sets.ItemNoGravity[item.type] = true;
@@ -70,8 +70,8 @@ namespace ItemLevelTest.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("[PH] Swordsoul1");
-            Tooltip.SetDefault("[PH] Final soul material");
+            DisplayName.SetDefault("Soul of the Forge");
+            Tooltip.SetDefault("A Reclaimed Shard of Koranthi's Soul");
 
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 9));
             ItemID.Sets.ItemNoGravity[item.type] = true;
@@ -147,7 +147,7 @@ namespace ItemLevelTest.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eternal Ore");
-            Tooltip.SetDefault("[PH] Craft at sword forge");
+            Tooltip.SetDefault("A Pearl of Purity in the dark...");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 7));
             ItemID.Sets.ItemNoGravity[item.type] = true;
         }
@@ -198,8 +198,25 @@ namespace ItemLevelTest.Items
         {
 
             DisplayName.SetDefault("Eternal Bar");
-            Tooltip.SetDefault("[PH] Alloy with Venerido");
+            Tooltip.SetDefault("Purifying metal");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 7));
+
+        }
+        public override void SetDefaults()
+        {
+            item.height = 24;
+            item.width = 30;
+            item.rare = -11;
+        }
+
+        public override void PostUpdate()
+        {
             
+            if (Main.rand.Next(2) == 0)
+            {
+                
+                Dust.NewDust(new Vector2(item.Center.X - (item.width) / 2, item.Center.Y - item.width / 2), item.width, item.width, mod.DustType("Swordoredust"));
+            }
         }
     }
 
@@ -208,9 +225,15 @@ namespace ItemLevelTest.Items
         public override void SetStaticDefaults()
         {
 
-            DisplayName.SetDefault("Pure Charged Bar");
-            Tooltip.SetDefault("[PH] Final metal material");
-
+            DisplayName.SetDefault("Reclaimed Coremetal");
+            Tooltip.SetDefault("The Material Used by the Dragon Herself...");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 8));
+        }
+        public override void SetDefaults()
+        {
+            item.height = 24;
+            item.width = 30;
+            item.rare = -11;
         }
 
         public override void AddRecipes()
@@ -218,6 +241,7 @@ namespace ItemLevelTest.Items
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "Swordbar1");
             recipe.AddIngredient(null, "Vingot");
+            recipe.AddRecipeGroup("IronBar", 50);
             //recipe.AddTile(null, "Swordforge1t");
             recipe.SetResult(this);
             recipe.AddRecipe();

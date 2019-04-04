@@ -25,8 +25,8 @@ namespace ItemLevelTest.Tiles
         {
             if (slagmelt)
             {
-                npc.lifeRegen -= 6;
-                damage += 6;
+                npc.lifeRegen -= 12;
+                damage += 3;
             }
         }
 

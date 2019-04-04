@@ -2,10 +2,15 @@ using System;
 using System.Collections.Generic;
 using ItemLevelTest.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+
+
 
 namespace ItemLevelTest.Items
 {
@@ -22,15 +27,16 @@ namespace ItemLevelTest.Items
         int timer = 0;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Leveling Sword");
+            DisplayName.SetDefault("Koranithus");
             Tooltip.SetDefault("Gains 10% of damage dealt as EXP" + "\n\n\n\n\n\n\n\n\n\n\n");
+            //Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 11));
         }
         public override void SetDefaults()
         {
             item.damage = 10;
             item.melee = true;
-            item.width = 54;
-            item.height = 54;
+            item.width = 62;
+            item.height = 62;
             item.useTime = 50;
             item.useAnimation = 60;
             item.useStyle = 1;
@@ -45,10 +51,54 @@ namespace ItemLevelTest.Items
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.DirtBlock, 10);
+            //recipe.AddIngredient(ItemID.DirtBlock, 10);
+            recipe.AddIngredient(null, "Swordsteel1");
+            recipe.AddIngredient(null, "Swordsoul1");
             recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(this);
             recipe.AddRecipe();
+        }
+        public override void OnCraft(Recipe recipe) 
+        {
+            //text
+            Player player = Main.player[Main.myPlayer];
+            string text = player.name + " Has Crafted Testswordname[PH]!";
+            if (Main.netMode == 2) // Server
+            {
+                NetMessage.SendData(25, -1, -1, NetworkText.FromLiteral(text), 255, 100f, 45f, 255f, 0, 0, 0);
+            }
+            else if (Main.netMode == 0) // Single Player
+            {
+                Main.NewText(text, new Color(255, 100, 45));
+                Main.NewText("Your body goes numb...", new Color(100, 100, 100));
+            }
+
+            //dust
+            for (int dustcounter = 300; dustcounter >= 0; dustcounter--)
+            {
+                float yvel = 0;
+                float xvel = 0;
+                float hyp = 0;
+                hyp = Main.rand.Next(0, 100) * 0.1f;
+                xvel = Main.rand.Next(-400, 400) * .01f;
+                if (Main.rand.Next(2) == 0)
+                {
+                    yvel = (float)Math.Sqrt(hyp - xvel * xvel);
+                }
+                else
+                {
+                    yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
+                }
+                Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(8, 10) * 0.1f);
+                if (Main.rand.Next(2) == 0)
+                {
+                    Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Slagdust"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(12, 14) * 0.1f);
+                }
+                Main.PlaySound(SoundID.Item37, player.Center);
+                Main.PlaySound(SoundID.Item45, player.Center);
+                
+            }
+
         }
         public override void GetWeaponDamage(Player player, ref int damage)
         {
@@ -329,7 +379,7 @@ namespace ItemLevelTest.Items
 
         public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-             float length = item.Size.Length();
+             float length = item.Size.Length() + 1;
              float r = player.direction == 1 ? ((float)Math.PI / 4) * -1 : (float)Math.PI * 5 / 4;
              Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r), length * (float)Math.Sin(player.itemRotation + r)), mod.DustType("Sworddust"));
              Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r - 0.12), length * (float)Math.Sin(player.itemRotation + r - 0.12)), mod.DustType("Sworddust"));
@@ -547,14 +597,11 @@ ref float knockBack)
             CDUI.ability = ab2;
             if (ab3 == 1)
             {
-                if(Main.rand.Next(5) == 0)
-                {
-                    Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("Slagaura"), 1, 0, Main.myPlayer);
-                }
-                else
-                {
+  
                     Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("Slagaura"), 0, 0, Main.myPlayer);
-                }
+                
+               
+
                    
             }
                 
