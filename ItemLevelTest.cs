@@ -10,7 +10,10 @@ namespace ItemLevelTest
 	class ItemLevelTest : Mod
 	{
         public CDUI cdui;
-        public UserInterface customResources;
+        public Upgradeui upui;
+        private UserInterface customResources;
+        private UserInterface customResourcesupgrade;
+
         public ItemLevelTest()
 		{
 
@@ -20,19 +23,33 @@ namespace ItemLevelTest
         {
       
                 int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-                if (MouseTextIndex != -1)
-                    layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer("[PH]MODNAME: Cooldown",
-                    delegate
+            if (MouseTextIndex != -1)
+            {
+                layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer("[PH]MODNAME: Cooldown",
+                delegate
+                    {
+                        if (CDUI.visible)
                         {
-                            if (CDUI.visible == true)
-                            {                                
-                                customResources.Update(Main._drawInterfaceGameTime);
-                                cdui.Draw(Main.spriteBatch);
-                            }
-                            return true;
-                        }));
+                            customResources.Update(Main._drawInterfaceGameTime);
+                            cdui.Draw(Main.spriteBatch);
+                        }
 
-             
+                        return true;
+                    }));
+                layers.Insert(MouseTextIndex + 1, new LegacyGameInterfaceLayer("[PH]MODNAME: Upgrade",
+                delegate
+                {
+                    if (Upgradeui.visible)
+                    {
+                        customResources.Update(Main._drawInterfaceGameTime);
+                        upui.Draw(Main.spriteBatch);
+                    }
+
+                    return true;
+                }));
+            }
+
+
         }
 
         public override void Load()
@@ -41,9 +58,14 @@ namespace ItemLevelTest
             if (!Main.dedServ)
             {
                 customResources = new UserInterface();
+                customResourcesupgrade = new UserInterface();
                 cdui = new CDUI();
+                upui = new Upgradeui();
                 CDUI.visible = true;
+                Upgradeui.visible = false;
                 customResources.SetState(cdui);
+                customResourcesupgrade.SetState(upui);
+
 
             }
         }

@@ -18,7 +18,7 @@ namespace ItemLevelTest.Items
     {
         int exp = 0;
         int expreq = 50;
-        int level = 0;
+        public int level = 0;
         int dmgscale = 5;
         int spdscale = 2;
         int critscale = 1;
@@ -548,61 +548,66 @@ ref float knockBack)
         public override void RightClick(Player player)
         {
             Main.PlaySound(SoundID.Item79, player.Center);//ui popup code here 
-
-            if (level >= 2)
+            if (level >= 2 && !Upgradeui.visible)
             {
-                //etc etc
-                item.stack++;
-                ab1 = 1;
-            }
-            if (level >= 5 && ab2 == 0)
-            {
-               
-                ab2 = 1;
-            }
-             //ability toggling code for test purposes untill a GUI works properly
-            else if (level >= 5 && ab2 == 1)
-            {
+                Upgradeui.visible = true;
                 
-                ab2 = 2;
+                //set values needed to get the correct UI here
+
             }
 
-            else if (level >= 5 && ab2 == 2)
-            {
-                
-                ab2 = 3;
-            }
+                /*if (level >= 2)
+                {
+                    //etc etc
+                    item.stack++;
+                    ab1 = 1;
+                }
+                if (level >= 5 && ab2 == 0)
+                {
 
-            else if (level >= 5 && ab2 == 3)
-            {
+                    ab2 = 1;
+                }
+                 //ability toggling code for test purposes untill a GUI works properly
+                else if (level >= 5 && ab2 == 1)
+                {
 
-                ab2 = 1;
-            }
+                    ab2 = 2;
+                }
 
-            if (level >= 8)
-            {
-                ab3 = 1;
-            }
+                else if (level >= 5 && ab2 == 2)
+                {
 
-            if ( level <= 1)
+                    ab2 = 3;
+                }
+
+                else if (level >= 5 && ab2 == 3)
+                {
+
+                    ab2 = 1;
+                }
+
+                if (level >= 8)
+                {
+                    ab3 = 1;
+                }*/
+
+                if ( level <= 1)
             {
                 Main.NewText("Abilities unlock at level 2!");
-                item.stack++;
+                
             }
+            item.stack++;
         }
 
         public override void HoldItem(Player player)
         {
             
             CDUI.ability = ab2;
+
+
             if (ab3 == 1)
             {
-  
-                    Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("Slagaura"), 0, 0, Main.myPlayer);
-                
-               
-
-                   
+               Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("Slagaura"), 0, 0, Main.myPlayer);         
             }
                 
         }
@@ -677,8 +682,24 @@ ref float knockBack)
             {
                 CDUI.visible = false;
             }
-            
-            
+
+
+            if (Upgradeui.visible)
+            {
+                if(player.controlHook)
+                {
+                    Upgradeui.visible = false;
+                }
+            }
+
+
+        }
+    }
+    class Testswordmax : Testsword
+    {
+        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+        {
+            level = 10;
         }
     }
 

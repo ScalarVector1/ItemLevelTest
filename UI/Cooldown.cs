@@ -60,7 +60,7 @@ namespace ItemLevelTest.UI
 
 
         }
-        public int value = 1;
+        int value = 1;
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             
@@ -81,7 +81,7 @@ namespace ItemLevelTest.UI
             else if (ability == slagward)
             {
                 Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagward"));
-                value = 1;//PH
+                value = 1800;
             }
             
         }
@@ -91,6 +91,7 @@ namespace ItemLevelTest.UI
             Recalculate();
 
             base.Draw(spriteBatch);
+            
         }
     }
     class Shade : UIElement
@@ -105,5 +106,68 @@ namespace ItemLevelTest.UI
         }
         
     }
+
+    class Upgradeui : UIState
+    {
+        public UIPanel backdrop;
+        public static bool visible = false;
+        public UITextBox statwindow;
+        public UIImageButton slagbuster;
+
+        public override void OnInitialize()
+        {
+            backdrop = new UIPanel();
+            backdrop.SetPadding(0);
+            backdrop.Left.Set(750f, 0f);
+            backdrop.Top.Set(250f, 0f);
+            backdrop.Width.Set(400f, 0f);
+            backdrop.Height.Set(500f, 0f);
+            backdrop.BackgroundColor = new Color(120, 40, 20, 170);
+            backdrop.BorderColor = new Color(60, 20, 10, 230);
+            base.Append(backdrop);
+
+            statwindow = new UITextBox("NULL");
+            statwindow.SetPadding(10);
+            statwindow.Left.Set(401, 0);
+            statwindow.Top.Set(0, 0f);
+            statwindow.Height.Set(160, 0);
+            statwindow.Width.Set(200, 0);
+            statwindow.BackgroundColor = new Color(120, 40, 20, 170);
+            statwindow.BorderColor = new Color(60, 20, 10, 230);
+            backdrop.Append(statwindow);
+
+            slagbuster = new UIImageButton(ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster"));
+            slagbuster.Left.Set(100, 0);
+            slagbuster.Top.Set(100, 0);
+            slagbuster.Height.Set(38, 0);
+            slagbuster.Width.Set(38, 0);
+            slagbuster.OnClick += new MouseEvent(Buster);
+            backdrop.Append(slagbuster);
+
+
+
+        }
+
+        private void Buster(UIMouseEvent evt, UIElement listeningElement)
+        {
+            Main.PlaySound(SoundID.MenuOpen);
+            statwindow.SetText("test");
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+          
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            
+            Recalculate();
+
+            base.Draw(spriteBatch);
+        }
+
+    }
+
   
 }
