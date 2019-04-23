@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using ItemLevelTest.UI;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -14,7 +12,7 @@ namespace ItemLevelTest.Items
 {
     class Koranithus : ModItem
     {
-        int exp = 0; //the current exp of the item (this is saved)
+        int exp = 0; //the current exp of the item (this is saved)why are you
         int expRequired = 50; //the exp required to reach the next level, this value sets the base
         public int level = 0; //the item's current level (this is saved)
         int dmgScale = 5; //changes the damage gain per level
@@ -45,6 +43,21 @@ namespace ItemLevelTest.Items
         {
             DisplayName.SetDefault("Koranithus");
             Tooltip.SetDefault("Gains 10% of damage dealt as EXP" + "\n\n\n\n\n\n\n\n\n\n\n");
+
+            ItemID.Sets.ItemNoGravity[item.type] = true; //makes the item float when thrown
+
+        }
+
+        //handles effects of the dropped item
+        public override void PostUpdate()
+        {
+            Lighting.AddLight(item.Center, 2, .7f, .6f);
+            Main.PlaySound(SoundID.Pixie, item.Center);
+            if (Main.rand.Next(5) == 0)
+            {
+                Dust.NewDust(new Vector2(item.Center.X - (item.width), item.Center.Y - item.width), item.width * 2, item.width * 2, mod.DustType("Sworddust"));
+                Dust.NewDust(new Vector2(item.Center.X - (item.width) / 2, item.Center.Y - (item.width) / 2), item.width, item.width, mod.DustType("Sworddust"));
+            }
         }
 
         public override void SetDefaults() //The values set here are the base level 1 values. remember that useTime is subtracted from rather than added to.
