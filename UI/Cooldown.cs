@@ -107,12 +107,13 @@ namespace ItemLevelTest.UI
         
     }
 
+
     class Upgradeui : UIState
     {
         public UIPanel backdrop;
         public static bool visible = false;
         public UITextBox statwindow;
-        public UIImageButton slagbuster;
+        //public UIImageButton slagbuster;
 
         public override void OnInitialize()
         {
@@ -136,9 +137,9 @@ namespace ItemLevelTest.UI
             statwindow.BorderColor = new Color(60, 20, 10, 230);
             backdrop.Append(statwindow);
 
-            slagbuster = new UIImageButton(ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster"));
+            UIImageButton slagbuster = new UIImageButton(ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster"));
             slagbuster.Left.Set(100, 0);
-            slagbuster.Top.Set(100, 0);
+            slagbuster.Top.Set(200, 0);
             slagbuster.Height.Set(38, 0);
             slagbuster.Width.Set(38, 0);
             slagbuster.OnClick += new MouseEvent(Buster);
@@ -152,6 +153,7 @@ namespace ItemLevelTest.UI
         {
             Main.PlaySound(SoundID.MenuOpen);
             statwindow.SetText("test");
+            Recalculate();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
