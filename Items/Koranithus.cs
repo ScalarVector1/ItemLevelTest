@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace ItemLevelTest.Items
 {
@@ -175,9 +176,11 @@ namespace ItemLevelTest.Items
              
             if (ab1 == firebolts)
             {
-                if (Main.rand.Next(9) == 1)
+                if (Main.rand.Next(4) == 1)
                 {
-
+                    int Xoffset = 0;
+                    Xoffset = Main.rand.Next(-100, 100);
+                    Projectile.NewProjectile(new Vector2 ((target.position.X + 10) + Xoffset, target.position.Y - 1000), new Vector2((float)Xoffset/-100, 10), mod.ProjectileType("Firebolt"), (10 + level * dmgScale), 0, Main.myPlayer);
                 }
             }
         }
@@ -343,9 +346,6 @@ namespace ItemLevelTest.Items
                 Upgradeui.ab2 = ab2;
                 Upgradeui.ab3 = ab3;
                 Upgradeui.instance = this;
-
-
-                // [WIP] set values needed to get the correct UI here
             }
             if (level <= 1)//if underleveled
             {
@@ -598,6 +598,13 @@ namespace ItemLevelTest.Items
         {
             get { return true; }
         }
+
+        //ensures the item will not have a prefix (this breaks stuff)
+        public override int ChoosePrefix(UnifiedRandom rand)
+        {
+            return 0;
+        }
+
     }
 
     //These next classes handle things related to the sword that must be handled in other types of classes, such as cooldown and UI
