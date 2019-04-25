@@ -35,11 +35,11 @@
   <ItemGroup>
     <Compile Include="Buffs\Slagmelt.cs" />
     <Compile Include="Dusts\Scarftest.cs" />
-    <Compile Include="Dusts\Sworddust - Copy.cs" />
+    <Compile Include="Dusts\Slagdust2.cs" />
     <Compile Include="Dusts\Sworddust.cs" />
     <Compile Include="ItemLevelTest.cs" />
+    <Compile Include="Items\Koranithus.cs" />
     <Compile Include="Items\Scarf.cs" />
-    <Compile Include="Items\Testsword.cs" />
     <Compile Include="Items\Venrido.cs" />
     <Compile Include="LegendWorld.cs" />
     <Compile Include="Projectiles\Shield.cs" />
@@ -76,6 +76,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Steam\steamapps\common\terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>"D:\Program Files (x86)\Steam\steamapps\common\terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

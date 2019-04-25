@@ -35,7 +35,6 @@ namespace ItemLevelTest.Items
                 Dust.NewDust(new Vector2(item.Center.X - (item.width + 8), item.Center.Y - item.width), item.width * 2, item.width * 2, mod.DustType("Sworddust"));
                 Dust.NewDust(new Vector2(item.Center.X - (item.width + 8) / 2, item.Center.Y - item.width / 2), item.width, item.width, mod.DustType("Sworddust"));
             }
-
         }
         public override bool OnPickup(Player player)
         {

@@ -1,0 +1,13 @@
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.csprojResolveAssemblyReference.cache
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.csproj.CoreCompileInputs.cache
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\ItemLevelTest.dll
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\ItemLevelTest.pdb
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\Microsoft.Xna.Framework.dll
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\Microsoft.Xna.Framework.Game.dll
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\Microsoft.Xna.Framework.Graphics.dll
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\Microsoft.Xna.Framework.Xact.dll
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\Terraria.exe
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\Terraria.pdb
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.csproj.CopyComplete
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.dll
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.pdb

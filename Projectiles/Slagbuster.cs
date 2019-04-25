@@ -23,10 +23,7 @@ namespace ItemLevelTest.Projectiles
             projectile.penetrate = 2;
             drawOriginOffsetY = -13;
             drawOriginOffsetX = 10;
-
-
         }
-
 
 
         public override void AI()
@@ -50,10 +47,6 @@ namespace ItemLevelTest.Projectiles
 
         public override void Kill(int timeLeft)
         {
-
-
-        
-
             for (int dustcounter = 120; dustcounter >= 0; dustcounter--)
             {
                 float yvel = 0;

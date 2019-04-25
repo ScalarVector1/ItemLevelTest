@@ -41,7 +41,7 @@ namespace ItemLevelTest
                 {
                     if (Upgradeui.visible)
                     {
-                        customResources.Update(Main._drawInterfaceGameTime);
+                        customResourcesupgrade.Update(Main._drawInterfaceGameTime);
                         upui.Draw(Main.spriteBatch);
                     }
 
@@ -54,7 +54,6 @@ namespace ItemLevelTest
 
         public override void Load()
         {
-
             if (!Main.dedServ)
             {
                 customResources = new UserInterface();
@@ -65,9 +64,21 @@ namespace ItemLevelTest
                 Upgradeui.visible = false;
                 customResources.SetState(cdui);
                 customResourcesupgrade.SetState(upui);
-
-
             }
+        }
+
+
+        public override void Unload()
+        {
+            if (!Main.dedServ)
+            {
+                Upgradeui.slagbusterimage = null;
+                Upgradeui.slagburstimage = null;
+                Upgradeui.slagwardimage = null;
+                Upgradeui.lockimage = null;
+            }
+
+            
         }
 
     }

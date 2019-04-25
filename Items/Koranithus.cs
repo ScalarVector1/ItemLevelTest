@@ -22,9 +22,9 @@ namespace ItemLevelTest.Items
         const float expScale = 1.2f; //Changes the multiplier for the amount of exp required for the next level after the previous
 
         //ability variables
-        private int ab1 = 0; //passive
-        int ab2 = 0; //active
-        private int ab3 = 0; //ultimate
+        public int ab1 = 0; //passive
+        public int ab2 = 0; //active
+        public int ab3 = 0; //ultimate
 
         public static int cd = 0; //cooldown
 
@@ -67,7 +67,7 @@ namespace ItemLevelTest.Items
             item.width = 62;
             item.height = 62;
             item.useTime = 50;
-            item.useAnimation = 60;
+            item.useAnimation = 50;
             item.useStyle = 1;
             item.knockBack = 1f;
             item.value = 10000;
@@ -339,6 +339,11 @@ namespace ItemLevelTest.Items
             if (level >= 2 && !Upgradeui.visible) //only if the appropraite level and the UI isnt already opened
             {
                 Upgradeui.visible = true; //open the UI
+                Upgradeui.ab1 = ab1;
+                Upgradeui.ab2 = ab2;
+                Upgradeui.ab3 = ab3;
+                Upgradeui.instance = this;
+
 
                 // [WIP] set values needed to get the correct UI here
             }
@@ -637,15 +642,6 @@ namespace ItemLevelTest.Items
             else
             {
                 CDUI.visible = false;
-            }
-
-            //this section handles the upgrade UI [WIP]
-            if (Upgradeui.visible)
-            {
-                if (player.controlHook)
-                {
-                    Upgradeui.visible = false;
-                }
             }
         }
     }
