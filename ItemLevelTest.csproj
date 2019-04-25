@@ -42,6 +42,7 @@
     <Compile Include="Items\Scarf.cs" />
     <Compile Include="Items\Venrido.cs" />
     <Compile Include="LegendWorld.cs" />
+    <Compile Include="Projectiles\Firebolt.cs" />
     <Compile Include="Projectiles\Shield.cs" />
     <Compile Include="Projectiles\Slagward.cs" />
     <Compile Include="Projectiles\Slagaura.cs" />

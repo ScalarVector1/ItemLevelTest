@@ -27,6 +27,7 @@ namespace ItemLevelTest.Tiles
             {
                 npc.lifeRegen -= 12;
                 damage += 3;
+                
             }
         }
 

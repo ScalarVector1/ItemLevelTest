@@ -72,10 +72,7 @@ namespace ItemLevelTest
         {
             if (!Main.dedServ)
             {
-                Upgradeui.slagbusterimage = null;
-                Upgradeui.slagburstimage = null;
-                Upgradeui.slagwardimage = null;
-                Upgradeui.lockimage = null;
+                //Upgradeui.burningstrike = null;
             }
 
             

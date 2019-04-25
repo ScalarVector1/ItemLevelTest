@@ -345,6 +345,7 @@ namespace ItemLevelTest.Items
                 Upgradeui.ab1 = ab1;
                 Upgradeui.ab2 = ab2;
                 Upgradeui.ab3 = ab3;
+                Upgradeui.level = level;
                 Upgradeui.instance = this;
             }
             if (level <= 1)//if underleveled

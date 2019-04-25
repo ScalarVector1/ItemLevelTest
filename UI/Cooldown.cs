@@ -112,7 +112,7 @@ namespace ItemLevelTest.UI
     {
         public UIPanel backdrop;
         public static bool visible = false;
-        public UITextBox statwindow;
+        public UIPanel statwindow;
 
         public UIImageButton burningstrike = new UIImageButton(burningstrikeimage);
         public UIImageButton firebolts = new UIImageButton(fireboltsimage);
@@ -122,6 +122,14 @@ namespace ItemLevelTest.UI
         public UIImageButton slagward = new UIImageButton(slagbusterimage);
 
         public UIImageButton cinderaura = new UIImageButton(cinderauraimage);
+
+        public UIText line1 = new UIText("null");
+        public UIText line2 = new UIText("null");
+        public UIText line3 = new UIText("null");
+        public UIText line4 = new UIText("null");
+        public UIText line5 = new UIText("null");
+        public UIText line6 = new UIText("null");
+        public UIText line7 = new UIText("null");
 
         //frames
 
@@ -140,6 +148,7 @@ namespace ItemLevelTest.UI
         public static int ab1; //set by the sword that calls this UI each time
         public static int ab2;
         public static int ab3;
+        public static int level;
 
         public static Koranithus instance = null;
 
@@ -171,19 +180,19 @@ namespace ItemLevelTest.UI
             backdrop.Left.Set(750f, 0f);
             backdrop.Top.Set(250f, 0f);
             backdrop.Width.Set(400f, 0f);
-            backdrop.Height.Set(500f, 0f);
-            backdrop.BackgroundColor = new Color(120, 40, 20, 170);
+            backdrop.Height.Set(438f, 0f);
+            backdrop.BackgroundColor = new Color(110, 40, 20, 170);
             backdrop.BorderColor = new Color(60, 20, 10, 230);
             base.Append(backdrop);
 
-            statwindow = new UITextBox("null");
-            statwindow.SetPadding(10);
+            statwindow = new UIPanel();
+            statwindow.SetPadding(0);
             statwindow.Left.Set(401, 0);
             statwindow.Top.Set(0, 0f);
-            statwindow.Height.Set(160, 0);
+            statwindow.Height.Set(220, 0);
             statwindow.Width.Set(200, 0);
-            statwindow.BackgroundColor = new Color(120, 40, 20, 170);
-            statwindow.BorderColor = new Color(60, 20, 10, 230);
+            statwindow.BackgroundColor = new Color(100, 50, 20, 140);
+            statwindow.BorderColor = new Color(50, 30, 10, 230);
             backdrop.Append(statwindow);
 
             UIImageButton selector = new UIImageButton(check);
@@ -250,7 +259,6 @@ namespace ItemLevelTest.UI
 
             //------------------------------------------------------------------------
             //Frames
-
             
             slagbusterframe.Left.Set(-4, 0);
             slagbusterframe.Top.Set(-4, 0);
@@ -287,6 +295,37 @@ namespace ItemLevelTest.UI
             cinderauraframe.Height.Set(46, 0);
             cinderauraframe.Width.Set(46, 0);
             cinderaura.Append(cinderauraframe);
+
+            //------------------------------------------------------------------------
+            //Text
+
+            line1.Left.Set(10, 0);
+            line1.Top.Set(10, 0);
+            statwindow.Append(line1);
+
+            line2.Left.Set(10, 0);
+            line2.Top.Set(40, 0);
+            statwindow.Append(line2);
+
+            line3.Left.Set(10, 0);
+            line3.Top.Set(60, 0);
+            statwindow.Append(line3);
+
+            line4.Left.Set(10, 0);
+            line4.Top.Set(80, 0);
+            statwindow.Append(line4);
+
+            line5.Left.Set(10, 0);
+            line5.Top.Set(100, 0);
+            statwindow.Append(line5);
+
+            line6.Left.Set(10, 0);
+            line6.Top.Set(120, 0);
+            statwindow.Append(line6);
+
+            line7.Left.Set(10, 0);
+            line7.Top.Set(150, 0);
+            statwindow.Append(line7);
 
 
         }
@@ -425,13 +464,28 @@ namespace ItemLevelTest.UI
             {
                 if (passiveselect == burningstrikeability) //passive text sets
                 {
-                    statwindow.SetText("Burning strike");
+                    line1.SetText("Burning Strike");
+                    line2.SetText("Your melee strikes");
+                    line3.SetText("inflict burning");
+                    line4.SetText("for " + level * 1 + "-" + ((level * 1) + 1) + " seconds.");
+                    line5.SetText("");
+                    line6.SetText("");
+                    line7.SetText("");
+
                     burningstrikeframe.SetImage(frame2);
                     fireboltsframe.SetImage(frame);
                 }
                 else if (passiveselect == fireboltsability)
                 {
-                    statwindow.SetText("Firebolts");
+                    line1.SetText("Firebolts");
+                    line2.SetText("Your melee strikes");
+                    line3.SetText("have a chance to");
+                    line4.SetText("summon burning bolts");
+                    line5.SetText("from the sky,");
+                    line6.SetText("dealing " + (10+level*5) +" damage.");
+                    line7.SetText("");
+
+
                     burningstrikeframe.SetImage(frame);
                     fireboltsframe.SetImage(frame2);
                 }
@@ -446,21 +500,42 @@ namespace ItemLevelTest.UI
             {
                 if (activeselect == slagbusterability) //active text sets
                 {
-                    statwindow.SetText("Slag Buster");
+                    line1.SetText("Slag Buster");
+                    line2.SetText("Shoot a projectile,");
+                    line3.SetText("dealing " + (3*(10 + level * 5)) + " damage");
+                    line4.SetText("and exploding on");
+                    line5.SetText("impact for 65 danage.");
+                    line6.SetText("");
+                    line7.SetText("3.5 second cooldown");
+
                     slagbusterframe.SetImage(frame2);
                     slagburstframe.SetImage(frame);
                     slagwardframe.SetImage(frame);
                 }
                 else if (activeselect == slagburstability)
                 {
-                    statwindow.SetText("Slagburst");
+                    line1.SetText("Slagburst");
+                    line2.SetText("Creates a pillar of");
+                    line3.SetText("flame, dealing " + ((10 + level * 5) / 3) * 6 );
+                    line4.SetText("damage per second");
+                    line5.SetText("at your cursor.");
+                    line6.SetText("");
+                    line7.SetText("30 second cooldown");
+
                     slagbusterframe.SetImage(frame);
                     slagburstframe.SetImage(frame2);
                     slagwardframe.SetImage(frame);
                 }
                 else if (activeselect == slagwardability)
                 {
-                    statwindow.SetText("Slag Ward");
+                    line1.SetText("Slag Ward");
+                    line2.SetText("Creates 3 shields");
+                    line3.SetText("around you, blocking");
+                    line4.SetText("projectiles and");
+                    line5.SetText("exploding on impact");
+                    line6.SetText("for "+ ((10 + level * 5) * 5) + " damage.");
+                    line7.SetText("30 second cooldown");
+
                     slagbusterframe.SetImage(frame);
                     slagburstframe.SetImage(frame);
                     slagwardframe.SetImage(frame2);
@@ -477,7 +552,14 @@ namespace ItemLevelTest.UI
             {
                 if (ultimateselect == cinderauraability) //ultimate text sets
                 {
-                    statwindow.SetText("Aura of Cinders");
+                    line1.SetText("Aura of Cinders");
+                    line2.SetText("Creates a burning");
+                    line3.SetText("aura around you, ");
+                    line4.SetText("dealing 10 damage");
+                    line5.SetText("per second.");
+                    line6.SetText("");
+                    line7.SetText("");
+
                     cinderauraframe.SetImage(frame2);
                 }
             }
@@ -489,7 +571,13 @@ namespace ItemLevelTest.UI
 
             if (activeselect == 0 && passiveselect == 0 && ultimateselect == 0)
             {
-                statwindow.SetText("Click an ability to see details");
+                line1.SetText("Koranithus Upgrades");
+                line2.SetText("Click an ability to");
+                line3.SetText("see details, click");
+                line4.SetText("the check button");
+                line5.SetText("to confirm your");
+                line6.SetText("selection.");
+                line7.SetText("");
             }
 
             //------------------------------------------------------------------------
