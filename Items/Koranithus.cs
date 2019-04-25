@@ -180,7 +180,7 @@ namespace ItemLevelTest.Items
                 {
                     int Xoffset = 0;
                     Xoffset = Main.rand.Next(-100, 100);
-                    Projectile.NewProjectile(new Vector2 ((target.position.X + 10) + Xoffset, target.position.Y - 1000), new Vector2((float)Xoffset/-100, 10), mod.ProjectileType("Firebolt"), (10 + level * dmgScale), 0, Main.myPlayer);
+                    Projectile.NewProjectile(new Vector2 ((target.position.X + 10) + Xoffset, target.position.Y - 1000), new Vector2((float)Xoffset/-50, 20), mod.ProjectileType("Firebolt"), (10 + level * dmgScale), 0, Main.myPlayer);
                 }
             }
         }
