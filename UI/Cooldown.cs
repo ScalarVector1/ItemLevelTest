@@ -22,8 +22,8 @@ namespace ItemLevelTest.UI
         const int slagbuster = 1;
         const int slagburst = 2;
         const int slagward = 3;
-        static Texture2D iconimg = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
-        UIImage Icon1 = new UIImage(iconimg);
+        //static Texture2D iconimg = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
+        UIImage Icon1 = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Blank"));
         Shade shade = new Shade();
 
 
@@ -39,8 +39,8 @@ namespace ItemLevelTest.UI
             abicon.BorderColor = new Color(0, 0, 0, 0);
             base.Append(abicon);
 
-            Texture2D frame = ModLoader.GetTexture("ItemLevelTest/UI/Frame");
-            UIImage Frame = new UIImage(frame);
+            //Texture2D frame = ModLoader.GetTexture("ItemLevelTest/UI/Frame");
+            UIImage Frame = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Frame"));
             Frame.Left.Set(0, 0f);
             Frame.Top.Set(0, 0f);
             Frame.Width.Set(50, 0f);
@@ -100,21 +100,19 @@ namespace ItemLevelTest.UI
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-
-
             base.Draw(spriteBatch);
-            
+            Recalculate();
         }
     }
     class Shade : UIElement
     {
         public Color shadecolor = new Color(220, 220, 220, 255);
-        private static Texture2D shadetexture = ModLoader.GetTexture("ItemLevelTest/UI/Shade");
+        //private static Texture2D shadetexture = ModLoader.GetTexture("ItemLevelTest/UI/Shade");
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             CalculatedStyle dimensions = GetDimensions();
-            spriteBatch.Draw(shadetexture, new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), shadecolor);
+            spriteBatch.Draw(ModLoader.GetTexture("ItemLevelTest/UI/Shade"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), shadecolor);
         }
         
     }
@@ -125,6 +123,18 @@ namespace ItemLevelTest.UI
         public UIPanel backdrop;
         public static bool visible = false;
         public UIPanel statwindow;
+
+        public static Texture2D frame = ModLoader.GetTexture("ItemLEvelTest/UI/Frame2");
+        public static Texture2D check = ModLoader.GetTexture("ItemLEvelTest/UI/check");
+        public static Texture2D ex = ModLoader.GetTexture("ItemLEvelTest/UI/ex");
+        public static Texture2D frame2 = ModLoader.GetTexture("ItemLEvelTest/UI/Frame3");
+        public static Texture2D slagbusterimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
+        public static Texture2D slagburstimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagburst");
+        public static Texture2D slagwardimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagward");
+        public static Texture2D burningstrikeimage = ModLoader.GetTexture("ItemLevelTest/UI/burningstrike");
+        public static Texture2D fireboltsimage = ModLoader.GetTexture("ItemLevelTest/UI/firebolts");
+        public static Texture2D cinderauraimage = ModLoader.GetTexture("ItemLevelTest/UI/cinderaura");
+        public static Texture2D lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
 
         public UIImageButton burningstrike = new UIImageButton(burningstrikeimage);
         public UIImageButton firebolts = new UIImageButton(fireboltsimage);
@@ -173,20 +183,9 @@ namespace ItemLevelTest.UI
 
         const int cinderauraability = 1;
 
-        public static Texture2D frame = ModLoader.GetTexture("ItemLEvelTest/UI/Frame2");
-        public static Texture2D check = ModLoader.GetTexture("ItemLEvelTest/UI/check");
-        public static Texture2D ex = ModLoader.GetTexture("ItemLEvelTest/UI/ex");
-        public static Texture2D frame2 = ModLoader.GetTexture("ItemLEvelTest/UI/Frame3");
-        public static Texture2D slagbusterimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
-        public static Texture2D slagburstimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagburst");
-        public static Texture2D slagwardimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagward");
-        public static Texture2D burningstrikeimage = ModLoader.GetTexture("ItemLevelTest/UI/burningstrike");
-        public static Texture2D fireboltsimage = ModLoader.GetTexture("ItemLevelTest/UI/firebolts");
-        public static Texture2D cinderauraimage = ModLoader.GetTexture("ItemLevelTest/UI/cinderaura");
-        public static Texture2D lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
-
         public override void OnInitialize()
         {
+
             backdrop = new UIPanel();
             backdrop.SetPadding(0);
             backdrop.Left.Set(750f, 0f);
@@ -673,13 +672,14 @@ namespace ItemLevelTest.UI
             }
 
             //------------------------------------------------------------------------
-
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {           
             Recalculate();
             base.Draw(spriteBatch);
+
         }
 
     }
