@@ -27,15 +27,15 @@ namespace ItemLevelTest
             {
                 layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer("[PH]MODNAME: Cooldown",
                 delegate
+                {
+                    if (CDUI.visible)
                     {
-                        if (CDUI.visible)
-                        {
-                            customResources.Update(Main._drawInterfaceGameTime);
-                            cdui.Draw(Main.spriteBatch);
-                        }
+                        customResources.Update(Main._drawInterfaceGameTime);
+                        cdui.Draw(Main.spriteBatch);
+                    }
 
-                        return true;
-                    }));
+                    return true;
+                }, InterfaceScaleType.UI));
                 layers.Insert(MouseTextIndex + 1, new LegacyGameInterfaceLayer("[PH]MODNAME: Upgrade",
                 delegate
                 {
@@ -46,7 +46,7 @@ namespace ItemLevelTest
                     }
 
                     return true;
-                }));
+                }, InterfaceScaleType.UI));
             }
 
 
@@ -72,7 +72,7 @@ namespace ItemLevelTest
         {
             if (!Main.dedServ)
             {
-                //Upgradeui.burningstrike = null;
+
             }
 
             

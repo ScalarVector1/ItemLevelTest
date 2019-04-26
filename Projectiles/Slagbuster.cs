@@ -13,6 +13,7 @@ namespace ItemLevelTest.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slag buster");
+            Main.projFrames[projectile.type] = 5;
         }
         public override void SetDefaults()
         {
@@ -38,6 +39,16 @@ namespace ItemLevelTest.Projectiles
             }
             projectile.position.X += projectile.velocity.X;
             projectile.position.Y += projectile.velocity.Y;
+
+            //animation 
+            if (++projectile.frameCounter >= 4)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 5)
+                {
+                    projectile.frame = 0;
+                }
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)

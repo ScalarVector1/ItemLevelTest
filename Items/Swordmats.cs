@@ -62,6 +62,14 @@ namespace ItemLevelTest.Items
             recipe.AddTile(null, "Swordaltar1t");
             recipe.SetResult(null, "Swordsoul1");
             recipe.AddRecipe();
+
+            ModRecipe recipe2 = new ModRecipe(mod);
+            recipe2.AddIngredient(ItemID.Silk, 5);
+            recipe2.AddIngredient(ItemID.Cobweb, 20);
+            recipe2.AddIngredient(ItemID.Bone, 10);
+            recipe2.AddTile(TileID.Loom);
+            recipe2.SetResult(ItemID.ClothierVoodooDoll);
+            recipe2.AddRecipe();
         }
     }
 

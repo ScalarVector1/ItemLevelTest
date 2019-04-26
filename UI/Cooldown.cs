@@ -16,14 +16,17 @@ namespace ItemLevelTest.UI
         public UIPanel abicon;
         public static bool visible = false;
         public static int ability = 0;
+        public static int maxcd = 0;
+        public static bool coolingdown = false;
         const int none = 0;
         const int slagbuster = 1;
         const int slagburst = 2;
         const int slagward = 3;
         static Texture2D iconimg = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
         UIImage Icon1 = new UIImage(iconimg);
-       
-     
+        Shade shade = new Shade();
+
+
         public override void OnInitialize()
         {
             abicon = new UIPanel();
@@ -50,7 +53,6 @@ namespace ItemLevelTest.UI
             Icon1.Height.Set(38, 0f);
             abicon.Append(Icon1);
 
-            Shade shade = new Shade();
             shade.Left.Set(0,0);
             shade.Top.Set(0,0);
             shade.Width.Set(38, 0);
@@ -60,7 +62,7 @@ namespace ItemLevelTest.UI
 
 
         }
-        int value = 1;
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             
@@ -71,24 +73,34 @@ namespace ItemLevelTest.UI
             else if (ability == slagbuster)
             {
                 Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster"));
-                value = 210;
+   
             }
             else if (ability == slagburst)
             {
                 Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagburst"));
-                value = 1800;
+
             }
             else if (ability == slagward)
             {
                 Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagward"));
-                value = 1800;
+
             }
-            
+            if (coolingdown)
+            {
+                //shade.Height.Set(0, (float)(Koranithus.cd / maxcd) * 100);
+                shade.Height.Set((float)(Koranithus.cd * 38)/maxcd, 0);
+                Recalculate();
+            }
+            else
+            {
+                shade.Height.Set(0, 0);
+                Recalculate();
+            }
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //shade.Height.Set((Testsword.cd / value) * 38, 0f);
-            Recalculate();
+
 
             base.Draw(spriteBatch);
             
@@ -96,7 +108,7 @@ namespace ItemLevelTest.UI
     }
     class Shade : UIElement
     {
-        public Color shadecolor = new Color(155, 155, 155, 100);
+        public Color shadecolor = new Color(220, 220, 220, 255);
         private static Texture2D shadetexture = ModLoader.GetTexture("ItemLevelTest/UI/Shade");
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -336,6 +348,7 @@ namespace ItemLevelTest.UI
             passiveselect = 0;
             activeselect = 0;
             ultimateselect = 0;
+            Main.PlaySound(SoundID.MenuClose);
         }
 
         private void Select(UIMouseEvent evt, UIElement listeningElement)

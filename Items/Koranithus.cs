@@ -217,7 +217,7 @@ namespace ItemLevelTest.Items
                     if (cd == 0) //only possible if cooldown isnt active
                     {
                         item.shoot = mod.ProjectileType("Slagbuster"); //the item will fire the projectile
-                        item.shootSpeed = 5.5f;
+                        item.shootSpeed = 6.5f;
 
                         Main.PlaySound(SoundID.Item20, player.Center); //sound effects
                         Main.PlaySound(SoundID.Item62, player.Center);
@@ -241,7 +241,11 @@ namespace ItemLevelTest.Items
                             Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(4, 6) * 0.1f);
                         }
 
-                        cd = 210; //adds 210 frames to the cooldown = 
+                        cd = 210; //adds 210 frames to the cooldown = 3.5 seconds
+
+                        //UI handling
+                        CDUI.coolingdown = true;
+                        CDUI.maxcd = 210;
                         return true;
                     }
                     else //occurs if cooldown is active
@@ -260,6 +264,9 @@ namespace ItemLevelTest.Items
                         Main.PlaySound(SoundID.Item42, player.Center); //sound effects
                         item.shoot = 0; //keeps the sword tiself from shooting anything
                         cd = 1800; //sets the cooldown to 1800 ticks (equal to 30 seconds)
+
+                        CDUI.coolingdown = true;
+                        CDUI.maxcd = 1800;
                         return true;
                     }
                     else //occurs if cooldown is ative
@@ -293,6 +300,9 @@ namespace ItemLevelTest.Items
                         }
                         Main.PlaySound(SoundID.Item62, player.Center);//sound FX
                         cd = 1800;//adds 1800 ticks to the cooldown (equal to 30 seconds)
+
+                        CDUI.coolingdown = true;
+                        CDUI.maxcd = 1800;
                         return true;
                     }
                     else//if cooldown is active
@@ -628,6 +638,7 @@ namespace ItemLevelTest.Items
                         Main.PlaySound(SoundID.Item20, player.Center);
                         Main.PlaySound(SoundID.Item74, player.Center);
                     }
+                    CDUI.coolingdown = false;
                 }
             }
         }

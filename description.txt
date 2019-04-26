@@ -1,1 +1,3 @@
-Jesus fuck this is making my brain hurt
+Leveling Items is a mod that adds 1 new weapons into the game, each with their own unique way of obtaining, abilities, and visual effects. Each of these weapons has a special ability: to gain expereience points as they're used, and to grow more powerful with each level gained. As you gain levels with these weapons, they will gain the ability to have unique abilities enabled on them; these abilities are specific to each different weapon, and you can carry multiples of the same weapon, each with a different selection of abilities (do note that the cooldown on active abilities will carry over between weapons, though).
+
+TLDR: cool weapons that gain levels and selectable abilities, in alpha so everything will probably be unbalanced and/or have some WIP art or buggy code.
