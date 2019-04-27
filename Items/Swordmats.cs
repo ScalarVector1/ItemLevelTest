@@ -313,7 +313,7 @@ namespace ItemLevelTest.Items
             if (((NPC.AnyNPCs(NPCID.BrainofCthulhu)) || (NPC.AnyNPCs(NPCID.EaterofWorldsHead)) || (NPC.AnyNPCs(NPCID.EaterofWorldsTail)) || (NPC.AnyNPCs(NPCID.EaterofWorldsBody))) && orefailed == false)
             {
                 oredrop = true;
-                if (!player.armor.Where((x, i) => i >= 2 && i <= 8 + player.extraAccessorySlots).All(x => x.IsAir))
+                if (!player.armor.Where((x, i) => i > 2 && i < 8 + player.extraAccessorySlots).All(x => x.IsAir))
                 {
                     oredrop = false;
                     orefailed = true;
@@ -333,9 +333,9 @@ namespace ItemLevelTest.Items
                     spiritfailed = true;
                 }
             }
-            if ((NPC.AnyNPCs(NPCID.SkeletronHead)) && spiritfailed == true)
+            if (!(NPC.AnyNPCs(NPCID.SkeletronHead)) && spiritfailed == true)
             {
-                spiritdrop = false;
+                spiritfailed = false;
             }
         }
     }
@@ -351,13 +351,13 @@ namespace ItemLevelTest.Items
             Player player = Main.player[playerIndex];
             
            
-                if ((npc.type == NPCID.BrainofCthulhu) || ((npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsTail || npc.type == NPCID.EaterofWorldsBody) && npc.boss && Dropworld.oredrop == true))
+                if ((npc.type == NPCID.BrainofCthulhu) || ((npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsTail || npc.type == NPCID.EaterofWorldsBody) && npc.boss && Dropworld.oredrop))
 
                 {
                     Item.NewItem((int)player.position.X, (int)player.position.Y - 100, player.width, player.height, mod.ItemType("Swordore1"));
                 }
             
-            if (npc.type == NPCID.SkeletronHead && Dropworld.spiritdrop == true)
+            if (npc.type == NPCID.SkeletronHead && Dropworld.spiritdrop)
             {
                 Item.NewItem(npc.getRect(), mod.ItemType("Swordspirit1"));
             }
