@@ -189,9 +189,9 @@ namespace ItemLevelTest.Items
         {
             float length = item.Size.Length() + 1;
             float r = player.direction == 1 ? ((float)Math.PI / 4) * -1 : (float)Math.PI * 5 / 4;
-            Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r), length * (float)Math.Sin(player.itemRotation + r)), mod.DustType("Sworddust"));
-            Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r - 0.12), length * (float)Math.Sin(player.itemRotation + r - 0.12)), mod.DustType("Sworddust"));
-            Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r - 0.04), length * (float)Math.Sin(player.itemRotation + r - 0.04)), mod.DustType("Sworddust"));
+            Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r), length * (float)Math.Sin(player.itemRotation + r)), mod.DustType("Sworddust"),null,0, new Color(255, 255, 255));
+            Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r - 0.12), length * (float)Math.Sin(player.itemRotation + r - 0.12)), mod.DustType("Sworddust"), null, 0, new Color(255, 255, 255));
+            Dust.NewDustPerfect(player.MountedCenter + new Vector2(length * (float)Math.Cos(player.itemRotation + r - 0.04), length * (float)Math.Sin(player.itemRotation + r - 0.04)), mod.DustType("Sworddust"), null, 0, new Color(255, 255, 255));
         }
 
         public override bool AltFunctionUse(Player player) //allows right click to be used

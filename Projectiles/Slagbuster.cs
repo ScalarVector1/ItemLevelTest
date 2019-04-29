@@ -30,7 +30,7 @@ namespace ItemLevelTest.Projectiles
         public override void AI()
         {
             projectile.rotation = projectile.velocity.ToRotation();
-            Dust.NewDust(new Vector2(projectile.Center.X - (projectile.width) / 2 - 15, projectile.Center.Y - projectile.height / 2 - 15), projectile.width+30, projectile.height + 30, mod.DustType("Sworddust"));
+            Dust.NewDust(new Vector2(projectile.Center.X - (projectile.width) / 2 - 15, projectile.Center.Y - projectile.height / 2 - 15), projectile.width+30, projectile.height + 30, mod.DustType("Sworddust"),0,0,0, new Color(255, 255, 255));
             Dust.NewDust(new Vector2(projectile.Center.X - (projectile.width) / 2 - 15 , projectile.Center.Y - projectile.height / 2 - 15), projectile.width+30, projectile.height + 30, 6,0,0,0,default(Color),1.2f);
 
             if (Main.rand.Next(6) == 0)
