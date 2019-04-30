@@ -20,8 +20,8 @@ namespace ItemLevelTest.Items
         int expRequired = 50; //the exp required to reach the next level, this value sets the base
         public int level = 0; //the item's current level (this is saved)
         int dmgScale = 5; //changes the damage gain per level
-        int spdScale = 2; //changes the usetime reduction per level
-        float velScale = 1f;//changes the shotspeed icnrease per level
+        int spdScale = 1; //changes the usetime reduction per level
+        float velScale = 0.6f;//changes the shotspeed icnrease per level
         int critScale = 1; //changes the critical strike chance gain per level
         float kbScale = 0.5f; //changes the knockback gained per level
         const float expScale = 1.2f; //Changes the multiplier for the amount of exp required for the next level after the previous
@@ -47,7 +47,7 @@ namespace ItemLevelTest.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Leveling Bow");
-            Tooltip.SetDefault("Gains 10% of damage dealt as EXP" + "\n\n\n\n\n\n\n\n\n\n\n");
+            Tooltip.SetDefault((100 + (dmgScale * level * 10)) +" max chage damage" + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
             ItemID.Sets.ItemNoGravity[item.type] = true; //makes the item float when thrown
         }
@@ -59,7 +59,7 @@ namespace ItemLevelTest.Items
             //item.shoot = mod.ProjectileType("Suicideprojectile");
             item.width = 16;
             item.height = 64;
-            item.useTime = 25;
+            item.useTime = 30;
             item.useAnimation = 25;
             item.useStyle = 5;
             item.knockBack = 1f;
@@ -73,18 +73,140 @@ namespace ItemLevelTest.Items
             item.useAmmo = AmmoID.Arrow;                      
         }
 
+        bool charging = false;
+        float charge = 0;
+        const float hyp = 40;
+        int dustpulse = 29;
+        int soundpulse = 14;
+
+        public override void UpdateInventory(Player player)
+        {
+            if (player.HeldItem.modItem == this)
+            {
+                if (Main.mouseRight)
+                {
+                    if(charge == 0)
+                    {
+                        for (int k = 0; k <= 6000; k++)
+                        {
+                            if (Main.dust[k].type == mod.DustType("Bowdust2"))
+                            {
+                                Main.dust[k].active = false;
+                            }
+                        }
+                    }
+                    if (charge < 1)
+                    {
+                        charge += 0.01f;
+                    }
+                    charging = true;
+                }
+
+
+                if (!Main.mouseRight && charge > 0)
+                {
+                    if (charge >= 0.25)
+                    {
+                        float x = (Main.screenPosition.X + Main.mouseX) - player.position.X;
+                        float y = (Main.screenPosition.Y + Main.mouseY) - player.position.Y;
+
+                        float R = (25 + level * velScale) * charge; //the number here is the base velocity!!
+
+                        float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
+                        float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
+
+                        Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow"), (int)(((10 + level * dmgScale) * 10) * charge), 0, Main.myPlayer);
+                        Main.PlaySound(SoundID.Item68, player.Center);
+                        if (charge == 1)
+                        {
+                            Main.PlaySound(SoundID.Item72, player.Center);
+                        }
+                        charge = 0;
+                        dustpulse = 29;
+                        charging = false;
+                    }
+                    else
+                    {
+                        charge = 0;
+                        dustpulse = 29;
+                        charging = false;
+                        Main.PlaySound(SoundID.Item16, player.Center);
+                    }
+
+                }
+
+
+                if (charging)
+                {
+                    if (charge < 1)
+                    {
+                        soundpulse++;
+                        float theta = (float)(Math.PI * 2 * charge);
+                        float dustx = (hyp * (float)Math.Cos(theta));
+                        float dusty = (hyp * (float)Math.Sin(theta));
+                        Dust.NewDustPerfect(new Vector2((player.position.X + player.width/2) + dustx,(player.position.Y + player.height/2) + dusty), mod.DustType("Bowdust2"),null,0,new Color(255,255,255));
+                        if(soundpulse >= 15)
+                        {
+                            Main.PlaySound(SoundID.Item24, player.Center);
+                            soundpulse = 0;
+                        }
+                        
+                    }
+                    if (charge >= 1)
+                    {
+                        for(int k = 0; k<=6000; k++)
+                        {
+                            if (Main.dust[k].type == mod.DustType("Bowdust2"))
+                            {
+                                Main.dust[k].active = false;
+                            }
+                        }
+                        dustpulse++;
+
+                            if (dustpulse == 30)
+                            {
+                                for (float dustcounter = 0; dustcounter <= (float)(Math.PI * 2); dustcounter += (float)(Math.PI * 2) / 100)
+                                {
+                                    float theta = (dustcounter);
+                                    float dustx = (hyp * (float)Math.Cos(theta));
+                                    float dusty = (hyp * (float)Math.Sin(theta));
+                                    Dust.NewDustPerfect(new Vector2((player.position.X + player.width/2) + dustx, (player.position.Y + player.height/2) + dusty), mod.DustType("Bowdust3"), null, 0, new Color(255, 255, 255));
+                                }
+                            Main.PlaySound(SoundID.Item15, player.Center);
+                            
+                            dustpulse = 0;
+                            }
+                        
+
+                    }
+                }
+            }
+        }
         public override bool CanUseItem(Player player)
         {
+            //right click
+            
+
+            
+
+
+            //left click
             bool loaded = false;
             bool consumed = false;
-            for (int z = 54; z<=57; z++)
+            for (int z = 54; z <= 57; z++)
             {
                 if (player.inventory[z].ammo == AmmoID.Arrow && !consumed)
                 {
-                    loaded = true;
-                    player.inventory[z].stack--;
-                    consumed = true;
-
+                    if (player.inventory[z].stack > 0)
+                    {
+                        loaded = true;
+                        player.inventory[z].stack--;
+                        consumed = true;
+                    }
+                    else
+                    {
+                        loaded = false;
+                    }
                 }
                 else if (loaded == true)
                 {
@@ -102,9 +224,16 @@ namespace ItemLevelTest.Items
                 {
                     if (player.inventory[z].ammo == AmmoID.Arrow && !consumed)
                     {
-                        loaded = true;
-                        player.inventory[z].stack--;
-                        consumed = true;
+                        if (player.inventory[z].stack > 0)
+                        {
+                            loaded = true;
+                            player.inventory[z].stack--;
+                            consumed = true;
+                        }
+                        else
+                        {
+                            loaded = false;
+                        }
 
                     }
                     else if (loaded == true)
@@ -137,8 +266,9 @@ namespace ItemLevelTest.Items
             {
                 return false;
             }
-
         }
+
+
 
         public void Expcalc() //calculates the exp of the item, and if it should be leveled up (this handles the actual increase to the level variable itself also)
         {
@@ -185,7 +315,7 @@ namespace ItemLevelTest.Items
 
             if (level == 5)
             {
-                Main.NewText("Active ability choice available! Right click in your inventory to select an ability.");
+                Main.NewText("Charge ability choice available! Right click in your inventory to select an ability.");
             }
 
             if (level == 8)
@@ -214,32 +344,47 @@ namespace ItemLevelTest.Items
 
             foreach (TooltipLine line in tooltips)
             {
-                if (line.mod == "Terraria" && line.Name == "Tooltip1") //These lines show the stat growth and current added stat
+                if (line.mod == "Terraria" && line.Name == "Tooltip2") //Description
+                {
+                    line.text = "Hold right click to charge";
+                    line.overrideColor = new Color(255, 218, 75);
+                }
+                if (line.mod == "Terraria" && line.Name == "Tooltip3") //These lines show the stat growth and current added stat
                 {
                     line.text = "Stat growth per level:";
                     line.overrideColor = new Color(255, 218, 75);
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip2")
+                if (line.mod == "Terraria" && line.Name == "Tooltip4")
                 {
                     line.text = "+" + dmgScale + " Melee damage (" + dmgScale * level + ")";
                     line.overrideColor = new Color(255, 218, 75);
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip3")
+                if (line.mod == "Terraria" && line.Name == "Tooltip5")
                 {
                     line.text = "+" + spdScale + " Speed (" + spdScale * level + ")";
                     line.overrideColor = new Color(255, 218, 75);
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip4")
+                if (line.mod == "Terraria" && line.Name == "Tooltip6")
                 {
                     line.text = "+" + critScale + " Critical strike chance (" + critScale * level + ")";
                     line.overrideColor = new Color(255, 218, 75);
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip5")
+                if (line.mod == "Terraria" && line.Name == "Tooltip7")
                 {
                     line.text = "+" + kbScale + " Knockback (" + kbScale * level + ")";
                     line.overrideColor = new Color(255, 218, 75);
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip10") //These lines show exp and level
+                if (line.mod == "Terraria" && line.Name == "Tooltip8")
+                {
+                    line.text = "+" + velScale + " Velocity (" + velScale * level + ")";
+                    line.overrideColor = new Color(255, 218, 75);
+                }
+                if (line.mod == "Terraria" && line.Name == "Tooltip9")
+                {
+                    line.text = "+" + 10 * dmgScale + " Max charge damage (" + dmgScale * 10 * level + ")";
+                    line.overrideColor = new Color(255, 218, 75);
+                }
+                if (line.mod == "Terraria" && line.Name == "Tooltip13") //These lines show exp and level
                 {
                     if (level < 10)
                     {
@@ -251,7 +396,7 @@ namespace ItemLevelTest.Items
                     }
                     line.overrideColor = new Color(170, 212, 120);
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip11")
+                if (line.mod == "Terraria" && line.Name == "Tooltip14")
                 {
                     if (level < 10)
                     {
@@ -265,7 +410,7 @@ namespace ItemLevelTest.Items
                     }
 
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip6") //these lines show abilities
+                if (line.mod == "Terraria" && line.Name == "Tooltip10") //these lines show abilities
                 {
                     if (ab1 == 0 && level <= 2)
                     {
@@ -288,16 +433,16 @@ namespace ItemLevelTest.Items
                         line.overrideColor = new Color(255, 100, 45);
                     }
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip7")
+                if (line.mod == "Terraria" && line.Name == "Tooltip11")
                 {
                     if (ab2 == 0 && level <= 5)
                     {
-                        line.text = "Active: LOCKED";
+                        line.text = "Charge: Default";
                         line.overrideColor = new Color(70, 70, 70);
                     }
                     if (ab2 == 0 && level >= 5)
                     {
-                        line.text = "Active: AVAILABLE, right click to choose";
+                        line.text = "Charge: AVAILABLE, right click to choose";
                         line.overrideColor = new Color(180, 180, 180);
                     }
                     else if (ab2 == 1)
@@ -317,7 +462,7 @@ namespace ItemLevelTest.Items
                     }
                 }
 
-                if (line.mod == "Terraria" && line.Name == "Tooltip9")
+                if (line.mod == "Terraria" && line.Name == "Tooltip12")
                 {
                     if (ab3 == 0 && level <= 8)
                     {
@@ -344,9 +489,14 @@ namespace ItemLevelTest.Items
                 {
                     line.overrideColor = new Color(40, Main.DiscoG - 50, 250);
                 }
-                if (line.mod == "Terraria" && line.Name == "Tooltip0")
+                if (line.mod == "Terraria" && line.Name == "Tooltip1")
                 {
+                    line.text = "Gains 10% of damage dealt as EXP";
                     line.overrideColor = new Color(255, 218, 75);
+                }
+                if(line.mod == "Terraria" && line.Name == "Tooltip0")
+                {
+                    line.text = (100 + (dmgScale * level * 10)) + " max chage damage";
                 }
             }
         }

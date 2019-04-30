@@ -67,6 +67,7 @@ namespace ItemLevelTest.Items
             item.melee = true;
             item.width = 62;
             item.height = 62;
+            item.height = 62;
             item.useTime = 50;
             item.useAnimation = 50;
             item.useStyle = 1;
