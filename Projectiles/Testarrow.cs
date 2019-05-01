@@ -48,15 +48,38 @@ namespace ItemLevelTest.Projectiles
             projectile.velocity.Y += 0.2f;
             for (int dustcounter = 0; dustcounter <= 3; dustcounter++)
             {
-              Dust.NewDust(projectile.position, 16, 16, mod.DustType("Bowdust"),0,0,0, new Color(255, 255, 255));
+              Dust.NewDust(projectile.position, 16, 16, mod.DustType("Bowdust4"),0,0,0, new Color(255, 255, 255));
             }
         }
     }
-    class Suicideprojectile : ModProjectile
+
+
+    class Testarrow2 : ModProjectile
     {
+        public Testbow instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Testarrow2");
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 20;
+            projectile.width = 26;
+            projectile.height = 14;
+            projectile.friendly = true;
+            projectile.penetrate = 1;
+
+        }
+
         public override void AI()
         {
-            projectile.timeLeft = 0;
+            projectile.rotation = projectile.velocity.ToRotation();
+            projectile.velocity.Y += 0.2f;
+            for (int dustcounter = 0; dustcounter <= 4; dustcounter++)
+            {
+                Dust.NewDust(projectile.position, 20, 20, mod.DustType("Bowdust"), 0, 0, 0, new Color(255, 255, 255));
+            }
         }
     }
+
 }

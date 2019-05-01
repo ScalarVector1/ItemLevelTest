@@ -645,24 +645,5 @@ namespace ItemLevelTest.Items
         }
     }
 
-    public class UImanager : ModPlayer
-    {
-        public override void PostUpdate()
-        {
-            //this section handles the cooldown UI
-            Item holding = player.HeldItem;
-            if (player.HeldItem.type == mod.ItemType("Koranithus"))//when holding the sword
-            {
-                if (player.HeldItem != holding)//failsafe if holding nothing
-                {
-                    CDUI.visible = false;
-                }
-                CDUI.visible = true; //handles the visibility of the UI
-            }
-            else
-            {
-                CDUI.visible = false;
-            }
-        }
-    }
+    
 }

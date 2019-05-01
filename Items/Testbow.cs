@@ -73,15 +73,75 @@ namespace ItemLevelTest.Items
             item.useAmmo = AmmoID.Arrow;                      
         }
 
-        bool charging = false;
-        float charge = 0;
+        public static bool charging = false;
+        public static float charge = 0;
         const float hyp = 40;
         int dustpulse = 29;
         int soundpulse = 14;
+        bool consumedcharge = false;
+        bool loadedcharge = false;
+        Item selectedammo;
 
         public override void UpdateInventory(Player player)
         {
-            if (player.HeldItem.modItem == this)
+            for (int z = 54; z <= 57; z++)
+            {
+                if (player.inventory[z].ammo == AmmoID.Arrow && !consumedcharge)
+                {
+                    if (player.inventory[z].stack > 0)
+                    {
+                        loadedcharge = true;
+                        selectedammo = player.inventory[z];
+                        consumedcharge = true;
+                    }
+                    else
+                    {
+                        loadedcharge = false;
+                    }
+                }
+                else if (loadedcharge == true)
+                {
+
+                }
+                else
+                {
+                    loadedcharge = false;
+                }
+
+            }
+            if (!consumedcharge)
+            {
+                for (int z = 0; z <= 54; z++)
+                {
+                    if (player.inventory[z].ammo == AmmoID.Arrow && !consumedcharge)
+                    {
+                        if (player.inventory[z].stack > 0)
+                        {
+                            loadedcharge = true;
+                            selectedammo = player.inventory[z];
+                            consumedcharge = true;
+                        }
+                        else
+                        {
+                            loadedcharge = false;
+                        }
+
+                    }
+                    else if (loadedcharge == true)
+                    {
+
+                    }
+                    else
+                    {
+                        loadedcharge = false;
+                    }
+
+                }
+            }
+
+
+
+            if (player.HeldItem.modItem == this && loadedcharge)
             {
                 if (Main.mouseRight)
                 {
@@ -105,7 +165,7 @@ namespace ItemLevelTest.Items
 
                 if (!Main.mouseRight && charge > 0)
                 {
-                    if (charge >= 0.25)
+                    if (charge >= 0.25 && selectedammo.stack > 0)
                     {
                         float x = (Main.screenPosition.X + Main.mouseX) - player.position.X;
                         float y = (Main.screenPosition.Y + Main.mouseY) - player.position.Y;
@@ -115,15 +175,30 @@ namespace ItemLevelTest.Items
                         float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
                         float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
 
-                        Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow"), (int)(((10 + level * dmgScale) * 10) * charge), 0, Main.myPlayer);
-                        Main.PlaySound(SoundID.Item68, player.Center);
-                        if (charge == 1)
+                        if (charge < 1)
                         {
-                            Main.PlaySound(SoundID.Item72, player.Center);
+                            Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow2"), (int)(((10 + level * dmgScale) * 10) * charge), 0, Main.myPlayer);
+                            Main.PlaySound(SoundID.Item68, player.Center);
                         }
+                        if (charge >= 1)
+                        {
+                            if(ab2 == 0)
+                            {
+                                Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow2"), (((10 + level * dmgScale) * 10)), 0, Main.myPlayer);
+                                Main.PlaySound(SoundID.Item72, player.Center);
+                            }
+                            if(ab2 == 1)
+                            {
+                                Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Slagbuster"), (((10 + level * dmgScale) * 10)), 0, Main.myPlayer); //replace this with a real ability lol
+                            }
+
+                        }
+
                         charge = 0;
                         dustpulse = 29;
                         charging = false;
+                        selectedammo.stack--;
+                        
                     }
                     else
                     {
@@ -176,10 +251,14 @@ namespace ItemLevelTest.Items
                             
                             dustpulse = 0;
                             }
-                        
-
                     }
                 }
+            }
+            if (player.HeldItem.type != mod.ItemType("Testbow"))
+            {
+                charge = 0;
+                dustpulse = 29;
+                charging = false;
             }
         }
         public override bool CanUseItem(Player player)
@@ -316,6 +395,7 @@ namespace ItemLevelTest.Items
             if (level == 5)
             {
                 Main.NewText("Charge ability choice available! Right click in your inventory to select an ability.");
+                ab2 = 1;
             }
 
             if (level == 8)
@@ -535,4 +615,6 @@ namespace ItemLevelTest.Items
 
 
     }
+
+
 }

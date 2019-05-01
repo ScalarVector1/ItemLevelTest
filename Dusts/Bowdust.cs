@@ -13,8 +13,8 @@ namespace ItemLevelTest.Dusts
 			dust.noLight = true;
 			dust.scale *= 1.6f;
             dust.color.G = 255;
-            dust.color.B = 180;
-            dust.color.R = 180;
+            dust.color.B = 190;
+            dust.color.R = 190;
         }
 
 		public override bool Update(Dust dust)
@@ -142,6 +142,55 @@ namespace ItemLevelTest.Dusts
             Lighting.AddLight(dust.position, dust.color.R * 0.002f, dust.color.G * 0.002f, dust.color.B * 0.002f);
 
             if (dust.scale < 0.55f)
+            {
+                dust.active = false;
+            }
+            return false;
+        }
+
+        public override Color? GetAlpha(Dust dust, Color lightColor)
+        {
+            return dust.color;
+        }
+
+    }
+
+    public class Bowdust4 : ModDust
+    {
+        public override void OnSpawn(Dust dust)
+        {
+            dust.velocity.Y = 0;
+            dust.noGravity = true;
+            dust.noLight = true;
+            dust.scale *= 1.6f;
+            dust.color.G = 255;
+            dust.color.B = 180;
+            dust.color.R = 180;
+        }
+
+        public override bool Update(Dust dust)
+        {
+            dust.position.Y += dust.velocity.Y;
+            dust.rotation += dust.velocity.X;
+
+            dust.scale *= 0.925f;
+            if (dust.color.G >= 120)
+            {
+                dust.color.G -= 4;
+
+                if (dust.color.B < 250)
+                {
+                    dust.color.B += 3;
+                }
+
+            }
+
+
+            float light = 0.02f * dust.scale;
+
+            Lighting.AddLight(dust.position, dust.color.R * 0.002f, dust.color.G * 0.002f, dust.color.B * 0.002f);
+
+            if (dust.scale < 0.45f)
             {
                 dust.active = false;
             }

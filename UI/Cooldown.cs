@@ -684,6 +684,81 @@ namespace ItemLevelTest.UI
 
     }
 
+    class CHUI : UIState
+    {
+        public UIPanel abicon;
+        public static bool visible = false;
+        public static int ability = 0;
+        float maxcharge = 1;
+        const int none = 0;
+        const int slagbuster = 1;
+        const int slagburst = 2;
+        const int slagward = 3;
+        //static Texture2D iconimg = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
+        UIImage Icon1 = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/default"));
+        Shade shade = new Shade();
 
-  
+
+        public override void OnInitialize()
+        {
+            abicon = new UIPanel();
+            abicon.SetPadding(0);
+            abicon.Left.Set(465f, 0f);
+            abicon.Top.Set(20f, 0f);
+            abicon.Width.Set(50f, 0f);
+            abicon.Height.Set(50f, 0f);
+            abicon.BackgroundColor = new Color(0, 0, 0, 0);
+            abicon.BorderColor = new Color(0, 0, 0, 0);
+            base.Append(abicon);
+
+            //Texture2D frame = ModLoader.GetTexture("ItemLevelTest/UI/Frame");
+            UIImage Frame = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Frame"));
+            Frame.Left.Set(0, 0f);
+            Frame.Top.Set(0, 0f);
+            Frame.Width.Set(50, 0f);
+            Frame.Height.Set(50, 0f);
+            abicon.Append(Frame);
+
+            Icon1.Left.Set(6, 0f);
+            Icon1.Top.Set(6, 0f);
+            Icon1.Width.Set(38, 0f);
+            Icon1.Height.Set(38, 0f);
+            abicon.Append(Icon1);
+
+            shade.Left.Set(0, 0);
+            shade.Top.Set(0, 0);
+            shade.Width.Set(38, 0);
+            shade.Height.Set(38, 0);
+            Icon1.Append(shade);
+
+
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            if (Testbow.charging)
+            {
+                //shade.Height.Set(0, (float)(Koranithus.cd / maxcd) * 100);
+                shade.Height.Set(38-((38 * Testbow.charge)),0);
+                Recalculate();
+            }
+            else
+            {
+                shade.Height.Set(38, 0);
+                Recalculate();
+            }
+
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            Recalculate();
+        }
+
+    }
+    
+
+
+
 }

@@ -11,8 +11,10 @@ namespace ItemLevelTest
 	{
         public CDUI cdui;
         public Upgradeui upui;
+        public CHUI chui;
         private UserInterface customResources;
         private UserInterface customResourcesupgrade;
+        private UserInterface customResourcescharge;
 
         public ItemLevelTest()
 		{
@@ -36,6 +38,7 @@ namespace ItemLevelTest
 
                     return true;
                 }, InterfaceScaleType.UI));
+
                 layers.Insert(MouseTextIndex + 1, new LegacyGameInterfaceLayer("[PH]MODNAME: Upgrade",
                 delegate
                 {
@@ -45,6 +48,17 @@ namespace ItemLevelTest
                         upui.Draw(Main.spriteBatch);
                     }
 
+                    return true;
+                }, InterfaceScaleType.UI));
+
+                layers.Insert(MouseTextIndex + 2, new LegacyGameInterfaceLayer("[PH]MODNAME: Charge",
+                delegate
+                {
+                    if (CHUI.visible)
+                    {
+                        customResourcescharge.Update(Main._drawInterfaceGameTime);
+                        chui.Draw(Main.spriteBatch);
+                    }
                     return true;
                 }, InterfaceScaleType.UI));
             }
@@ -71,12 +85,16 @@ namespace ItemLevelTest
 
                 customResources = new UserInterface();
                 customResourcesupgrade = new UserInterface();
+                customResourcescharge = new UserInterface();
                 cdui = new CDUI();
                 upui = new Upgradeui();
+                chui = new CHUI();
                 CDUI.visible = true;
+                CHUI.visible = true;
                 Upgradeui.visible = false;
                 customResources.SetState(cdui);
                 customResourcesupgrade.SetState(upui);
+                customResourcescharge.SetState(chui);
             }
         }
 
@@ -99,8 +117,10 @@ namespace ItemLevelTest
 
                 customResources = null;
                 customResourcesupgrade = null;
+                customResourcescharge = null;
                 cdui = null;
                 upui = null;
+                chui = null;
 
             }         
         }

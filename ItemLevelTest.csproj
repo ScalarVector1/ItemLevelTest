@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Buffs\Slagmelt.cs" />
+    <Compile Include="Dusts\Bowdust.cs" />
     <Compile Include="Dusts\Scarftest.cs" />
     <Compile Include="Dusts\Slagdust2.cs" />
     <Compile Include="Dusts\Sworddust.cs" />
