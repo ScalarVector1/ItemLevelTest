@@ -21,9 +21,9 @@ namespace ItemLevelTest.Items
         public int level = 0; //the item's current level (this is saved)
         int dmgScale = 5; //changes the damage gain per level
         int spdScale = 1; //changes the usetime reduction per level
-        float velScale = 0.6f;//changes the shotspeed icnrease per level
-        int critScale = 1; //changes the critical strike chance gain per level
-        float kbScale = 0.5f; //changes the knockback gained per level
+        float velScale = 0.4f;//changes the shotspeed icnrease per level
+        int critScale = 3; //changes the critical strike chance gain per level
+        float kbScale = 0.2f; //changes the knockback gained per level
         const float expScale = 1.2f; //Changes the multiplier for the amount of exp required for the next level after the previous
 
         //ability variables
@@ -59,13 +59,13 @@ namespace ItemLevelTest.Items
             //item.shoot = mod.ProjectileType("Suicideprojectile");
             item.width = 16;
             item.height = 64;
-            item.useTime = 30;
+            item.useTime = 37;
             item.useAnimation = 25;
             item.useStyle = 5;
             item.knockBack = 1f;
             item.value = 10000;
             item.rare = -12;
-            item.crit = 7;
+            item.crit = 4;
             item.UseSound = SoundID.Item5;
             item.useTurn = true;
             item.autoReuse = true;
@@ -177,21 +177,21 @@ namespace ItemLevelTest.Items
 
                         if (charge < 1)
                         {
-                            Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow2"), (int)(((10 + level * dmgScale) * 10) * charge), 0, Main.myPlayer);
+                            Projectile.NewProjectile(player.Center, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow2"), (int)(((10 + level * dmgScale) * 5) * charge), 0, Main.myPlayer);
                             Main.PlaySound(SoundID.Item68, player.Center);
                         }
                         if (charge >= 1)
                         {
                             if(ab2 == 0)
                             {
-                                Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow2"), (((10 + level * dmgScale) * 10)), 0, Main.myPlayer);
+                                Projectile.NewProjectile(player.Center, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow2"), (((10 + level * dmgScale) * 5)), 0, Main.myPlayer);
                                 Main.PlaySound(SoundID.Item72, player.Center);
                             }
                             if(ab2 == 1)
                             {
-                                Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Slagbuster"), (((10 + level * dmgScale) * 10)), 0, Main.myPlayer); //replace this with a real ability lol
+                                Projectile.NewProjectile(player.Center, new Vector2(xvel, yvel), mod.ProjectileType("Phantomarrow"), (((10 + level * dmgScale) * 7)), 0, Main.myPlayer);
+                                Main.PlaySound(SoundID.Item72, player.Center);
                             }
-
                         }
 
                         charge = 0;
@@ -263,43 +263,12 @@ namespace ItemLevelTest.Items
         }
         public override bool CanUseItem(Player player)
         {
-            //right click
-            
-
-            
-
-
             //left click
             bool loaded = false;
             bool consumed = false;
-            for (int z = 54; z <= 57; z++)
+            if (!charging)
             {
-                if (player.inventory[z].ammo == AmmoID.Arrow && !consumed)
-                {
-                    if (player.inventory[z].stack > 0)
-                    {
-                        loaded = true;
-                        player.inventory[z].stack--;
-                        consumed = true;
-                    }
-                    else
-                    {
-                        loaded = false;
-                    }
-                }
-                else if (loaded == true)
-                {
-
-                }
-                else
-                {
-                    loaded = false;
-                }
-
-            }
-            if (!consumed)
-            {
-                for (int z = 0; z <= 54; z++)
+                for (int z = 54; z <= 57; z++)
                 {
                     if (player.inventory[z].ammo == AmmoID.Arrow && !consumed)
                     {
@@ -313,7 +282,6 @@ namespace ItemLevelTest.Items
                         {
                             loaded = false;
                         }
-
                     }
                     else if (loaded == true)
                     {
@@ -323,24 +291,58 @@ namespace ItemLevelTest.Items
                     {
                         loaded = false;
                     }
+                }
 
+                if (!consumed)
+                {
+                    for (int z = 0; z <= 54; z++)
+                    {
+                        if (player.inventory[z].ammo == AmmoID.Arrow && !consumed)
+                        {
+                            if (player.inventory[z].stack > 0)
+                            {
+                                loaded = true;
+                                player.inventory[z].stack--;
+                                consumed = true;
+                            }
+                            else
+                            {
+                                loaded = false;
+                            }
+
+                        }
+                        else if (loaded == true)
+                        {
+
+                        }
+                        else
+                        {
+                            loaded = false;
+                        }
+
+                    }
                 }
             }
+
+
+
+            
             if (loaded)
             {
                 float x = (Main.screenPosition.X + Main.mouseX) - player.position.X;
                 float y = (Main.screenPosition.Y + Main.mouseY) - player.position.Y;
 
-                float R = (15 + level * velScale); //the number here is the base velocity!!
+                float R = (12 + level * velScale); //the number here is the base velocity!!
 
                 float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
                 float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
 
-                int index = Projectile.NewProjectile(player.position, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow"), (10 + level * dmgScale), 0, Main.myPlayer);
+                int index = Projectile.NewProjectile(player.Center, new Vector2(xvel, yvel), mod.ProjectileType("Testarrow"), (10 + level * dmgScale), 0, Main.myPlayer);
                 Testarrow proj = Main.projectile[index].modProjectile as Testarrow;
                 proj.instance = this;
                 return true;
             }
+
             else
             {
                 return false;
@@ -412,7 +414,7 @@ namespace ItemLevelTest.Items
         }
         public override void GetWeaponCrit(Player player, ref int crit)
         {
-            crit = item.crit = 0 + level * critScale;
+            crit = item.crit = 4 + level * critScale;
         }
         public override void GetWeaponKnockback(Player player, ref float knockback)
         {
@@ -436,7 +438,7 @@ namespace ItemLevelTest.Items
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip4")
                 {
-                    line.text = "+" + dmgScale + " Melee damage (" + dmgScale * level + ")";
+                    line.text = "+" + dmgScale + " Ranged damage (" + dmgScale * level + ")";
                     line.overrideColor = new Color(255, 218, 75);
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip5")
@@ -461,7 +463,7 @@ namespace ItemLevelTest.Items
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip9")
                 {
-                    line.text = "+" + 10 * dmgScale + " Max charge damage (" + dmgScale * 10 * level + ")";
+                    line.text = "+" + 5 * dmgScale + " Max charge damage (" + dmgScale * 5 * level + ")";
                     line.overrideColor = new Color(255, 218, 75);
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip13") //These lines show exp and level
@@ -527,18 +529,18 @@ namespace ItemLevelTest.Items
                     }
                     else if (ab2 == 1)
                     {
-                        line.text = "Active: Slag Buster (" + (10 + level * dmgScale) * 3 + ")";
-                        line.overrideColor = new Color(255, 100, 45);
+                        line.text = "Charge: Phantom Bolt (" + (10 + level * dmgScale) * 7 + ")";
+                        line.overrideColor = new Color(80, 200, 175);
                     }
                     else if (ab2 == 2)
                     {
-                        line.text = "Active: Slagburst (" + ((10 + level * dmgScale) / 3) * 6 + "/s)";
-                        line.overrideColor = new Color(255, 100, 45);
+                        line.text = "Charge: [PH]carpetbomb (" + (10 + level * dmgScale) / 5 + " X 10)";
+                        line.overrideColor = new Color(80, 200, 175);
                     }
                     else if (ab2 == 3)
                     {
-                        line.text = "Active: Slag Ward (" + ((10 + level * dmgScale) * 5) + ")";
-                        line.overrideColor = new Color(255, 100, 45);
+                        line.text = "Active: Slag Ward (" + ((10 + level * dmgScale) * 5) + " Max)";
+                        line.overrideColor = new Color(80, 200, 175);
                     }
                 }
 
@@ -576,9 +578,14 @@ namespace ItemLevelTest.Items
                 }
                 if(line.mod == "Terraria" && line.Name == "Tooltip0")
                 {
-                    line.text = (100 + (dmgScale * level * 10)) + " max chage damage";
+                    line.text = (50 + (dmgScale * level * 5)) + " max chage damage";
                 }
             }
+        }
+
+        public override void HoldItem(Player player)
+        {
+            CHUI.ability = ab2;//sets the ability variable in the cooldown UI to display the correct icon
         }
 
 

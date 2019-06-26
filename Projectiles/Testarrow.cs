@@ -82,4 +82,47 @@ namespace ItemLevelTest.Projectiles
         }
     }
 
+
+    class Phantomarrow : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Testarrow");
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 20;
+            projectile.width = 26;
+            projectile.height = 14;
+            projectile.friendly = true;
+            projectile.penetrate = 10;
+            projectile.tileCollide = false;
+            projectile.scale = 1.5f;
+            projectile.timeLeft = 300;
+
+        }
+
+        public override void AI()
+        {
+            projectile.rotation = projectile.velocity.ToRotation();
+            for (int dustcounter = 0; dustcounter <= 6; dustcounter++)
+            {
+                Dust.NewDust(projectile.position, 24, 24, mod.DustType("Bowdust"), 0, 0, 0, new Color(255, 255, 255));
+            }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+
+                target.AddBuff(mod.BuffType("Phantomburn"), 300);
+                for (int dustcounter = 0; dustcounter <= 50; dustcounter++)
+                {
+                    Dust.NewDust(target.position, target.width, target.height, mod.DustType("Bowdust"), 0, 0, 0, new Color(255, 255, 255));
+                }
+            
+        }
+    }
+
+
+
 }

@@ -9,6 +9,24 @@ using Terraria.ModLoader;
 
 namespace ItemLevelTest.Buffs
 {
+    public class Phantomburn : ModBuff
+    {
+        public override void SetDefaults()
+        {
+            DisplayName.SetDefault("");
+            Description.SetDefault("");
+            Main.debuff[Type] = true;
+            Main.buffNoSave[Type] = true;
+        }
+
+
+
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            npc.GetGlobalNPC<Buffhandler>(mod).phantom = true;
+        }
+    }
+
     public class Slagmelt : ModBuff
     {
         public override void SetDefaults()

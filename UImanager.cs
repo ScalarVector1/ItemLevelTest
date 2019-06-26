@@ -8,7 +8,7 @@ public class UImanager : ModPlayer
     {
         //this section handles the cooldown UI
         Item holding = player.HeldItem;
-        if (player.HeldItem.type == mod.ItemType("Koranithus"))//when holding the sword
+        if (player.HeldItem.type == mod.ItemType("Koranithus") && !Main.playerInventory)//when holding the sword
         {
             if (player.HeldItem != holding)//failsafe if holding nothing
             {
@@ -21,7 +21,7 @@ public class UImanager : ModPlayer
             CDUI.visible = false;
         }
         //bow UI
-        if (player.HeldItem.type == mod.ItemType("Testbow"))//when holding the bow
+        if (player.HeldItem.type == mod.ItemType("Testbow") && !Main.playerInventory)//when holding the bow
         {
             if (player.HeldItem != holding)//failsafe if holding nothing
             {

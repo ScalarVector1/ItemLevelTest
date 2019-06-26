@@ -4,6 +4,8 @@ using Terraria;
 using System.Linq;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+
 
 namespace ItemLevelTest.Items
 {
@@ -12,10 +14,22 @@ namespace ItemLevelTest.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Koranthi's Spirit");
-            Tooltip.SetDefault("A Fragment of the Forge's Master Herself");
+            Tooltip.SetDefault("A Fragment of the Forge's Master Herself" + "\n");
 
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 7));
             ItemID.Sets.ItemNoGravity[item.type] = true;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+
+            foreach (TooltipLine line in tooltips)
+            {
+                if (line.mod == "Terraria" && line.Name == "Tooltip1") //These lines show the stat growth and current added stat
+                {
+                    line.text = "Foes slain while holding this item will drop flaming soul shards";
+                }
+            }
         }
 
         public override void SetDefaults()
@@ -59,6 +73,7 @@ namespace ItemLevelTest.Items
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "Swordspirit1");
+            recipe.AddIngredient(null, "Swordbit1", 500);
             recipe.AddTile(null, "Swordaltar1t");
             recipe.SetResult(null, "Swordsoul1");
             recipe.AddRecipe();
@@ -71,6 +86,40 @@ namespace ItemLevelTest.Items
             recipe2.SetResult(ItemID.ClothierVoodooDoll);
             recipe2.AddRecipe();
         }
+    }
+
+    public class Swordbit1 : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Flaming soul shard");
+            Tooltip.SetDefault("A flickering ember of a dragon's soul");
+            ItemID.Sets.ItemNoGravity[item.type] = true;
+        }
+
+        public override void SetDefaults()
+        {
+            item.alpha = 0;
+            item.width = 6;
+            item.height = 6;
+            item.rare = 3;
+            item.maxStack = 500;
+
+        }
+        public override void PostUpdate()
+        {
+            Lighting.AddLight(item.Center, .2f, .07f, .06f);
+            if (Main.rand.Next(2) == 0)
+            {
+                Dust.NewDust(new Vector2(item.Center.X - (item.width + 8) / 2, item.Center.Y - item.width / 2), item.width, item.width, mod.DustType("Sworddust"));
+            }
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+
     }
 
     public class Swordsoul1 : ModItem
@@ -189,43 +238,10 @@ namespace ItemLevelTest.Items
             return true;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "Swordore1");
-            //recipe.AddTile(null, "Swordforge1t");
-            recipe.SetResult(null, "Swordbar1");
-            recipe.AddRecipe();
-        }
+
     }
 
-    public class Swordbar1 : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-
-            DisplayName.SetDefault("Eternal Bar");
-            Tooltip.SetDefault("Purifying metal");
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 7));
-
-        }
-        public override void SetDefaults()
-        {
-            item.height = 24;
-            item.width = 30;
-            item.rare = -11;
-        }
-
-        public override void PostUpdate()
-        {
-            
-            if (Main.rand.Next(2) == 0)
-            {
-                
-                Dust.NewDust(new Vector2(item.Center.X - (item.width) / 2, item.Center.Y - item.width / 2), item.width, item.width, mod.DustType("Swordoredust"));
-            }
-        }
-    }
+    
 
     public class Swordsteel1 : ModItem
     {
@@ -246,9 +262,9 @@ namespace ItemLevelTest.Items
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "Swordbar1");
+            recipe.AddIngredient(null, "Swordore1");
             recipe.AddIngredient(null, "Vingot");
-            recipe.AddRecipeGroup("IronBar", 50);
+            recipe.AddIngredient(null, "Metalgift");
             //recipe.AddTile(null, "Swordforge1t");
             recipe.SetResult(this);
             recipe.AddRecipe();
@@ -306,6 +322,7 @@ namespace ItemLevelTest.Items
         public bool orefailed = false;
         public static bool spiritdrop = false;
         public static bool spiritfailed = false;
+        public static bool fragdrop = false;
         public override void PreUpdate()
         {
 
@@ -337,6 +354,17 @@ namespace ItemLevelTest.Items
             {
                 spiritfailed = false;
             }
+
+            fragdrop = false;
+
+            for (int z = 0; z <= 50; z++)
+            {
+                if (player.inventory[z].type == mod.ItemType("Swordspirit1"))
+                {
+                    fragdrop = true;
+                }
+            }
+            
         }
     }
     class Drop : GlobalNPC
@@ -360,6 +388,19 @@ namespace ItemLevelTest.Items
             if (npc.type == NPCID.SkeletronHead && Dropworld.spiritdrop)
             {
                 Item.NewItem(npc.getRect(), mod.ItemType("Swordspirit1"));
+            }
+
+            if (Dropworld.fragdrop)
+            {
+                Item.NewItem(npc.getRect(), mod.ItemType("Swordbit1"));
+                if(Main.rand.Next(2) == 0)
+                {
+                    Item.NewItem(npc.getRect(), mod.ItemType("Swordbit1"));
+                }
+                if (Main.rand.Next(4) == 0)
+                {
+                    Item.NewItem(npc.getRect(), mod.ItemType("Swordbit1"));
+                }
             }
         }
     }

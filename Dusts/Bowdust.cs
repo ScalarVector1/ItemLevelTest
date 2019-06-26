@@ -203,4 +203,17 @@ namespace ItemLevelTest.Dusts
         }
 
     }
+
+    public class Bowdust5 : Bowdust
+    {
+        public override void OnSpawn(Dust dust)
+        {
+            dust.noGravity = true;
+            dust.noLight = true;
+            dust.scale *= 1.6f;
+            dust.color.G = 255;
+            dust.color.B = 190;
+            dust.color.R = 190;
+        }
+    }
 }

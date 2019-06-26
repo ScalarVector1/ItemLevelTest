@@ -54,6 +54,7 @@
     <Compile Include="Tiles\Swordtiles.cs" />
     <Compile Include="Items\Swordmats.cs" />
     <Compile Include="NPC\Debuffhandler.cs" />
+    <Compile Include="UImanager.cs" />
     <Compile Include="UI\Cooldown.cs" />
   </ItemGroup>
   <ItemGroup>
