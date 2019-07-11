@@ -6,6 +6,13 @@ public class UImanager : ModPlayer
 {
     public override void PostUpdate()
     {
+        //this handles closing the upgrade UI with escape
+        if (Upgradeui.visible && player.controlInv)
+        {
+            Upgradeui.visible = false;
+        }
+
+
         //this section handles the cooldown UI
         Item holding = player.HeldItem;
         if (player.HeldItem.type == mod.ItemType("Koranithus") && !Main.playerInventory)//when holding the sword

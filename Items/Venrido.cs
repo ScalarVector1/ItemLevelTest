@@ -73,6 +73,38 @@ namespace ItemLevelTest.Items
 
     }
 
+    public class Vorb : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Venerido Orb");
+            Tooltip.SetDefault("Used to reset abilities");
+        }
+
+
+
+        public override void SetDefaults()
+        {
+            item.alpha = 0;
+            item.width = 24;
+            item.height = 24;
+            item.rare = 1;
+
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddTile(TileID.Furnaces);
+            recipe.AddIngredient(null, "Vore", 200);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+
+
+
+    }
+
 
 
 

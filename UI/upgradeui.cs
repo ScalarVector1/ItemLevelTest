@@ -10,6 +10,15 @@ using System.Linq;
 using ItemLevelTest.Items;
 namespace ItemLevelTest.UI
 {
+    class Typefinder : ModWorld
+    {
+        static public int vorbtype = 0;
+        public override void PostUpdate()
+        {
+            vorbtype = mod.ItemType("Vorb");
+        }
+        
+    }
 class Upgradeui : UIState
 {
     public UIPanel backdrop;
@@ -30,6 +39,7 @@ class Upgradeui : UIState
     public static Texture2D lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
     public static Texture2D vfxtoggleon = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleon");
         public static Texture2D vfxtoggleoff = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
+        public static Texture2D vorb = ModLoader.GetTexture("ItemLevelTest/UI/Vorb");
 
         public UIImageButton burningstrike = new UIImageButton(burningstrikeimage);
     public UIImageButton firebolts = new UIImageButton(fireboltsimage);
@@ -41,6 +51,7 @@ class Upgradeui : UIState
     public UIImageButton cinderaura = new UIImageButton(cinderauraimage);
 
     public UIImageButton vfxtoggle = new UIImageButton(vfxtoggleon);
+        public UIImageButton reset = new UIImageButton(vorb);
 
 
     public UIText line1 = new UIText("null");
@@ -51,10 +62,11 @@ class Upgradeui : UIState
     public UIText line6 = new UIText("null");
     public UIText line7 = new UIText("null");
         public UIText settingstext = new UIText("Fire Trail");
+        public UIText resettext = new UIText("x1   Reset Abilities");
 
-    //frames
+        //frames
 
-    public UIImage slagbusterframe = new UIImage(frame);
+        public UIImage slagbusterframe = new UIImage(frame);
     public UIImage slagburstframe = new UIImage(frame);
     public UIImage slagwardframe = new UIImage(frame);
     public UIImage burningstrikeframe = new UIImage(frame);
@@ -113,6 +125,13 @@ class Upgradeui : UIState
             settingswindow.BackgroundColor = new Color(100, 50, 20, 140);
             settingswindow.BorderColor = new Color(50, 30, 10, 230);
             base.Append(settingswindow);
+
+            reset.Left.Set(10, 0);
+            reset.Top.Set(408, 0);
+            reset.Width.Set(24, 0);
+            reset.Height.Set(24, 0);
+            reset.OnClick += new MouseEvent(Reset);
+            backdrop.Append(reset);
 
 
             UIImageButton selector = new UIImageButton(check);
@@ -258,8 +277,35 @@ class Upgradeui : UIState
             settingstext.Top.Set(10, 0);
             settingswindow.Append(settingstext);
 
+            resettext.Left.Set(38,0);
+            resettext.Top.Set(410, 0);
+            backdrop.Append(resettext);
+
 
         }
+        bool eatenorb = false;
+    private void Reset(UIMouseEvent evt, UIElement ListeningElement)
+        {
+            Player player = Main.LocalPlayer;
+            for (int z = 0; z <= 50; z++)
+            {
+ 
+                if (player.inventory[z].type == Typefinder.vorbtype && !eatenorb)
+                {
+                    player.inventory[z].stack--;
+                    ab1 = 0;
+                    ab2 = 0;
+                    ab3 = 0;
+                    instance.ab1 = 0;
+                    instance.ab2 = 0;
+                    instance.ab3 = 0;
+                    eatenorb = true;
+                }
+
+            }
+            eatenorb = false;
+        }
+
     private void VFXtoggle(UIMouseEvent evt, UIElement ListeningElement)
         {
             if (instance.VFXstate == false)
@@ -623,6 +669,7 @@ class Upgradeui : UIState
     }
 
 }
+
 
 
     
