@@ -38,9 +38,12 @@
     <Compile Include="Dusts\Scarftest.cs" />
     <Compile Include="Dusts\Slagdust2.cs" />
     <Compile Include="Dusts\Sworddust.cs" />
+    <Compile Include="Effecthandler.cs" />
     <Compile Include="ItemLevelTest.cs" />
+    <Compile Include="Items\Gifts.cs" />
     <Compile Include="Items\Koranithus.cs" />
     <Compile Include="Items\Scarf.cs" />
+    <Compile Include="Items\VFXaccessories.cs" />
     <Compile Include="Projectiles\Testarrow.cs" />
     <Compile Include="Items\Testbow.cs" />
     <Compile Include="Items\Venrido.cs" />
@@ -56,6 +59,7 @@
     <Compile Include="NPC\Debuffhandler.cs" />
     <Compile Include="UImanager.cs" />
     <Compile Include="UI\Cooldown.cs" />
+    <Compile Include="UI\upgradeui.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">

@@ -25,7 +25,7 @@ namespace ItemLevelTest.Items
 
             foreach (TooltipLine line in tooltips)
             {
-                if (line.mod == "Terraria" && line.Name == "Tooltip1") //These lines show the stat growth and current added stat
+                if (line.mod == "Terraria" && line.Name == "Tooltip1") 
                 {
                     line.text = "Foes slain while holding this item will drop flaming soul shards";
                 }
@@ -129,7 +129,7 @@ namespace ItemLevelTest.Items
             DisplayName.SetDefault("Soul of the Forge");
             Tooltip.SetDefault("A Reclaimed Shard of Koranthi's Soul");
 
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 9));
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 6));
             ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 
@@ -138,8 +138,8 @@ namespace ItemLevelTest.Items
         public override void SetDefaults()
         {
             item.alpha = 0;
-            item.width = 46;
-            item.height = 32;
+            item.width = 36;
+            item.height = 38;
             item.rare = -11;
 
         }

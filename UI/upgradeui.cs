@@ -15,6 +15,7 @@ class Upgradeui : UIState
     public UIPanel backdrop;
     public static bool visible = false;
     public UIPanel statwindow;
+    public UIPanel settingswindow;
 
     public static Texture2D frame = ModLoader.GetTexture("ItemLEvelTest/UI/Frame2");
     public static Texture2D check = ModLoader.GetTexture("ItemLEvelTest/UI/check");
@@ -27,8 +28,10 @@ class Upgradeui : UIState
     public static Texture2D fireboltsimage = ModLoader.GetTexture("ItemLevelTest/UI/firebolts");
     public static Texture2D cinderauraimage = ModLoader.GetTexture("ItemLevelTest/UI/cinderaura");
     public static Texture2D lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
+    public static Texture2D vfxtoggleon = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleon");
+        public static Texture2D vfxtoggleoff = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
 
-    public UIImageButton burningstrike = new UIImageButton(burningstrikeimage);
+        public UIImageButton burningstrike = new UIImageButton(burningstrikeimage);
     public UIImageButton firebolts = new UIImageButton(fireboltsimage);
 
     public UIImageButton slagbuster = new UIImageButton(slagbusterimage);
@@ -37,6 +40,9 @@ class Upgradeui : UIState
 
     public UIImageButton cinderaura = new UIImageButton(cinderauraimage);
 
+    public UIImageButton vfxtoggle = new UIImageButton(vfxtoggleon);
+
+
     public UIText line1 = new UIText("null");
     public UIText line2 = new UIText("null");
     public UIText line3 = new UIText("null");
@@ -44,6 +50,7 @@ class Upgradeui : UIState
     public UIText line5 = new UIText("null");
     public UIText line6 = new UIText("null");
     public UIText line7 = new UIText("null");
+        public UIText settingstext = new UIText("Fire Trail");
 
     //frames
 
@@ -77,7 +84,6 @@ class Upgradeui : UIState
 
     public override void OnInitialize()
     {
-
         backdrop = new UIPanel();
         backdrop.SetPadding(0);
         backdrop.Left.Set(750f, 0f);
@@ -91,20 +97,30 @@ class Upgradeui : UIState
         statwindow = new UIPanel();
         statwindow.SetPadding(0);
         statwindow.Left.Set(401, 0);
-        statwindow.Top.Set(0, 0f);
+        statwindow.Top.Set(0, 0);
         statwindow.Height.Set(220, 0);
         statwindow.Width.Set(200, 0);
         statwindow.BackgroundColor = new Color(100, 50, 20, 140);
         statwindow.BorderColor = new Color(50, 30, 10, 230);
         backdrop.Append(statwindow);
 
-        UIImageButton selector = new UIImageButton(check);
+            settingswindow = new UIPanel();
+            settingswindow.SetPadding(0);
+            settingswindow.Left.Set(401 + 750, 0);
+            settingswindow.Top.Set(221 + 250, 0);
+            settingswindow.Height.Set(36, 0);
+            settingswindow.Width.Set(125, 0);
+            settingswindow.BackgroundColor = new Color(100, 50, 20, 140);
+            settingswindow.BorderColor = new Color(50, 30, 10, 230);
+            base.Append(settingswindow);
+
+
+            UIImageButton selector = new UIImageButton(check);
         selector.Left.Set(10, 0);
         selector.Top.Set(10, 0);
         selector.Height.Set(46, 0);
         selector.Width.Set(46, 0);
         selector.OnClick += new MouseEvent(Select);
-        selector.OnClick += new MouseEvent(Exit);
         backdrop.Append(selector);
 
         UIImageButton exit = new UIImageButton(ex);
@@ -114,6 +130,14 @@ class Upgradeui : UIState
         exit.Width.Set(46, 0);
         exit.OnClick += new MouseEvent(Exit);
         backdrop.Append(exit);
+
+            
+            vfxtoggle.Left.Set(10, 0);
+            vfxtoggle.Top.Set(10, 0);
+            vfxtoggle.Height.Set(16, 0);
+            vfxtoggle.Width.Set(16, 0);
+            vfxtoggle.OnClick += new MouseEvent(VFXtoggle);
+            settingswindow.Append(vfxtoggle);
 
         burningstrike.Left.Set(150 - 19, 0);
         burningstrike.Top.Set(100, 0);
@@ -230,8 +254,23 @@ class Upgradeui : UIState
         line7.Top.Set(150, 0);
         statwindow.Append(line7);
 
+            settingstext.Left.Set(36, 0);
+            settingstext.Top.Set(10, 0);
+            settingswindow.Append(settingstext);
 
-    }
+
+        }
+    private void VFXtoggle(UIMouseEvent evt, UIElement ListeningElement)
+        {
+            if (instance.VFXstate == false)
+            {
+                instance.VFXstate = true;
+            }
+            else if (instance.VFXstate == true)
+            {
+                instance.VFXstate = false;
+            }
+        }
 
     private void Exit(UIMouseEvent evt, UIElement listeningElement)
     {
@@ -364,7 +403,17 @@ class Upgradeui : UIState
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        if (passiveselect != 0)
+            if (instance.VFXstate)
+            {
+                vfxtoggle.SetImage(vfxtoggleon);
+            }
+
+            if (!instance.VFXstate)
+            {
+                vfxtoggle.SetImage(vfxtoggleoff);
+            }
+
+            if (passiveselect != 0)
         {
             if (passiveselect == burningstrikeability) //passive text sets
             {
@@ -563,8 +612,7 @@ class Upgradeui : UIState
             cinderaura.SetImage(cinderauraimage);
         }
 
-        //------------------------------------------------------------------------
-
+            //------------------------------------------------------------------------
     }
 
     public override void Draw(SpriteBatch spriteBatch)

@@ -26,6 +26,7 @@ namespace ItemLevelTest.Items
         public int ab1 = 0; //passive
         public int ab2 = 0; //active
         public int ab3 = 0; //ultimate
+        public bool VFXstate = true; //VFX toggle
 
         public static int cd = 0; //cooldown
 
@@ -350,7 +351,7 @@ namespace ItemLevelTest.Items
         public override void RightClick(Player player)
         {
             Main.PlaySound(SoundID.Item79, player.Center); //sound FX
-            if (level >= 2 && !Upgradeui.visible) //only if the appropraite level and the UI isnt already opened
+            if (!Upgradeui.visible) //only if the UI isnt already opened
             {
                 Upgradeui.visible = true; //open the UI
                 Upgradeui.ab1 = ab1;
@@ -358,11 +359,6 @@ namespace ItemLevelTest.Items
                 Upgradeui.ab3 = ab3;
                 Upgradeui.level = level;
                 Upgradeui.instance = this;
-            }
-            if (level <= 1)//if underleveled
-            {
-                Main.NewText("Abilities unlock at level 2!");
-
             }
             item.stack++;//make sure the item dosent just dissappear 
         }
@@ -390,7 +386,8 @@ namespace ItemLevelTest.Items
                 {"level", level},
                 {"ab1", ab1}, 
                 {"ab2", ab2},
-                {"ab3", ab3}
+                {"ab3", ab3},
+                {"vfx", VFXstate}
             };
         }
 
@@ -402,8 +399,8 @@ namespace ItemLevelTest.Items
             ab1 = tag.GetInt("ab1");
             ab2 = tag.GetInt("ab2");
             ab3 = tag.GetInt("ab3");
+            VFXstate = tag.GetBool("vfx");
             Leveler();
-
         }
 
 
@@ -458,6 +455,9 @@ namespace ItemLevelTest.Items
                 Main.PlaySound(SoundID.Item37, player.Center);
                 Main.PlaySound(SoundID.Item45, player.Center);
             }
+
+            //this spawns the VFX accessory
+            Item.NewItem((int)player.position.X, (int)player.position.Y - 50, player.width, player.height, mod.ItemType("SwordAccessory"));
         }
 
 
