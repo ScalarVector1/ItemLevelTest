@@ -25,6 +25,8 @@ namespace ItemLevelTest.UI
         //static Texture2D iconimg = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
         UIImage Icon1 = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Blank"));
         Shade shade = new Shade();
+        Exp exp = new Exp();
+        public static Koranithus instance;
 
 
         public override void OnInitialize()
@@ -43,7 +45,7 @@ namespace ItemLevelTest.UI
             UIImage Frame = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Frame"));
             Frame.Left.Set(0, 0f);
             Frame.Top.Set(0, 0f);
-            Frame.Width.Set(50, 0f);
+            Frame.Width.Set(66, 0f);
             Frame.Height.Set(50, 0f);
             abicon.Append(Frame);
 
@@ -58,6 +60,12 @@ namespace ItemLevelTest.UI
             shade.Width.Set(38, 0);
             shade.Height.Set(38, 0);
             Icon1.Append(shade);
+
+            exp.Left.Set(58, 0);
+            exp.Top.Set(4,0);
+            exp.Width.Set(4, 0);
+            exp.Height.Set(42, 0);
+            Frame.Append(exp);
 
 
 
@@ -97,6 +105,9 @@ namespace ItemLevelTest.UI
                 Recalculate();
             }
 
+            exp.Height.Set(((instance.expRequired - instance.exp) * 42)/instance.expRequired, 0);
+            Recalculate();
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -113,6 +124,15 @@ namespace ItemLevelTest.UI
         {
             CalculatedStyle dimensions = GetDimensions();
             spriteBatch.Draw(ModLoader.GetTexture("ItemLevelTest/UI/Shade"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), shadecolor);
+        }
+    }
+
+    class Exp : UIElement
+    {
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            CalculatedStyle dimensions = GetDimensions();
+            spriteBatch.Draw(ModLoader.GetTexture("ItemLevelTest/UI/EXP"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), new Color(56,40,54));
         }
     }
 

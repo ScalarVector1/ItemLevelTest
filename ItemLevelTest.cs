@@ -82,6 +82,9 @@ namespace ItemLevelTest
                 Upgradeui.fireboltsimage = ModLoader.GetTexture("ItemLevelTest/UI/firebolts");
                 Upgradeui.cinderauraimage = ModLoader.GetTexture("ItemLevelTest/UI/cinderaura");
                 Upgradeui.lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
+                Upgradeui.vfxtoggleoff = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
+                Upgradeui.vfxtoggleon = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleon");
+                Upgradeui.vorb = ModLoader.GetTexture("ItemLevelTest/UI/Vorb");
 
                 customResources = new UserInterface();
                 customResourcesupgrade = new UserInterface();
@@ -114,6 +117,9 @@ namespace ItemLevelTest
                     Upgradeui.fireboltsimage = null;
                     Upgradeui.cinderauraimage = null;
                     Upgradeui.lockimage = null;
+                    Upgradeui.vfxtoggleoff = null;
+                    Upgradeui.vfxtoggleon = null;
+                    Upgradeui.vorb = null;
 
                 customResources = null;
                 customResourcesupgrade = null;
