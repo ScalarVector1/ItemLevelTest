@@ -416,50 +416,7 @@ namespace ItemLevelTest.Items
         }
 
 
-        public override void OnCraft(Recipe recipe)
-        {
-            //handles the text displayed in chat
-            Player player = Main.player[Main.myPlayer];
-            string text = player.name + " Has Crafted Koranithus!";
-            if (Main.netMode == 2) // Server
-            {
-                NetMessage.SendData(25, -1, -1, NetworkText.FromLiteral(text), 255, 100f, 45f, 255f, 0, 0, 0);
-            }
-            else if (Main.netMode == 0) // Client
-            {
-                Main.NewText(text, new Color(255, 100, 45));
-                Main.NewText("Your body goes numb...", new Color(100, 100, 100));
-            }
 
-            //handles dust spawned on craft
-            for (int dustcounter = 300; dustcounter >= 0; dustcounter--)
-            {
-                float yvel = 0;
-                float xvel = 0;
-                float hyp = 0;
-                hyp = Main.rand.Next(0, 100) * 0.1f;
-                xvel = Main.rand.Next(-400, 400) * .01f;
-                if (Main.rand.Next(2) == 0)
-                {
-                    yvel = (float)Math.Sqrt(hyp - xvel * xvel);
-                }
-                else
-                {
-                    yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
-                }
-                Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(8, 10) * 0.1f);
-                if (Main.rand.Next(2) == 0)
-                {
-                    Dust.NewDustPerfect(new Vector2(player.Center.X, player.Center.Y), mod.DustType("Slagdust"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(12, 14) * 0.1f);
-                }
-                //sound FX
-                Main.PlaySound(SoundID.Item37, player.Center);
-                Main.PlaySound(SoundID.Item45, player.Center);
-            }
-
-            //this spawns the VFX accessory
-            Item.NewItem((int)player.position.X, (int)player.position.Y - 50, player.width, player.height, mod.ItemType("SwordAccessory"));
-        }
 
 
         //This method handles the tooltips on the item

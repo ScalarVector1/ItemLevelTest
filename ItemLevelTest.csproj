@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Buffs\Slagmelt.cs" />
+    <Compile Include="Dusts\AltarDusts.cs" />
     <Compile Include="Dusts\Bowdust.cs" />
     <Compile Include="Dusts\Scarftest.cs" />
     <Compile Include="Dusts\Slagdust2.cs" />
@@ -45,6 +46,7 @@
     <Compile Include="Items\Koranithus.cs" />
     <Compile Include="Items\Scarf.cs" />
     <Compile Include="Items\VFXaccessories.cs" />
+    <Compile Include="Projectiles\Altarvisuals.cs" />
     <Compile Include="Projectiles\Testarrow.cs" />
     <Compile Include="Items\Testbow.cs" />
     <Compile Include="Items\Venrido.cs" />

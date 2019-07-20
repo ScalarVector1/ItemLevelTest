@@ -293,8 +293,15 @@ namespace ItemLevelTest.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Crystalline Obsidian");
-            Tooltip.SetDefault("[PH]Craft with cinderplank");
-        
+            Tooltip.SetDefault("A living flame is visible inside");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 6));
+        }
+
+        public override void SetDefaults()
+        {
+            item.height = 32;
+            item.width = 32;
+            item.rare = -11;
         }
     }
 
