@@ -27,13 +27,15 @@ namespace ItemLevelTest.Dusts
         Dust dustnext = null;
         private float K = 13.2f; //spring constant of the scarf              all of these values will be changed to properly simulate 
         private float M = 0.00187f; //mass or each particle
-        private float W = 0.1f; //wind force
+        private float W = 0f; //wind force
         private float T = 1/60f; //time
         private float g = 250f; //acceleration due to gravity
+        float timer = 0;
 
 
         public override bool Update(Dust dust)
         {
+
 
             for (int k = 0; k <= 6000; k++)//check the whole flipping dust array  !!!THIS IS PROBABLY CAUSING PERFORMANCE ISSUES, REPLACE IF POSSIBLE!!!
             {
@@ -65,11 +67,24 @@ namespace ItemLevelTest.Dusts
                 (g) //add accel. due to gravity instead of an applied force
                 ) * T * T);
 
+                dust.position.X -= (float)Math.Sin(((float)Math.PI * 2) * (timer / 1500f)) / 26;
+            dust.position.Y -= (float)Math.Sin(((float)Math.PI * 2) * (timer / 750f)) / 35;
+
             dust.rotation = Main.rand.NextFloat(0, (float)Math.PI / 2);//gives a frizzy effect
 
-            
-        
-            
+            dust.active = Effecthandler.spearSpawned;
+
+            timer += 1;
+            W = (float)Math.Abs((Math.Sin(((float)Math.PI * 2) * (timer / 1500f)) / 7f));
+
+            if (timer >= 1500)
+            {
+                timer = 0;
+            }
+
+            float light = 0.02f * dust.scale;
+            Lighting.AddLight(dust.position, 0.4f, 0.4f, 0.6f);
+
             return false;
         }
     }
@@ -107,8 +122,9 @@ namespace ItemLevelTest.Dusts
                 }
 
             }
-            
-                return false;
+            dust.active = Effecthandler.spearSpawned;
+
+            return false;
         }
     }
 

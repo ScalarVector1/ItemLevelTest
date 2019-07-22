@@ -40,6 +40,19 @@ public class UImanager : ModPlayer
         {
             CHUI.visible = false;
         }
+        //spear UI
+        if (player.HeldItem.type == mod.ItemType("Testspear") && !Main.playerInventory)//when holding the bow
+        {
+            if (player.HeldItem != holding)//failsafe if holding nothing
+            {
+                ENUI.visible = false;
+            }
+            ENUI.visible = true; //handles the visibility of the UI
+        }
+        else
+        {
+            ENUI.visible = false;
+        }
 
 
     }

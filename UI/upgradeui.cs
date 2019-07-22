@@ -38,17 +38,20 @@ class Upgradeui : UIState
     public static Texture2D cinderauraimage = ModLoader.GetTexture("ItemLevelTest/UI/cinderaura");
     public static Texture2D lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
     public static Texture2D vfxtoggleon = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleon");
+        public static Texture2D thornsimage = ModLoader.GetTexture("ItemLevelTest/UI/Spears");
+        public static Texture2D greatspearimage = ModLoader.GetTexture("ItemLevelTest/UI/Whirl");
+        public static Texture2D energyvampireimage = ModLoader.GetTexture("ItemLevelTest/UI/Energy");
         public static Texture2D vfxtoggleoff = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
         public static Texture2D vorb = ModLoader.GetTexture("ItemLevelTest/UI/Vorb");
 
-        public UIImageButton burningstrike = new UIImageButton(burningstrikeimage);
-    public UIImageButton firebolts = new UIImageButton(fireboltsimage);
+        public UIImageButton passive1 = new UIImageButton(burningstrikeimage);
+    public UIImageButton passive2 = new UIImageButton(fireboltsimage);
 
-    public UIImageButton slagbuster = new UIImageButton(slagbusterimage);
-    public UIImageButton slagburst = new UIImageButton(slagbusterimage);
-    public UIImageButton slagward = new UIImageButton(slagbusterimage);
+    public UIImageButton active1 = new UIImageButton(slagbusterimage);
+    public UIImageButton active2 = new UIImageButton(slagbusterimage);
+    public UIImageButton active3 = new UIImageButton(slagbusterimage);
 
-    public UIImageButton cinderaura = new UIImageButton(cinderauraimage);
+    public UIImageButton ultimate1 = new UIImageButton(cinderauraimage);
 
     public UIImageButton vfxtoggle = new UIImageButton(vfxtoggleon);
         public UIImageButton reset = new UIImageButton(vorb);
@@ -66,12 +69,12 @@ class Upgradeui : UIState
 
         //frames
 
-        public UIImage slagbusterframe = new UIImage(frame);
-    public UIImage slagburstframe = new UIImage(frame);
-    public UIImage slagwardframe = new UIImage(frame);
-    public UIImage burningstrikeframe = new UIImage(frame);
-    public UIImage fireboltsframe = new UIImage(frame);
-    public UIImage cinderauraframe = new UIImage(frame);
+        public UIImage active1frame = new UIImage(frame);
+    public UIImage active2frame = new UIImage(frame);
+    public UIImage active3frame = new UIImage(frame);
+    public UIImage passive1frame = new UIImage(frame);
+    public UIImage passive2frame = new UIImage(frame);
+    public UIImage ultimate1frame = new UIImage(frame);
 
 
     public static int passiveselect = 0; //highlighted item
@@ -83,16 +86,17 @@ class Upgradeui : UIState
     public static int ab3;
     public static int level;
 
-    public static Koranithus instance = null;
+    public static Koranithus swordinstance = null;
+    public static Testspear spearinstance = null;
 
-    const int burningstrikeability = 1; //constants to deobfuscate
-    const int fireboltsability = 2;
+        const int passive1ability = 1; //constants to deobfuscate
+    const int passive2ability = 2;
 
-    const int slagbusterability = 1;
-    const int slagburstability = 2;
-    const int slagwardability = 3;
+    const int active1ability = 1;
+    const int active2ability = 2;
+    const int active3ability = 3;
 
-    const int cinderauraability = 1;
+    const int ultimate1ability = 1;
 
     public override void OnInitialize()
     {
@@ -102,8 +106,6 @@ class Upgradeui : UIState
         backdrop.Top.Set(250f, 0f);
         backdrop.Width.Set(400f, 0f);
         backdrop.Height.Set(438f, 0f);
-        backdrop.BackgroundColor = new Color(110, 40, 20, 170);
-        backdrop.BorderColor = new Color(60, 20, 10, 230);
         base.Append(backdrop);
 
         statwindow = new UIPanel();
@@ -112,9 +114,7 @@ class Upgradeui : UIState
         statwindow.Top.Set(0, 0);
         statwindow.Height.Set(220, 0);
         statwindow.Width.Set(200, 0);
-        statwindow.BackgroundColor = new Color(100, 50, 20, 140);
-        statwindow.BorderColor = new Color(50, 30, 10, 230);
-        backdrop.Append(statwindow);
+            backdrop.Append(statwindow);
 
             settingswindow = new UIPanel();
             settingswindow.SetPadding(0);
@@ -122,8 +122,6 @@ class Upgradeui : UIState
             settingswindow.Top.Set(221 + 250, 0);
             settingswindow.Height.Set(36, 0);
             settingswindow.Width.Set(125, 0);
-            settingswindow.BackgroundColor = new Color(100, 50, 20, 140);
-            settingswindow.BorderColor = new Color(50, 30, 10, 230);
             base.Append(settingswindow);
 
             reset.Left.Set(10, 0);
@@ -158,89 +156,89 @@ class Upgradeui : UIState
             vfxtoggle.OnClick += new MouseEvent(VFXtoggle);
             settingswindow.Append(vfxtoggle);
 
-        burningstrike.Left.Set(150 - 19, 0);
-        burningstrike.Top.Set(100, 0);
-        burningstrike.Height.Set(38, 0);
-        burningstrike.Width.Set(38, 0);
-        burningstrike.OnClick += new MouseEvent(Strike);
-        backdrop.Append(burningstrike);
+        passive1.Left.Set(150 - 19, 0);
+        passive1.Top.Set(100, 0);
+        passive1.Height.Set(38, 0);
+        passive1.Width.Set(38, 0);
+        passive1.OnClick += new MouseEvent(Strike);
+        backdrop.Append(passive1);
 
-        firebolts.Left.Set(250 - 19, 0);
-        firebolts.Top.Set(100, 0);
-        firebolts.Height.Set(38, 0);
-        firebolts.Width.Set(38, 0);
-        firebolts.OnClick += new MouseEvent(Bolts);
-        backdrop.Append(firebolts);
+        passive2.Left.Set(250 - 19, 0);
+        passive2.Top.Set(100, 0);
+        passive2.Height.Set(38, 0);
+        passive2.Width.Set(38, 0);
+        passive2.OnClick += new MouseEvent(Bolts);
+        backdrop.Append(passive2);
 
         //UIImageButton slagbuster = new UIImageButton(slagbusterimage);
-        slagbuster.Left.Set(100 - 19, 0);
-        slagbuster.Top.Set(200, 0);
-        slagbuster.Height.Set(38, 0);
-        slagbuster.Width.Set(38, 0);
-        slagbuster.OnClick += new MouseEvent(Buster);
-        backdrop.Append(slagbuster);
+        active1.Left.Set(100 - 19, 0);
+        active1.Top.Set(200, 0);
+        active1.Height.Set(38, 0);
+        active1.Width.Set(38, 0);
+        active1.OnClick += new MouseEvent(Buster);
+        backdrop.Append(active1);
 
-        //UIImageButton slagburst = new UIImageButton(slagburstimage);
-        slagburst.Left.Set(200 - 19, 0);
-        slagburst.Top.Set(200, 0);
-        slagburst.Height.Set(38, 0);
-        slagburst.Width.Set(38, 0);
-        slagburst.OnClick += new MouseEvent(Burst);
-        backdrop.Append(slagburst);
+        //UIImageButton active2 = new UIImageButton(active2image);
+        active2.Left.Set(200 - 19, 0);
+        active2.Top.Set(200, 0);
+        active2.Height.Set(38, 0);
+        active2.Width.Set(38, 0);
+        active2.OnClick += new MouseEvent(Burst);
+        backdrop.Append(active2);
 
-        //UIImageButton slagward = new UIImageButton(slagwardimage);
-        slagward.Left.Set(300 - 19, 0);
-        slagward.Top.Set(200, 0);
-        slagward.Height.Set(38, 0);
-        slagward.Width.Set(38, 0);
-        slagward.OnClick += new MouseEvent(Ward);
-        backdrop.Append(slagward);
+        //UIImageButton active3 = new UIImageButton(active3image);
+        active3.Left.Set(300 - 19, 0);
+        active3.Top.Set(200, 0);
+        active3.Height.Set(38, 0);
+        active3.Width.Set(38, 0);
+        active3.OnClick += new MouseEvent(Ward);
+        backdrop.Append(active3);
 
-        cinderaura.Left.Set(200 - 19, 0);
-        cinderaura.Top.Set(300, 0);
-        cinderaura.Height.Set(38, 0);
-        cinderaura.Width.Set(38, 0);
-        cinderaura.OnClick += new MouseEvent(Aura);
-        backdrop.Append(cinderaura);
+        ultimate1.Left.Set(200 - 19, 0);
+        ultimate1.Top.Set(300, 0);
+        ultimate1.Height.Set(38, 0);
+        ultimate1.Width.Set(38, 0);
+        ultimate1.OnClick += new MouseEvent(Aura);
+        backdrop.Append(ultimate1);
 
         //------------------------------------------------------------------------
         //Frames
 
-        slagbusterframe.Left.Set(-4, 0);
-        slagbusterframe.Top.Set(-4, 0);
-        slagbusterframe.Height.Set(46, 0);
-        slagbusterframe.Width.Set(46, 0);
-        slagbuster.Append(slagbusterframe);
+        active1frame.Left.Set(-4, 0);
+        active1frame.Top.Set(-4, 0);
+        active1frame.Height.Set(46, 0);
+        active1frame.Width.Set(46, 0);
+        active1.Append(active1frame);
 
-        slagburstframe.Left.Set(-4, 0);
-        slagburstframe.Top.Set(-4, 0);
-        slagburstframe.Height.Set(46, 0);
-        slagburstframe.Width.Set(46, 0);
-        slagburst.Append(slagburstframe);
+        active2frame.Left.Set(-4, 0);
+        active2frame.Top.Set(-4, 0);
+        active2frame.Height.Set(46, 0);
+        active2frame.Width.Set(46, 0);
+        active2.Append(active2frame);
 
-        slagwardframe.Left.Set(-4, 0);
-        slagwardframe.Top.Set(-4, 0);
-        slagwardframe.Height.Set(46, 0);
-        slagwardframe.Width.Set(46, 0);
-        slagward.Append(slagwardframe);
+        active3frame.Left.Set(-4, 0);
+        active3frame.Top.Set(-4, 0);
+        active3frame.Height.Set(46, 0);
+        active3frame.Width.Set(46, 0);
+        active3.Append(active3frame);
 
-        burningstrikeframe.Left.Set(-4, 0);
-        burningstrikeframe.Top.Set(-4, 0);
-        burningstrikeframe.Height.Set(46, 0);
-        burningstrikeframe.Width.Set(46, 0);
-        burningstrike.Append(burningstrikeframe);
+        passive1frame.Left.Set(-4, 0);
+        passive1frame.Top.Set(-4, 0);
+        passive1frame.Height.Set(46, 0);
+        passive1frame.Width.Set(46, 0);
+        passive1.Append(passive1frame);
 
-        fireboltsframe.Left.Set(-4, 0);
-        fireboltsframe.Top.Set(-4, 0);
-        fireboltsframe.Height.Set(46, 0);
-        fireboltsframe.Width.Set(46, 0);
-        firebolts.Append(fireboltsframe);
+        passive2frame.Left.Set(-4, 0);
+        passive2frame.Top.Set(-4, 0);
+        passive2frame.Height.Set(46, 0);
+        passive2frame.Width.Set(46, 0);
+        passive2.Append(passive2frame);
 
-        cinderauraframe.Left.Set(-4, 0);
-        cinderauraframe.Top.Set(-4, 0);
-        cinderauraframe.Height.Set(46, 0);
-        cinderauraframe.Width.Set(46, 0);
-        cinderaura.Append(cinderauraframe);
+        ultimate1frame.Left.Set(-4, 0);
+        ultimate1frame.Top.Set(-4, 0);
+        ultimate1frame.Height.Set(46, 0);
+        ultimate1frame.Width.Set(46, 0);
+        ultimate1.Append(ultimate1frame);
 
         //------------------------------------------------------------------------
         //Text
@@ -296,9 +294,18 @@ class Upgradeui : UIState
                     ab1 = 0;
                     ab2 = 0;
                     ab3 = 0;
-                    instance.ab1 = 0;
-                    instance.ab2 = 0;
-                    instance.ab3 = 0;
+                    if (swordinstance != null)
+                    {
+                        swordinstance.ab1 = 0;
+                        swordinstance.ab2 = 0;
+                        swordinstance.ab3 = 0;
+                    }
+                    if (spearinstance != null)
+                    {
+                        spearinstance.ab1 = 0;
+                        spearinstance.ab2 = 0;
+                        spearinstance.ab3 = 0;
+                    }
                     eatenorb = true;
                 }
 
@@ -308,13 +315,28 @@ class Upgradeui : UIState
 
     private void VFXtoggle(UIMouseEvent evt, UIElement ListeningElement)
         {
-            if (instance.VFXstate == false)
+            if (swordinstance != null)
             {
-                instance.VFXstate = true;
+                if (swordinstance.VFXstate == false)
+                {
+                    swordinstance.VFXstate = true;
+                }
+                else if (swordinstance.VFXstate == true)
+                {
+                    swordinstance.VFXstate = false;
+                }
             }
-            else if (instance.VFXstate == true)
+
+            if (spearinstance != null)
             {
-                instance.VFXstate = false;
+                if (spearinstance.VFXstate == false)
+                {
+                    spearinstance.VFXstate = true;
+                }
+                else if (spearinstance.VFXstate == true)
+                {
+                    spearinstance.VFXstate = false;
+                }
             }
         }
 
@@ -344,322 +366,682 @@ class Upgradeui : UIState
             ab3 = ultimateselect;
         }
 
-        instance.ab1 = ab1;
-        instance.ab2 = ab2;
-        instance.ab3 = ab3;
+            if (swordinstance != null)
+            {
+                swordinstance.ab1 = ab1;
+                swordinstance.ab2 = ab2;
+                swordinstance.ab3 = ab3;
+            }
 
-        passiveselect = 0;
+            if (spearinstance != null)
+            {
+                spearinstance.ab1 = ab1;
+                spearinstance.ab2 = ab2;
+                spearinstance.ab3 = ab3;
+            }
+
+            passiveselect = 0;
         activeselect = 0;
         ultimateselect = 0;
     }
 
     private void Strike(UIMouseEvent evt, UIElement listeningElement)
     {
-        if ((ab1 == 0 || ab1 == 1) && instance.level >= 2)
-        {
-            Main.PlaySound(SoundID.MenuTick);
-            passiveselect = burningstrikeability;
-            activeselect = 0;
-            ultimateselect = 0;
+            if(swordinstance != null)
+            {
+                    if (ab1 == 0 || ab1 == 1 && swordinstance.level >= 2)
+                    {
+                        Main.PlaySound(SoundID.MenuTick);
+                        passiveselect = passive1ability;
+                        activeselect = 0;
+                        ultimateselect = 0;
+                    }
+                    else
+                    {
+                        Main.PlaySound(SoundID.Unlock);
+                    }              
+            }
+
+            if (spearinstance != null)
+            {
+                if (ab1 == 0 || ab1 == 1 && spearinstance.level >= 2)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    passiveselect = passive1ability;
+                    activeselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
+
         }
-        else
-        {
-            Main.PlaySound(SoundID.Unlock);
-        }
-    }
 
     private void Bolts(UIMouseEvent evt, UIElement listeningElement)
     {
-        if ((ab1 == 0 || ab1 == 2) && instance.level >= 2)
-        {
-            Main.PlaySound(SoundID.MenuTick);
-            passiveselect = fireboltsability;
-            activeselect = 0;
-            ultimateselect = 0;
-        }
-        else
-        {
-            Main.PlaySound(SoundID.Unlock);
-        }
-    }
+            if (swordinstance != null)
+            {
+                if (ab1 == 0 || ab1 == 2 && swordinstance.level >= 2)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    passiveselect = passive2ability;
+                    activeselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
 
-
+            if (spearinstance != null)
+            {
+                if (ab1 == 0 || ab1 == 2 && spearinstance.level >= 2)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    passiveselect = passive2ability;
+                    activeselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
+        }
 
     private void Buster(UIMouseEvent evt, UIElement listeningElement)
     {
-        if ((ab2 == 0 || ab2 == 1) && instance.level >= 5)
-        {
-            Main.PlaySound(SoundID.MenuTick);
-            activeselect = slagbusterability;
-            passiveselect = 0;
-            ultimateselect = 0;
+            if (swordinstance != null)
+            {
+                if ((ab2 == 0 || ab2 == 1) && swordinstance.level >= 5)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = active1ability;
+                    passiveselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
+
+            if (spearinstance != null)
+            {
+                if ((ab2 == 0 || ab2 == 1) && spearinstance.level >= 5)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = active1ability;
+                    passiveselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
         }
-        else
-        {
-            Main.PlaySound(SoundID.Unlock);
-        }
-    }
 
     private void Burst(UIMouseEvent evt, UIElement listeningElement)
     {
-        if ((ab2 == 0 || ab2 == 2) && instance.level >= 5)
-        {
-            Main.PlaySound(SoundID.MenuTick);
-            activeselect = slagburstability;
-            passiveselect = 0;
-            ultimateselect = 0;
+            if (swordinstance != null)
+            {
+                if ((ab2 == 0 || ab2 == 2) && swordinstance.level >= 5)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = active2ability;
+                    passiveselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
+
+            if (spearinstance != null)
+            {
+                if ((ab2 == 0 || ab2 == 2) && spearinstance.level >= 5)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = active2ability;
+                    passiveselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
         }
-        else
-        {
-            Main.PlaySound(SoundID.Unlock);
-        }
-    }
 
     private void Ward(UIMouseEvent evt, UIElement listeningElement)
     {
-        if ((ab2 == 0 || ab2 == 3) && instance.level >= 5)
-        {
-            Main.PlaySound(SoundID.MenuTick);
-            activeselect = slagwardability;
-            passiveselect = 0;
-            ultimateselect = 0;
-        }
-        else
-        {
-            Main.PlaySound(SoundID.Unlock);
-        }
+            if (swordinstance != null)
+            {
+                if ((ab2 == 0 || ab2 == 3) && swordinstance.level >= 5)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = active3ability;
+                    passiveselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
 
-    }
+            if (spearinstance != null)
+            {
+                if ((ab2 == 0 || ab2 == 3) && spearinstance.level >= 5)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = active3ability;
+                    passiveselect = 0;
+                    ultimateselect = 0;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
+            }
+
+        }
 
     private void Aura(UIMouseEvent evt, UIElement listeningElement)
     {
-        if ((ab3 == 0 || ab3 == 1) && instance.level >= 8)
-        {
-            Main.PlaySound(SoundID.MenuTick);
-            activeselect = 0;
-            passiveselect = 0;
-            ultimateselect = cinderauraability;
-        }
-        else
-        {
-            Main.PlaySound(SoundID.Unlock);
-        }
-
-    }
-
-    protected override void DrawSelf(SpriteBatch spriteBatch)
-    {
-            if (instance.VFXstate)
+            if (swordinstance != null)
             {
-                vfxtoggle.SetImage(vfxtoggleon);
+
+                if ((ab3 == 0 || ab3 == 1) && swordinstance.level >= 8)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = 0;
+                    passiveselect = 0;
+                    ultimateselect = ultimate1ability;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
             }
 
-            if (!instance.VFXstate)
+            if (spearinstance != null)
             {
-                vfxtoggle.SetImage(vfxtoggleoff);
+
+                if ((ab3 == 0 || ab3 == 1) && spearinstance.level >= 8)
+                {
+                    Main.PlaySound(SoundID.MenuTick);
+                    activeselect = 0;
+                    passiveselect = 0;
+                    ultimateselect = ultimate1ability;
+                }
+                else
+                {
+                    Main.PlaySound(SoundID.Unlock);
+                }
             }
 
-            if (passiveselect != 0)
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (passiveselect == burningstrikeability) //passive text sets
+            if (swordinstance != null)
             {
-                line1.SetText("Burning Strike");
-                line2.SetText("Your melee strikes");
-                line3.SetText("inflict burning");
-                line4.SetText("for " + level * 1 + "-" + ((level * 1) + 1) + " seconds.");
-                line5.SetText("");
-                line6.SetText("");
-                line7.SetText("");
 
-                burningstrikeframe.SetImage(frame2);
-                fireboltsframe.SetImage(frame);
+                settingstext.SetText("Fire Trail");
+
+                backdrop.BackgroundColor = new Color(110, 40, 20, 170);
+                backdrop.BorderColor = new Color(60, 20, 10, 230);
+
+                statwindow.BackgroundColor = new Color(100, 50, 20, 140);
+                statwindow.BorderColor = new Color(50, 30, 10, 230);
+
+                settingswindow.BackgroundColor = new Color(100, 50, 20, 140);
+                settingswindow.BorderColor = new Color(50, 30, 10, 230);
+
+
+                if (swordinstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleon);
+                }
+
+                if (!swordinstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleoff);
+                }
+
+                if (passiveselect != 0)
+                {
+                    if (passiveselect == passive1ability) //passive text sets
+                    {
+                        line1.SetText("Burning Strike");
+                        line2.SetText("Your melee strikes");
+                        line3.SetText("inflict burning");
+                        line4.SetText("for " + level * 1 + "-" + ((level * 1) + 1) + " seconds.");
+                        line5.SetText("");
+                        line6.SetText("");
+                        line7.SetText("");
+
+                        passive1frame.SetImage(frame2);
+                        passive2frame.SetImage(frame);
+                    }
+                    else if (passiveselect == passive2ability)
+                    {
+                        line1.SetText("Firebolts");
+                        line2.SetText("Your melee strikes");
+                        line3.SetText("have a chance to");
+                        line4.SetText("summon burning bolts");
+                        line5.SetText("from the sky,");
+                        line6.SetText("dealing " + (10 + level * 5) + " damage.");
+                        line7.SetText("");
+
+
+                        passive1frame.SetImage(frame);
+                        passive2frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    passive1frame.SetImage(frame);
+                    passive2frame.SetImage(frame);
+                }
+
+                if (activeselect != 0)
+                {
+                    if (activeselect == active1ability) //active text sets
+                    {
+                        line1.SetText("Slag Buster");
+                        line2.SetText("Shoot a projectile,");
+                        line3.SetText("dealing " + (3 * (10 + level * 5)) + " damage");
+                        line4.SetText("and exploding on");
+                        line5.SetText("impact for 65 danage.");
+                        line6.SetText("");
+                        line7.SetText("3.5 second cooldown");
+
+                        active1frame.SetImage(frame2);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active2ability)
+                    {
+                        line1.SetText("Slagburst");
+                        line2.SetText("Creates a pillar of");
+                        line3.SetText("flame, dealing " + ((10 + level * 5) / 3) * 6);
+                        line4.SetText("damage per second");
+                        line5.SetText("at your cursor.");
+                        line6.SetText("");
+                        line7.SetText("30 second cooldown");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame2);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active3ability)
+                    {
+                        line1.SetText("Slag Ward");
+                        line2.SetText("Creates 3 shields");
+                        line3.SetText("around you, blocking");
+                        line4.SetText("projectiles and");
+                        line5.SetText("exploding on impact");
+                        line6.SetText("for " + ((10 + level * 5) * 5) + " damage.");
+                        line7.SetText("30 second cooldown");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    active1frame.SetImage(frame);
+                    active2frame.SetImage(frame);
+                    active3frame.SetImage(frame);
+                }
+
+                if (ultimateselect != 0)
+                {
+                    if (ultimateselect == ultimate1ability) //ultimate text sets
+                    {
+                        line1.SetText("Aura of Cinders");
+                        line2.SetText("Creates a burning");
+                        line3.SetText("aura around you, ");
+                        line4.SetText("dealing 10 damage");
+                        line5.SetText("per second.");
+                        line6.SetText("");
+                        line7.SetText("");
+
+                        ultimate1frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    ultimate1frame.SetImage(frame);
+                }
+
+
+                if (activeselect == 0 && passiveselect == 0 && ultimateselect == 0)
+                {
+                    line1.SetText("Koranithus Upgrades");
+                    line2.SetText("Click an ability to");
+                    line3.SetText("see details, click");
+                    line4.SetText("the check button");
+                    line5.SetText("to confirm your");
+                    line6.SetText("selection.");
+                    line7.SetText("");
+                }
+
+                //------------------------------------------------------------------------
+                //------------------------------------------------------------------------
+
+                if (ab1 == 0 && swordinstance.level >= 2)
+                {
+                    passive1.SetImage(burningstrikeimage);
+                    passive2.SetImage(fireboltsimage);
+                }
+
+                else if (ab1 == 0 && swordinstance.level < 2)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive1ability)
+                {
+                    passive1.SetImage(burningstrikeimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive2ability)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(fireboltsimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab2 == 0 && swordinstance.level >= 5)
+                {
+                    active1.SetImage(slagbusterimage);
+                    active2.SetImage(slagburstimage);
+                    active3.SetImage(slagwardimage);
+                }
+                else if (ab2 == 0 && swordinstance.level < 5)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+                else if (ab2 == active1ability)
+                {
+                    active1.SetImage(slagbusterimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active2ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(slagburstimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active3ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(slagwardimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab3 == 0 && swordinstance.level >= 8)
+                {
+                    ultimate1.SetImage(cinderauraimage);
+                }
+
+                else if (ab3 == 0 && swordinstance.level < 8)
+                {
+                    ultimate1.SetImage(lockimage);
+                }
+
+                else if (ab3 == 1)
+                {
+                    ultimate1.SetImage(cinderauraimage);
+                }
+
+                //------------------------------------------------------------------------
             }
-            else if (passiveselect == fireboltsability)
+
+            if (spearinstance != null)
             {
-                line1.SetText("Firebolts");
-                line2.SetText("Your melee strikes");
-                line3.SetText("have a chance to");
-                line4.SetText("summon burning bolts");
-                line5.SetText("from the sky,");
-                line6.SetText("dealing " + (10 + level * 5) + " damage.");
-                line7.SetText("");
+                backdrop.BackgroundColor = new Color(11, 70, 119, 180);
+                backdrop.BorderColor = new Color(20, 10, 60, 230);
+
+                statwindow.BackgroundColor = new Color(50, 30, 110, 170);
+                statwindow.BorderColor = new Color(20, 5, 50, 230);
+
+                settingswindow.BackgroundColor = new Color(50, 30, 110, 170);
+                settingswindow.BorderColor = new Color(20, 5, 50, 230);
+
+                settingstext.SetText("Scarf");
+
+                if (spearinstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleon);
+                }
+
+                if (!spearinstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleoff);
+                }
+
+                if (passiveselect != 0)
+                {
+                    if (passiveselect == passive1ability) //passive text sets
+                    {
+                        line1.SetText("Burning Strike");
+                        line2.SetText("Your melee strikes");
+                        line3.SetText("inflict burning");
+                        line4.SetText("for " + level * 1 + "-" + ((level * 1) + 1) + " seconds.");
+                        line5.SetText("");
+                        line6.SetText("");
+                        line7.SetText("");
+
+                        passive1frame.SetImage(frame2);
+                        passive2frame.SetImage(frame);
+                    }
+                    else if (passiveselect == passive2ability)
+                    {
+                        line1.SetText("Firebolts");
+                        line2.SetText("Your melee strikes");
+                        line3.SetText("have a chance to");
+                        line4.SetText("summon burning bolts");
+                        line5.SetText("from the sky,");
+                        line6.SetText("dealing " + (10 + level * 5) + " damage.");
+                        line7.SetText("");
 
 
-                burningstrikeframe.SetImage(frame);
-                fireboltsframe.SetImage(frame2);
+                        passive1frame.SetImage(frame);
+                        passive2frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    passive1frame.SetImage(frame);
+                    passive2frame.SetImage(frame);
+                }
+
+                if (activeselect != 0)
+                {
+                    if (activeselect == active1ability) //active text sets
+                    {
+                        line1.SetText("One-thousand Thorns");
+                        line2.SetText("Lash out with many");
+                        line3.SetText("spears, dealing" );
+                        line4.SetText(((40 + level * 8)) + " damage each");
+                        line5.SetText("");
+                        line6.SetText("");
+                        line7.SetText("uses X energy /s");
+
+                        active1frame.SetImage(frame2);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active2ability)
+                    {
+                        line1.SetText("Tyrant's Greatspear");
+                        line2.SetText("Channel energy into");
+                        line3.SetText("your spear, extending");
+                        line4.SetText("it and spinning it");
+                        line5.SetText("for " + (40 + level * 4) + " damage");
+                        line6.SetText("per hit");
+                        line7.SetText("uses 120 energy /s");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame2);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active3ability)
+                    {
+                        line1.SetText("Slag Ward");
+                        line2.SetText("Creates 3 shields");
+                        line3.SetText("around you, blocking");
+                        line4.SetText("projectiles and");
+                        line5.SetText("exploding on impact");
+                        line6.SetText("for " + ((10 + level * 5) * 5) + " damage.");
+                        line7.SetText("30 second cooldown");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    active1frame.SetImage(frame);
+                    active2frame.SetImage(frame);
+                    active3frame.SetImage(frame);
+                }
+
+                if (ultimateselect != 0)
+                {
+                    if (ultimateselect == ultimate1ability) //ultimate text sets
+                    {
+                        line1.SetText("Energy Vampire");
+                        line2.SetText("Each regular jab");
+                        line3.SetText("of your spear grants");
+                        line4.SetText("30 energy per hit.");
+                        line5.SetText("");
+                        line6.SetText("");
+                        line7.SetText("");
+
+                        ultimate1frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    ultimate1frame.SetImage(frame);
+                }
+
+
+                if (activeselect == 0 && passiveselect == 0 && ultimateselect == 0)
+                {
+                    line1.SetText("Lunarin Upgrades");
+                    line2.SetText("Click an ability to");
+                    line3.SetText("see details, click");
+                    line4.SetText("the check button");
+                    line5.SetText("to confirm your");
+                    line6.SetText("selection.");
+                    line7.SetText("");
+                }
+
+                //------------------------------------------------------------------------
+                //------------------------------------------------------------------------
+
+                if (ab1 == 0 && spearinstance.level >= 2)
+                {
+                    passive1.SetImage(burningstrikeimage);
+                    passive2.SetImage(fireboltsimage);
+                }
+
+                else if (ab1 == 0 && spearinstance.level < 2)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive1ability)
+                {
+                    passive1.SetImage(burningstrikeimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive2ability)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(fireboltsimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab2 == 0 && spearinstance.level >= 5)
+                {
+                    active1.SetImage(thornsimage);
+                    active2.SetImage(greatspearimage);
+                    active3.SetImage(slagwardimage);
+                }
+                else if (ab2 == 0 && spearinstance.level < 5)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+                else if (ab2 == active1ability)
+                {
+                    active1.SetImage(thornsimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active2ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(greatspearimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active3ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(slagwardimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab3 == 0 && spearinstance.level >= 8)
+                {
+                    ultimate1.SetImage(energyvampireimage);
+                }
+
+                else if (ab3 == 0 && spearinstance.level < 8)
+                {
+                    ultimate1.SetImage(lockimage);
+                }
+
+                else if (ab3 == 1)
+                {
+                    ultimate1.SetImage(energyvampireimage);
+                }
+
+                //------------------------------------------------------------------------
             }
         }
-        else
-        {
-            burningstrikeframe.SetImage(frame);
-            fireboltsframe.SetImage(frame);
-        }
-
-        if (activeselect != 0)
-        {
-            if (activeselect == slagbusterability) //active text sets
-            {
-                line1.SetText("Slag Buster");
-                line2.SetText("Shoot a projectile,");
-                line3.SetText("dealing " + (3 * (10 + level * 5)) + " damage");
-                line4.SetText("and exploding on");
-                line5.SetText("impact for 65 danage.");
-                line6.SetText("");
-                line7.SetText("3.5 second cooldown");
-
-                slagbusterframe.SetImage(frame2);
-                slagburstframe.SetImage(frame);
-                slagwardframe.SetImage(frame);
-            }
-            else if (activeselect == slagburstability)
-            {
-                line1.SetText("Slagburst");
-                line2.SetText("Creates a pillar of");
-                line3.SetText("flame, dealing " + ((10 + level * 5) / 3) * 6);
-                line4.SetText("damage per second");
-                line5.SetText("at your cursor.");
-                line6.SetText("");
-                line7.SetText("30 second cooldown");
-
-                slagbusterframe.SetImage(frame);
-                slagburstframe.SetImage(frame2);
-                slagwardframe.SetImage(frame);
-            }
-            else if (activeselect == slagwardability)
-            {
-                line1.SetText("Slag Ward");
-                line2.SetText("Creates 3 shields");
-                line3.SetText("around you, blocking");
-                line4.SetText("projectiles and");
-                line5.SetText("exploding on impact");
-                line6.SetText("for " + ((10 + level * 5) * 5) + " damage.");
-                line7.SetText("30 second cooldown");
-
-                slagbusterframe.SetImage(frame);
-                slagburstframe.SetImage(frame);
-                slagwardframe.SetImage(frame2);
-            }
-        }
-        else
-        {
-            slagbusterframe.SetImage(frame);
-            slagburstframe.SetImage(frame);
-            slagwardframe.SetImage(frame);
-        }
-
-        if (ultimateselect != 0)
-        {
-            if (ultimateselect == cinderauraability) //ultimate text sets
-            {
-                line1.SetText("Aura of Cinders");
-                line2.SetText("Creates a burning");
-                line3.SetText("aura around you, ");
-                line4.SetText("dealing 10 damage");
-                line5.SetText("per second.");
-                line6.SetText("");
-                line7.SetText("");
-
-                cinderauraframe.SetImage(frame2);
-            }
-        }
-        else
-        {
-            cinderauraframe.SetImage(frame);
-        }
-
-
-        if (activeselect == 0 && passiveselect == 0 && ultimateselect == 0)
-        {
-            line1.SetText("Koranithus Upgrades");
-            line2.SetText("Click an ability to");
-            line3.SetText("see details, click");
-            line4.SetText("the check button");
-            line5.SetText("to confirm your");
-            line6.SetText("selection.");
-            line7.SetText("");
-        }
-
-        //------------------------------------------------------------------------
-        //------------------------------------------------------------------------
-
-        if (ab1 == 0 && instance.level >= 2)
-        {
-            burningstrike.SetImage(burningstrikeimage);
-            firebolts.SetImage(fireboltsimage);
-        }
-
-        else if (ab1 == 0 && instance.level < 2)
-        {
-            burningstrike.SetImage(lockimage);
-            firebolts.SetImage(lockimage);
-        }
-
-        else if (ab1 == burningstrikeability)
-        {
-            burningstrike.SetImage(burningstrikeimage);
-            firebolts.SetImage(lockimage);
-        }
-
-        else if (ab1 == fireboltsability)
-        {
-            burningstrike.SetImage(lockimage);
-            firebolts.SetImage(fireboltsimage);
-        }
-
-        //------------------------------------------------------------------------
-
-        if (ab2 == 0 && instance.level >= 5)
-        {
-            slagbuster.SetImage(slagbusterimage);
-            slagburst.SetImage(slagburstimage);
-            slagward.SetImage(slagwardimage);
-        }
-        else if (ab2 == 0 && instance.level < 5)
-        {
-            slagbuster.SetImage(lockimage);
-            slagburst.SetImage(lockimage);
-            slagward.SetImage(lockimage);
-        }
-        else if (ab2 == slagbusterability)
-        {
-            slagbuster.SetImage(slagbusterimage);
-            slagburst.SetImage(lockimage);
-            slagward.SetImage(lockimage);
-        }
-
-        else if (ab2 == slagburstability)
-        {
-            slagbuster.SetImage(lockimage);
-            slagburst.SetImage(slagburstimage);
-            slagward.SetImage(lockimage);
-        }
-
-        else if (ab2 == slagwardability)
-        {
-            slagbuster.SetImage(lockimage);
-            slagburst.SetImage(lockimage);
-            slagward.SetImage(slagwardimage);
-        }
-
-        //------------------------------------------------------------------------
-
-        if (ab3 == 0 && instance.level >= 8)
-        {
-            cinderaura.SetImage(cinderauraimage);
-        }
-
-        else if (ab3 == 0 && instance.level < 8)
-        {
-            cinderaura.SetImage(lockimage);
-        }
-
-        else if (ab3 == burningstrikeability)
-        {
-            cinderaura.SetImage(cinderauraimage);
-        }
-
-            //------------------------------------------------------------------------
-    }
 
     public override void Draw(SpriteBatch spriteBatch)
     {

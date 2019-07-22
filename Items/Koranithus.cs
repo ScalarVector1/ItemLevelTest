@@ -112,9 +112,9 @@ namespace ItemLevelTest.Items
 
             //Handles the dust that spawns on level up
             {
-                for (int dustcounter = 0; dustcounter <= 45; dustcounter++)
+                for (int dustcounter = 0; dustcounter <= 35; dustcounter++)
                 {
-                    Dust.NewDust(new Vector2(player.MountedCenter.X - 30, player.MountedCenter.Y - 50), 70, 70, mod.DustType("Leveldust"));
+                    Dust.NewDust(new Vector2(player.position.X, player.position.Y), player.width, player.height, mod.DustType("Leveldust"));
                 }
             }
 
@@ -353,12 +353,14 @@ namespace ItemLevelTest.Items
             Main.PlaySound(SoundID.Item79, player.Center); //sound FX
             if (!Upgradeui.visible) //only if the UI isnt already opened
             {
-                Upgradeui.visible = true; //open the UI
                 Upgradeui.ab1 = ab1;
                 Upgradeui.ab2 = ab2;
                 Upgradeui.ab3 = ab3;
                 Upgradeui.level = level;
-                Upgradeui.instance = this;
+                Upgradeui.swordinstance = this;
+                Upgradeui.spearinstance = null;
+                Upgradeui.visible = true; //open the UI
+
             }
             item.stack++;//make sure the item dosent just dissappear 
         }

@@ -10,6 +10,10 @@ public class Effecthandler : ModPlayer
     bool VFXactive = false;
     public bool swordVFX = false;
     public bool swordVFXforce = false;
+    public bool spearVFX = false;
+    public static bool spearSpawned = false;
+    public bool spearfailed = false;
+    public bool spearVFXforce = false;
     public bool bowVFX = false;
     public override void PostUpdate()
     {
@@ -44,6 +48,7 @@ public class Effecthandler : ModPlayer
         }
 
         bowVFX = false;
+
         for (int z = 0; z <= 50; z++)
         {
             if (player.inventory[z].type == mod.ItemType("Testbow") && !VFXactive)
@@ -52,12 +57,53 @@ public class Effecthandler : ModPlayer
             }
         }
 
+
+        spearfailed = true;
+
+        for (int z = 0; z <= 50; z++)
+        {
+            Item thisinstance = player.inventory[z];
+            Testspear spear = thisinstance.modItem as Testspear;
+            if ((thisinstance.type == mod.ItemType("Testspear") && !VFXactive && spear.VFXstate) || (spearVFXforce && !VFXactive))
+            {
+                spearVFX = true;
+                spearVFXforce = false;
+                spearfailed = false;
+            }
+        }
+
+        if (!spearfailed)
+        {
+            
+        }
+        else 
+        {
+            spearVFX = false;
+            spearfailed = false;
+            spearSpawned = false;
+        }
+
+
+
         if (swordVFX)
         {
             if (Math.Abs(player.velocity.X) > 1 || Math.Abs(player.velocity.Y) > 1)
             {
                 Dust.NewDust(new Vector2(player.position.X - 2, player.position.Y + player.height - 4), player.width + 4, 4, mod.DustType("Sworddust"));
             }
+        }
+
+        if(spearVFX && !spearSpawned)
+        {
+            Dust root = Dust.NewDustPerfect(player.MountedCenter, mod.DustType("Scarftestroot"));
+            root.customData = player;
+            for (int u = 0; u <= 29; u++)
+            {
+                Dust segment = Dust.NewDustPerfect(new Vector2(player.MountedCenter.X - u * 3, player.MountedCenter.Y), mod.DustType("Scarftest"));
+                segment.customData = u;
+            }
+            spearSpawned = true;
+
         }
 
     }

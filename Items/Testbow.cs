@@ -382,9 +382,9 @@ namespace ItemLevelTest.Items
 
             //Handles the dust that spawns on level up
             {
-                for (int dustcounter = 0; dustcounter <= 45; dustcounter++)
+                for (int dustcounter = 0; dustcounter <= 35; dustcounter++)
                 {
-                    Dust.NewDust(new Vector2(player.MountedCenter.X - 30, player.MountedCenter.Y - 50), 70, 70, mod.DustType("Leveldust"));
+                    Dust.NewDust(new Vector2(player.position.X, player.position.Y), player.width, player.height, mod.DustType("Leveldust"));
                 }
             }
 

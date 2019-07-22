@@ -42,7 +42,7 @@ namespace ItemLevelTest.Projectiles
         public override void AI()
         {
             projectile.rotation += (float)(Math.PI * 2 / 120);
-            double rot = projectile.rotation;
+            //double rot = projectile.rotation;
             Player player = Main.player[Main.myPlayer];
             projectile.position = new Vector2(player.MountedCenter.X - projectile.width / 2 + x, player.MountedCenter.Y - projectile.height / 2 + y);
             y = (float)Math.Sin(projectile.rotation) * r;

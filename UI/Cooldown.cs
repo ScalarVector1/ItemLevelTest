@@ -220,5 +220,104 @@ namespace ItemLevelTest.UI
 
     }
 
+    class ENUI : UIState
+    {
+        public UIPanel abicon;
+        public static bool visible = false;
+        public static int ability = 0;
+        const int none = 0;
 
+        //static Texture2D iconimg = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
+        UIImage Icon1 = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Blank"));
+        Shade shade = new Shade();
+        Exp exp = new Exp();
+        public static Testspear instance;
+
+
+        public override void OnInitialize()
+        {
+            abicon = new UIPanel();
+            abicon.SetPadding(0);
+            abicon.Left.Set(465f, 0f);
+            abicon.Top.Set(20f, 0f);
+            abicon.Width.Set(50f, 0f);
+            abicon.Height.Set(50f, 0f);
+            abicon.BackgroundColor = new Color(0, 0, 0, 0);
+            abicon.BorderColor = new Color(0, 0, 0, 0);
+            base.Append(abicon);
+
+            //Texture2D frame = ModLoader.GetTexture("ItemLevelTest/UI/Frame");
+            UIImage Frame = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Frame"));
+            Frame.Left.Set(0, 0f);
+            Frame.Top.Set(0, 0f);
+            Frame.Width.Set(66, 0f);
+            Frame.Height.Set(50, 0f);
+            abicon.Append(Frame);
+
+            Icon1.Left.Set(6, 0f);
+            Icon1.Top.Set(6, 0f);
+            Icon1.Width.Set(38, 0f);
+            Icon1.Height.Set(38, 0f);
+            abicon.Append(Icon1);
+
+            shade.Left.Set(0, 0);
+            shade.Top.Set(0, 0);
+            shade.Width.Set(38, 0);
+            shade.Height.Set(38, 0);
+            Icon1.Append(shade);
+
+            exp.Left.Set(58, 0);
+            exp.Top.Set(4, 0);
+            exp.Width.Set(4, 0);
+            exp.Height.Set(42, 0);
+            Frame.Append(exp);
+
+
+
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+
+            if (ability == none)
+            {
+                Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Blank"));
+            }
+            else if (ability == 1)
+            {
+                Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Spears"));
+
+            }
+            else if (ability == 2)
+            {
+                Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Whirl"));
+
+            }
+            /*else if (ability == slagward)
+            {
+                Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagward"));
+
+            }
+            */
+
+                //shade.Height.Set(0, (float)(Koranithus.cd / maxcd) * 100);
+                shade.Height.Set((float)((Testspear.maxenergy - Testspear.energy) * 38) / Testspear.maxenergy, 0);
+                Recalculate();
+            
+            if(Testspear.energy == Testspear.maxenergy)
+            {
+                shade.Height.Set(0, 0);
+                Recalculate();
+            }
+
+            exp.Height.Set(((instance.expRequired - instance.exp) * 42) / instance.expRequired, 0);
+            Recalculate();
+
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            Recalculate();
+        }
+    }
 }

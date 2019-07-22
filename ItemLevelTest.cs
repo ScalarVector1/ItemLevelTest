@@ -12,9 +12,11 @@ namespace ItemLevelTest
         public CDUI cdui;
         public Upgradeui upui;
         public CHUI chui;
+        public ENUI enui;
         private UserInterface customResources;
         private UserInterface customResourcesupgrade;
         private UserInterface customResourcescharge;
+        private UserInterface customResourcesenergy;
 
         public ItemLevelTest()
 		{
@@ -61,6 +63,17 @@ namespace ItemLevelTest
                     }
                     return true;
                 }, InterfaceScaleType.UI));
+
+                layers.Insert(MouseTextIndex + 3, new LegacyGameInterfaceLayer("[PH]MODNAME: Energy",
+                delegate
+                {
+                    if (ENUI.visible)
+                    {
+                        customResourcesenergy.Update(Main._drawInterfaceGameTime);
+                        enui.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                }, InterfaceScaleType.UI));
             }
 
 
@@ -89,15 +102,19 @@ namespace ItemLevelTest
                 customResources = new UserInterface();
                 customResourcesupgrade = new UserInterface();
                 customResourcescharge = new UserInterface();
+                customResourcesenergy = new UserInterface();
                 cdui = new CDUI();
                 upui = new Upgradeui();
                 chui = new CHUI();
+                enui = new ENUI();
                 CDUI.visible = true;
                 CHUI.visible = true;
+                ENUI.visible = true;
                 Upgradeui.visible = false;
                 customResources.SetState(cdui);
                 customResourcesupgrade.SetState(upui);
                 customResourcescharge.SetState(chui);
+                customResourcesenergy.SetState(enui);
             }
         }
 
@@ -124,9 +141,11 @@ namespace ItemLevelTest
                 customResources = null;
                 customResourcesupgrade = null;
                 customResourcescharge = null;
+                customResourcesenergy = null;
                 cdui = null;
                 upui = null;
                 chui = null;
+                enui = null;
 
             }         
         }
