@@ -46,6 +46,7 @@
     <Compile Include="Items\Gifts.cs" />
     <Compile Include="Items\Koranithus.cs" />
     <Compile Include="Items\Scarf.cs" />
+    <Compile Include="Items\Spearmats.cs" />
     <Compile Include="Items\Testspear.cs" />
     <Compile Include="Items\VFXaccessories.cs" />
     <Compile Include="Projectiles\Altarvisuals.cs" />

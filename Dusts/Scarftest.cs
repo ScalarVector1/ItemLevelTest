@@ -68,7 +68,7 @@ namespace ItemLevelTest.Dusts
                 ) * T * T);
 
                 dust.position.X -= (float)Math.Sin(((float)Math.PI * 2) * (timer / 1500f)) / 26;
-            dust.position.Y -= (float)Math.Sin(((float)Math.PI * 2) * (timer / 750f)) / 35;
+                dust.position.Y -= (float)Math.Sin(((float)Math.PI * 2) * (timer / 750f)) / 35;
 
             dust.rotation = Main.rand.NextFloat(0, (float)Math.PI / 2);//gives a frizzy effect
 

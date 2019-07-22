@@ -819,7 +819,7 @@ class Upgradeui : UIState
 
             if (spearinstance != null)
             {
-                backdrop.BackgroundColor = new Color(11, 70, 119, 180);
+                backdrop.BackgroundColor = new Color(35, 60, 120, 190);
                 backdrop.BorderColor = new Color(20, 10, 60, 230);
 
                 statwindow.BackgroundColor = new Color(50, 30, 110, 170);
