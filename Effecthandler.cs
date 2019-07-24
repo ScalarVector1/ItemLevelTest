@@ -32,9 +32,10 @@ public class Effecthandler : ModPlayer
         {
             Item thisinstance = player.inventory[z];
             Koranithus koranithus = thisinstance.modItem as Koranithus;
-            if ((thisinstance.type == mod.ItemType("Koranithus") && !VFXactive && koranithus.VFXstate) || (swordVFXforce && !VFXactive))
+            if ((thisinstance.type == mod.ItemType("Koranithus") && !VFXactive && koranithus.VFXstate && !spearVFX) || (swordVFXforce && !VFXactive && !spearVFX))
             {
                 swordVFX = true;
+                VFXactive = true;
                 swordVFXforce = false;
             }
         }
@@ -43,7 +44,8 @@ public class Effecthandler : ModPlayer
         {
             if (player.armor[z].type == mod.ItemType("SwordAccessory"))
             {
-                swordVFXforce = true; 
+                swordVFXforce = true;
+                VFXactive = true;
             }
         }
 
@@ -51,9 +53,10 @@ public class Effecthandler : ModPlayer
 
         for (int z = 0; z <= 50; z++)
         {
-            if (player.inventory[z].type == mod.ItemType("Testbow") && !VFXactive)
+            if (player.inventory[z].type == mod.ItemType("Testbow") && !VFXactive && !spearVFX)
             {
                 bowVFX = true;
+                VFXactive = true;
             }
         }
 

@@ -11,12 +11,11 @@ namespace ItemLevelTest.Dusts
 {
     class Scarftest : ModDust
     {
-        private int n = 0;
+
         public override void OnSpawn(Dust dust)
         {          
             dust.noGravity = true;
             dust.noLight = true;
-            n = 0;
         }
         public override Color? GetAlpha(Dust dust, Color color)
         {
@@ -33,25 +32,25 @@ namespace ItemLevelTest.Dusts
         float timer = 0;
 
 
+
         public override bool Update(Dust dust)
         {
 
-
-            for (int k = 0; k <= 6000; k++)//check the whole flipping dust array  !!!THIS IS PROBABLY CAUSING PERFORMANCE ISSUES, REPLACE IF POSSIBLE!!!
-            {
-                if (Main.dust[k].customData is int && (int)Main.dust[k].customData == (int)dust.customData - 1 && Main.dust[k].type == mod.DustType("Scarftest")) // find the previous dust in the dust index
+                for (int k = 0; k <= 6000; k++)//check the whole flipping dust array  !!!THIS IS PROBABLY CAUSING PERFORMANCE ISSUES, REPLACE IF POSSIBLE!!!
                 {
-                    dustprev = Main.dust[k]; //set that as dustprev
+                    if (Main.dust[k].customData is int && (int)Main.dust[k].customData == (int)dust.customData - 1 && Main.dust[k].type == mod.DustType("Scarftest")) // find the previous dust in the dust index
+                    {
+                        dustprev = Main.dust[k]; //set that as dustprev
+                    }
+                    else if (Main.dust[k].type == mod.DustType("Scarftestroot"))//the root dust is also allowed to be dustprev
+                    {
+                        dustprev = Main.dust[k]; //set that as dustprev instead
+                    }
+                    if (Main.dust[k].customData is int && (int)Main.dust[k].customData == (int)dust.customData + 1 && Main.dust[k].type == mod.DustType("Scarftest")) // find the next dust in the dust index
+                    {
+                        dustnext = Main.dust[k]; //set that as dustnext
+                    }
                 }
-                else if (Main.dust[k].type == mod.DustType("Scarftestroot"))//the root dust is also allowed to be dustprev
-                {
-                    dustprev = Main.dust[k]; //set that as dustprev instead
-                }
-                if (Main.dust[k].customData is int && (int)Main.dust[k].customData == (int)dust.customData + 1 && Main.dust[k].type == mod.DustType("Scarftest")) // find the next dust in the dust index
-                {
-                    dustnext = Main.dust[k]; //set that as dustnext
-                }
-            }
 
                 dust.position.X -= (0.5f * //add to the current position the change in distance based off of d=1/2 at^2
                 (
@@ -92,12 +91,11 @@ namespace ItemLevelTest.Dusts
     class Scarftestroot : ModDust
     {
 
-        private int n = 0;
         public override void OnSpawn(Dust dust)
         {
             dust.noGravity = true;
             dust.noLight = true;
-            n = 0;
+
         }
 
         public override Color? GetAlpha(Dust dust, Color color)

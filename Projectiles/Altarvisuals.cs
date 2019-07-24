@@ -55,6 +55,22 @@ namespace ItemLevelTest.Projectiles
                 {
                     Dust.NewDust(new Vector2(projectile.position.X + 58, projectile.position.Y + 8), 4, 4, mod.DustType("Staffdustaltar"));
                 }
+                if (instance.spearmade)
+                {
+                    Dust.NewDust(new Vector2(projectile.position.X + 142, projectile.position.Y + 8), 4, 4, mod.DustType("Speardustaltar"));
+                }
+                if (instance.gunmade)
+                {
+                    Dust.NewDust(new Vector2(projectile.position.X + 172, projectile.position.Y + 28), 4, 4, mod.DustType("Gundustaltar"));
+                }
+                if (instance.orbmade)
+                {
+                    Dust.NewDust(new Vector2(projectile.position.X + 196, projectile.position.Y + 54), 4, 4, mod.DustType("Orbdustaltar"));
+                }
+                if(instance.pickmade)
+                {
+                    Dust.NewDust(new Vector2(projectile.position.X + 95, projectile.position.Y + 32), 14, 14, mod.DustType("Pickdustaltar"));
+                }
             }
 
             projectile.timeLeft = 2;
@@ -68,6 +84,8 @@ namespace ItemLevelTest.Projectiles
             }
         }
     }
+
+    //------------------------------------------------------------------------------------------------
 
     class Sword1 : ModProjectile
     {
@@ -126,8 +144,7 @@ namespace ItemLevelTest.Projectiles
         }
     }
 
-
-        class Sword2 : ModProjectile
+    class Sword2 : ModProjectile
         {
         public Tiles.Altar.AltarEntity instance;
         public override void SetStaticDefaults()
@@ -282,6 +299,199 @@ namespace ItemLevelTest.Projectiles
                     projectile.frame = 0;
                 }
             }
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------
+
+    class Spear1p : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 36;
+            projectile.height = 36;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+        float timer = 0;
+
+        public override void AI()
+        {
+
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Speardust"));
+            }
+            if (instance.slot1 == mod.ItemType("Spear1") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot1 != mod.ItemType("Spear1") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
+
+    class Spear2p : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 36;
+            projectile.height = 36;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+        float timer = 0;
+
+        public override void AI()
+        {
+
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Speardust"));
+            }
+            if (instance.slot2 == mod.ItemType("Spear2") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot2 != mod.ItemType("Spear2") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
+
+    class Spear3p : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 36;
+            projectile.height = 36;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+        float timer = 0;
+
+        public override void AI()
+        {
+
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Speardust"));
+            }
+            if (instance.slot3 == mod.ItemType("Spear3") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot3 != mod.ItemType("Spear3") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
+
+    class Spear4p : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 36;
+            projectile.height = 36;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+        float timer = 0;
+
+        public override void AI()
+        {
+
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Speardust"));
+            }
+            if (instance.slot4 == mod.ItemType("Spear4") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot4 != mod.ItemType("Spear4") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+
 
             timer += 0.1256f;
             if (timer >= 6.28)

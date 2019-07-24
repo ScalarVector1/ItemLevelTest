@@ -17,7 +17,7 @@ namespace ItemLevelTest.Items
     class Testbow : ModItem
     {
         public int exp = 0; //the current exp of the item (this is saved)why are you
-        int expRequired = 50; //the exp required to reach the next level, this value sets the base
+        public int expRequired = 50; //the exp required to reach the next level, this value sets the base
         public int level = 0; //the item's current level (this is saved)
         int dmgScale = 5; //changes the damage gain per level
         int spdScale = 1; //changes the usetime reduction per level
@@ -585,7 +585,12 @@ namespace ItemLevelTest.Items
 
         public override void HoldItem(Player player)
         {
-            CHUI.ability = ab2;//sets the ability variable in the cooldown UI to display the correct icon
+            CDUI.ability = ab2;//sets the ability variable in the cooldown UI to display the correct icon
+            CDUI.bowinstance = this;
+
+            CDUI.swordinstance = null;
+            CDUI.spearinstance = null;
+            CDUI.guninstance = null;
         }
 
 

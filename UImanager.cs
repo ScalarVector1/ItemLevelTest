@@ -15,7 +15,11 @@ public class UImanager : ModPlayer
 
         //this section handles the cooldown UI
         Item holding = player.HeldItem;
-        if (player.HeldItem.type == mod.ItemType("Koranithus") && !Main.playerInventory)//when holding the sword
+        if ((player.HeldItem.type == mod.ItemType("Koranithus") 
+            || player.HeldItem.type == mod.ItemType("Testbow") 
+            || player.HeldItem.type == mod.ItemType("Testspear")
+            || player.HeldItem.type == mod.ItemType("Testgun")
+            ) && !Main.playerInventory)//when holding a legendary item
         {
             if (player.HeldItem != holding)//failsafe if holding nothing
             {
@@ -27,33 +31,7 @@ public class UImanager : ModPlayer
         {
             CDUI.visible = false;
         }
-        //bow UI
-        if (player.HeldItem.type == mod.ItemType("Testbow") && !Main.playerInventory)//when holding the bow
-        {
-            if (player.HeldItem != holding)//failsafe if holding nothing
-            {
-                CHUI.visible = false;
-            }
-            CHUI.visible = true; //handles the visibility of the UI
-        }
-        else
-        {
-            CHUI.visible = false;
-        }
-        //spear UI
-        if (player.HeldItem.type == mod.ItemType("Testspear") && !Main.playerInventory)//when holding the bow
-        {
-            if (player.HeldItem != holding)//failsafe if holding nothing
-            {
-                ENUI.visible = false;
-            }
-            ENUI.visible = true; //handles the visibility of the UI
-        }
-        else
-        {
-            ENUI.visible = false;
-        }
-
+       
 
     }
 }

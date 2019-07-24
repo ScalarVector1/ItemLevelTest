@@ -102,8 +102,12 @@ namespace ItemLevelTest.Items
 
         public override void HoldItem(Player player)
         {
-            ENUI.ability = ab2;//sets the ability variable in the cooldown UI to display the correct icon
-            ENUI.instance = this;
+            CDUI.ability = ab2;//sets the ability variable in the cooldown UI to display the correct icon
+            CDUI.spearinstance = this;
+
+            CDUI.swordinstance = null;
+            CDUI.bowinstance = null;
+            CDUI.guninstance = null;
 
             if (player.HeldItem.modItem == this)
             {
@@ -233,12 +237,24 @@ namespace ItemLevelTest.Items
                 Upgradeui.ab3 = ab3;
                 Upgradeui.level = level;
                 Upgradeui.swordinstance = null;
+                Upgradeui.guninstance = null;
+                Upgradeui.bowinstance = null;
+
                 Upgradeui.spearinstance = this;
                 Upgradeui.visible = true; //open the UI
-
-
             }
             item.stack++;//make sure the item dosent just dissappear 
+        }
+
+        public override bool CloneNewInstances
+        {
+            get { return true; }
+        }
+
+        //ensures the item will not have a prefix (this breaks stuff)
+        public override int ChoosePrefix(UnifiedRandom rand)
+        {
+            return 0;
         }
 
         public override TagCompound Save()

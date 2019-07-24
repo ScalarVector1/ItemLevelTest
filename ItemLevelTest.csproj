@@ -36,6 +36,7 @@
     <Compile Include="Buffs\Slagmelt.cs" />
     <Compile Include="Dusts\AltarDusts.cs" />
     <Compile Include="Dusts\Bowdust.cs" />
+    <Compile Include="Dusts\Gundust.cs" />
     <Compile Include="Dusts\Scarftest.cs" />
     <Compile Include="Dusts\Slagdust2.cs" />
     <Compile Include="Dusts\Speardust.cs" />
@@ -47,9 +48,12 @@
     <Compile Include="Items\Koranithus.cs" />
     <Compile Include="Items\Scarf.cs" />
     <Compile Include="Items\Spearmats.cs" />
+    <Compile Include="Items\Testgun.cs" />
     <Compile Include="Items\Testspear.cs" />
     <Compile Include="Items\VFXaccessories.cs" />
     <Compile Include="Projectiles\Altarvisuals.cs" />
+    <Compile Include="Projectiles\Flashdamage.cs" />
+    <Compile Include="Projectiles\Healblast.cs" />
     <Compile Include="Projectiles\Spearwhirl.cs" />
     <Compile Include="Projectiles\Testarrow.cs" />
     <Compile Include="Items\Testbow.cs" />
@@ -61,6 +65,7 @@
     <Compile Include="Projectiles\Slagaura.cs" />
     <Compile Include="Projectiles\Slagburst.cs" />
     <Compile Include="Projectiles\Slagbuster.cs" />
+    <Compile Include="Projectiles\Testbullet.cs" />
     <Compile Include="Projectiles\Testspearproj.cs" />
     <Compile Include="Tiles\Altar.cs" />
     <Compile Include="Tiles\Swordtiles.cs" />

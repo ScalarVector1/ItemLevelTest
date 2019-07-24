@@ -69,29 +69,53 @@ namespace ItemLevelTest.Tiles
                 AltarEntity altarentity = (AltarEntity)TileEntity.ByID[index];
                 Player player = Main.LocalPlayer; //needs to be changed for multiplayer adaptation
             if (!altarentity.crafting) { 
-
-                if (player.HeldItem.type == mod.ItemType("Swordsteel1"))
+                //--------------------------------------------------------------
+                if (player.HeldItem.type == mod.ItemType("Swordsteel1") && altarentity.slot1 == 0)
                 {
                     player.HeldItem.stack--;
                     altarentity.slot1 = mod.ItemType("Swordsteel1");
                 }
 
-                if (player.HeldItem.type == mod.ItemType("Swordsoul1"))
+                if (player.HeldItem.type == mod.ItemType("Swordsoul1") && altarentity.slot2 == 0)
                 {
                     player.HeldItem.stack--;
                     altarentity.slot2 = mod.ItemType("Swordsoul1");
                 }
 
-                if (player.HeldItem.type == mod.ItemType("Swordlog1"))
+                if (player.HeldItem.type == mod.ItemType("Swordlog1") && altarentity.slot3 == 0)
                 {
                     player.HeldItem.stack--;
                     altarentity.slot3 = mod.ItemType("Swordlog1");
                 }
 
-                if (player.HeldItem.type == mod.ItemType("Swordlogadd1"))
+                if (player.HeldItem.type == mod.ItemType("Swordlogadd1") && altarentity.slot4 == 0)
                 {
                     player.HeldItem.stack--;
                     altarentity.slot4 = mod.ItemType("Swordlogadd1");
+                }
+                //-------------------------------------------------------------
+                if (player.HeldItem.type == mod.ItemType("Spear1") && altarentity.slot1 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot1 = mod.ItemType("Spear1");
+                }
+
+                if (player.HeldItem.type == mod.ItemType("Spear2") && altarentity.slot2 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot2 = mod.ItemType("Spear2");
+                }
+
+                if (player.HeldItem.type == mod.ItemType("Spear3") && altarentity.slot3 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot3 = mod.ItemType("Spear3");
+                }
+
+                if (player.HeldItem.type == mod.ItemType("Spear4") && altarentity.slot4 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot4 = mod.ItemType("Spear4");
                 }
 
                 if (player.HeldItem.type == 0)
@@ -101,6 +125,7 @@ namespace ItemLevelTest.Tiles
                         Item.NewItem(player.position, new Vector2(1, 1), altarentity.slot1);
                         altarentity.slot1 = 0;
                         altarentity.swordItem1spawned = false;//find a better way to do this later
+                        altarentity.spearItem1spawned = false;
                     }
 
                     if (altarentity.slot2 != 0)
@@ -108,6 +133,7 @@ namespace ItemLevelTest.Tiles
                         Item.NewItem(player.position, new Vector2(1, 1), altarentity.slot2);
                         altarentity.slot2 = 0;
                         altarentity.swordItem2spawned = false;//find a better way to do this later
+                        altarentity.spearItem2spawned = false;
                     }
 
                     if (altarentity.slot3 != 0)
@@ -115,6 +141,7 @@ namespace ItemLevelTest.Tiles
                         Item.NewItem(player.position, new Vector2(1, 1), altarentity.slot3);
                         altarentity.slot3 = 0;
                         altarentity.swordItem3spawned = false;//find a better way to do this later
+                        altarentity.spearItem3spawned = false;
                     }
 
                     if (altarentity.slot4 != 0)
@@ -122,6 +149,7 @@ namespace ItemLevelTest.Tiles
                         Item.NewItem(player.position, new Vector2(1, 1), altarentity.slot4);
                         altarentity.slot4 = 0;
                         altarentity.swordItem4spawned = false;//find a better way to do this later
+                        altarentity.spearItem4spawned = false;
                     }
                 }
 
@@ -144,9 +172,10 @@ namespace ItemLevelTest.Tiles
             public bool bowmade = true;
             public bool staffmade = true;
             public bool spearmade = false;
-            public bool gunmade = false;
-            public bool orbmade = false;
-
+            public bool gunmade = true;
+            public bool orbmade = true;
+            public bool pickmade = true;
+            //----------------------------------------------
             public bool swordItem1spawned = false;
             public int thisSword1Index;
             
@@ -158,6 +187,18 @@ namespace ItemLevelTest.Tiles
 
             public bool swordItem4spawned = false;
             public int thisSword4Index;
+            //----------------------------------------------
+            public bool spearItem1spawned = false;
+            public int thisSpear1Index;
+
+            public bool spearItem2spawned = false;
+            public int thisSpear2Index;
+
+            public bool spearItem3spawned = false;
+            public int thisSpear3Index;
+
+            public bool spearItem4spawned = false;
+            public int thisSpear4Index;
 
             int timer = 0;
             public override void Update()
@@ -272,8 +313,6 @@ namespace ItemLevelTest.Tiles
                         }                              
                 }
 
-            
-
                 if (slot3 == mod.ItemType("Swordlog1"))
                 {
                         if (!swordItem3spawned)//find a better way to do this later
@@ -296,6 +335,127 @@ namespace ItemLevelTest.Tiles
                     }
                 }
 
+                //---------------------------------------------------
+
+                if (slot1 == mod.ItemType("Spear1") && slot2 == mod.ItemType("Spear2") && slot3 == mod.ItemType("Spear3") && slot4 == mod.ItemType("Spear4"))
+                {
+                    crafting = true;
+                    if (timer == 0)
+                    {
+                        timer = 300;
+                        for (int dc = 0; dc < 30; dc++)
+                        {
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 10), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 50), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 182), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 142), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
+                        }
+                    }
+
+                    if (timer > 1)
+                    {
+                        Dust.NewDust(new Vector2(((Position.X * 16) + 10) + (((300 - timer) / 300f) * 84), ((Position.Y * 16) - 9) + (((300 - timer) / 300f) * 66)), 6, 6, mod.DustType("Speardust"));
+                        Dust.NewDust(new Vector2(((Position.X * 16) + 50) + (((300 - timer) / 300f) * 49), ((Position.Y * 16) - 29) + (((300 - timer) / 300f) * 86)), 6, 6, mod.DustType("Speardust"));
+                        Dust.NewDust(new Vector2(((Position.X * 16) + 182) - (((300 - timer) / 300f) * 84), ((Position.Y * 16) - 9) + (((300 - timer) / 300f) * 66)), 6, 6, mod.DustType("Speardust"));
+                        Dust.NewDust(new Vector2(((Position.X * 16) + 142) - (((300 - timer) / 300f) * 49), ((Position.Y * 16) - 29) + (((300 - timer) / 300f) * 86)), 6, 6, mod.DustType("Speardust"));
+
+                    }
+
+                    if (timer == 1)
+                    {
+                        Vector2 tilecenter = new Vector2((Position.X * 16) + 114, (Position.Y * 16) + 50);
+                        Item.NewItem(tilecenter, new Vector2(1, 1), mod.ItemType("Testspear"));
+                        slot1 = 0;
+                        slot2 = 0;
+                        slot3 = 0;
+                        slot4 = 0;
+                        spearItem1spawned = false;
+                        spearItem2spawned = false;
+                        spearItem3spawned = false;
+                        spearItem4spawned = false;
+                        spearmade = true;
+                        crafting = false;
+
+                        string text = player.name + " Has Crafted PH TESTSPEAR!";
+                        if (Main.netMode == 2) // Server
+                        {
+                            NetMessage.SendData(25, -1, -1, NetworkText.FromLiteral(text), 255, 100f, 45f, 255f, 0, 0, 0);
+                        }
+                        else if (Main.netMode == 0) // Client
+                        {
+                            Main.NewText(text, new Color(170, 140, 220));
+                            Main.NewText("Your body goes numb...", new Color(100, 100, 100));
+                        }
+
+                        //handles dust spawned on craft
+                        for (int dustcounter = 300; dustcounter >= 0; dustcounter--)
+                        {
+                            float yvel = 0;
+                            float xvel = 0;
+                            float hyp = 0;
+                            hyp = Main.rand.Next(0, 100) * 0.1f;
+                            xvel = Main.rand.Next(-400, 400) * .01f;
+                            if (Main.rand.Next(2) == 0)
+                            {
+                                yvel = (float)Math.Sqrt(hyp - xvel * xvel);
+                            }
+                            else
+                            {
+                                yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
+                            }
+                            Dust.NewDustPerfect(tilecenter, mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(8, 10) * 0.1f);
+
+                            //sound FX
+                            Main.PlaySound(SoundID.Item37, player.Center);
+                            Main.PlaySound(SoundID.Item45, player.Center);
+                        }
+                    }
+                }
+
+                if (slot1 == mod.ItemType("Spear1"))
+                {
+                    if (!spearItem1spawned)//find a better way to do this later
+                    {
+                        thisSpear1Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 15, Position.Y * 16), new Vector2(0, 0), mod.ProjectileType("Spear1p"), 0, 0);
+                        Spear1p spear1p = Main.projectile[thisSpear1Index].modProjectile as Spear1p;
+                        spear1p.instance = this;
+                        spearItem1spawned = true;
+                    }
+                }
+
+                if (slot2 == mod.ItemType("Spear2"))
+                {
+                    if (!spearItem2spawned)//find a better way to do this later
+                    {
+                        thisSpear2Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 54, Position.Y * 16 - 20), new Vector2(0, 0), mod.ProjectileType("Spear2p"), 0, 0);
+                        Spear2p spear2p = Main.projectile[thisSpear2Index].modProjectile as Spear2p;
+                        spear2p.instance = this;
+                        spearItem2spawned = true;
+                    }
+                }
+
+                if (slot3 == mod.ItemType("Spear3"))
+                {
+                    if (!spearItem3spawned)//find a better way to do this later
+                    {
+                        thisSpear3Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 154, Position.Y * 16 - 20), new Vector2(0, 0), mod.ProjectileType("Spear3p"), 0, 0);
+                        Spear3p spear3p = Main.projectile[thisSpear3Index].modProjectile as Spear3p;
+                        spear3p.instance = this;
+                        spearItem3spawned = true;
+                    }
+                }
+
+                if (slot4 == mod.ItemType("Spear4"))
+                {
+                    if (!spearItem4spawned)//find a better way to do this later
+                    {
+                        thisSpear4Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 193, Position.Y * 16), new Vector2(0, 0), mod.ProjectileType("Spear4p"), 0, 0);
+                        Spear4p spear4p = Main.projectile[thisSpear4Index].modProjectile as Spear4p;
+                        spear4p.instance = this;
+                        spearItem4spawned = true;
+                    }
+                }
+
                 //next recipie here
 
 
@@ -307,10 +467,7 @@ namespace ItemLevelTest.Tiles
                 Tile tile = Main.tile[i, j];
                 return tile.active() && tile.type == mod.TileType("Altar") && tile.frameX == 0 && tile.frameY == 0;
             }
-            public override void PostGlobalUpdate()
-            {
 
-            }
             public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction)
             {
                 if (Main.netMode == 1)
@@ -321,6 +478,7 @@ namespace ItemLevelTest.Tiles
                 }
                 return Place(i, j);
             }
+
             public override TagCompound Save()
             {
                 return new TagCompound
@@ -334,7 +492,8 @@ namespace ItemLevelTest.Tiles
                 {"staff", staffmade},
                 {"spear", spearmade},
                 {"gun", gunmade},
-                {"orb", orbmade}
+                {"orb", orbmade},
+                    {"pick", pickmade}
 
 
             };
@@ -352,6 +511,7 @@ namespace ItemLevelTest.Tiles
                 spearmade = tag.GetBool("spear");
                 gunmade = tag.GetBool("gun");
                 orbmade = tag.GetBool("orb");
+                pickmade = tag.GetBool("pick");
 
                 int thisBack = Projectile.NewProjectile(new Vector2(Position.X * 16 + 104, Position.Y * 16 ), new Vector2(0, 0), mod.ProjectileType("Backdrop"), 0, 0);
                 Backdrop thisBack2 = Main.projectile[thisBack].modProjectile as Backdrop;

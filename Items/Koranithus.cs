@@ -246,7 +246,6 @@ namespace ItemLevelTest.Items
                         cd = 210; //adds 210 frames to the cooldown = 3.5 seconds
 
                         //UI handling
-                        CDUI.coolingdown = true;
                         CDUI.maxcd = 210;
                         return true;
                     }
@@ -267,7 +266,6 @@ namespace ItemLevelTest.Items
                         item.shoot = 0; //keeps the sword tiself from shooting anything
                         cd = 1800; //sets the cooldown to 1800 ticks (equal to 30 seconds)
 
-                        CDUI.coolingdown = true;
                         CDUI.maxcd = 1800;
                         return true;
                     }
@@ -303,7 +301,6 @@ namespace ItemLevelTest.Items
                         Main.PlaySound(SoundID.Item62, player.Center);//sound FX
                         cd = 1800;//adds 1800 ticks to the cooldown (equal to 30 seconds)
 
-                        CDUI.coolingdown = true;
                         CDUI.maxcd = 1800;
                         return true;
                     }
@@ -359,6 +356,8 @@ namespace ItemLevelTest.Items
                 Upgradeui.level = level;
                 Upgradeui.swordinstance = this;
                 Upgradeui.spearinstance = null;
+                Upgradeui.bowinstance = null;
+                Upgradeui.guninstance = null;
                 Upgradeui.visible = true; //open the UI
 
             }
@@ -369,7 +368,11 @@ namespace ItemLevelTest.Items
         public override void HoldItem(Player player)
         {
             CDUI.ability = ab2;//sets the ability variable in the cooldown UI to display the correct icon
-            CDUI.instance = this;
+            CDUI.swordinstance = this;
+
+            CDUI.bowinstance = null;
+            CDUI.spearinstance = null;
+            CDUI.guninstance = null;
 
 
             if (ab3 == cinderaura)//Handles the ultimate ability "Aura of Cinders"
@@ -599,7 +602,6 @@ namespace ItemLevelTest.Items
                         Main.PlaySound(SoundID.Item20, player.Center);
                         Main.PlaySound(SoundID.Item74, player.Center);
                     }
-                    CDUI.coolingdown = false;
                 }
             }
         }

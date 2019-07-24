@@ -41,6 +41,11 @@ class Upgradeui : UIState
         public static Texture2D thornsimage = ModLoader.GetTexture("ItemLevelTest/UI/Spears");
         public static Texture2D greatspearimage = ModLoader.GetTexture("ItemLevelTest/UI/Whirl");
         public static Texture2D energyvampireimage = ModLoader.GetTexture("ItemLevelTest/UI/Energy");
+        public static Texture2D wingsimage = ModLoader.GetTexture("ItemLevelTest/UI/Wings");
+        public static Texture2D boltimage = ModLoader.GetTexture("ItemLevelTest/UI/Bolt");
+        public static Texture2D dareimage = ModLoader.GetTexture("ItemLevelTest/UI/Daredevil");
+        public static Texture2D sniperimage = ModLoader.GetTexture("ItemLevelTest/UI/Sniper");
+        public static Texture2D shotgunimage = ModLoader.GetTexture("ItemLevelTest/UI/Shotgun");
         public static Texture2D vfxtoggleoff = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
         public static Texture2D vorb = ModLoader.GetTexture("ItemLevelTest/UI/Vorb");
 
@@ -88,6 +93,9 @@ class Upgradeui : UIState
 
     public static Koranithus swordinstance = null;
     public static Testspear spearinstance = null;
+    public static Testbow bowinstance = null;
+    public static Testgun guninstance = null;
+
 
         const int passive1ability = 1; //constants to deobfuscate
     const int passive2ability = 2;
@@ -306,6 +314,12 @@ class Upgradeui : UIState
                         spearinstance.ab2 = 0;
                         spearinstance.ab3 = 0;
                     }
+                    if (guninstance != null)
+                    {
+                        guninstance.ab1 = 0;
+                        guninstance.ab2 = 0;
+                        guninstance.ab3 = 0;
+                    }
                     eatenorb = true;
                 }
 
@@ -336,6 +350,18 @@ class Upgradeui : UIState
                 else if (spearinstance.VFXstate == true)
                 {
                     spearinstance.VFXstate = false;
+                }
+            }
+
+            if (guninstance != null)
+            {
+                if (guninstance.VFXstate == false)
+                {
+                    guninstance.VFXstate = true;
+                }
+                else if (guninstance.VFXstate == true)
+                {
+                    guninstance.VFXstate = false;
                 }
             }
         }
@@ -380,6 +406,13 @@ class Upgradeui : UIState
                 spearinstance.ab3 = ab3;
             }
 
+            if (guninstance != null)
+            {
+                guninstance.ab1 = ab1;
+                guninstance.ab2 = ab2;
+                guninstance.ab3 = ab3;
+            }
+
             passiveselect = 0;
         activeselect = 0;
         ultimateselect = 0;
@@ -387,9 +420,7 @@ class Upgradeui : UIState
 
     private void Strike(UIMouseEvent evt, UIElement listeningElement)
     {
-            if(swordinstance != null)
-            {
-                    if (ab1 == 0 || ab1 == 1 && swordinstance.level >= 2)
+                    if (ab1 == 0 || ab1 == 1 && level >= 2)
                     {
                         Main.PlaySound(SoundID.MenuTick);
                         passiveselect = passive1ability;
@@ -400,45 +431,12 @@ class Upgradeui : UIState
                     {
                         Main.PlaySound(SoundID.Unlock);
                     }              
-            }
-
-            if (spearinstance != null)
-            {
-                if (ab1 == 0 || ab1 == 1 && spearinstance.level >= 2)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    passiveselect = passive1ability;
-                    activeselect = 0;
-                    ultimateselect = 0;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
-                }
-            }
-
         }
 
     private void Bolts(UIMouseEvent evt, UIElement listeningElement)
     {
-            if (swordinstance != null)
-            {
-                if (ab1 == 0 || ab1 == 2 && swordinstance.level >= 2)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    passiveselect = passive2ability;
-                    activeselect = 0;
-                    ultimateselect = 0;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
-                }
-            }
 
-            if (spearinstance != null)
-            {
-                if (ab1 == 0 || ab1 == 2 && spearinstance.level >= 2)
+                if (ab1 == 0 || ab1 == 2 && level >= 2)
                 {
                     Main.PlaySound(SoundID.MenuTick);
                     passiveselect = passive2ability;
@@ -449,29 +447,13 @@ class Upgradeui : UIState
                 {
                     Main.PlaySound(SoundID.Unlock);
                 }
-            }
+
         }
 
     private void Buster(UIMouseEvent evt, UIElement listeningElement)
     {
-            if (swordinstance != null)
-            {
-                if ((ab2 == 0 || ab2 == 1) && swordinstance.level >= 5)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    activeselect = active1ability;
-                    passiveselect = 0;
-                    ultimateselect = 0;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
-                }
-            }
 
-            if (spearinstance != null)
-            {
-                if ((ab2 == 0 || ab2 == 1) && spearinstance.level >= 5)
+                if ((ab2 == 0 || ab2 == 1) && level >= 5)
                 {
                     Main.PlaySound(SoundID.MenuTick);
                     activeselect = active1ability;
@@ -482,14 +464,12 @@ class Upgradeui : UIState
                 {
                     Main.PlaySound(SoundID.Unlock);
                 }
-            }
+
         }
 
     private void Burst(UIMouseEvent evt, UIElement listeningElement)
     {
-            if (swordinstance != null)
-            {
-                if ((ab2 == 0 || ab2 == 2) && swordinstance.level >= 5)
+                if ((ab2 == 0 || ab2 == 2) && level >= 5)
                 {
                     Main.PlaySound(SoundID.MenuTick);
                     activeselect = active2ability;
@@ -500,44 +480,12 @@ class Upgradeui : UIState
                 {
                     Main.PlaySound(SoundID.Unlock);
                 }
-            }
-
-            if (spearinstance != null)
-            {
-                if ((ab2 == 0 || ab2 == 2) && spearinstance.level >= 5)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    activeselect = active2ability;
-                    passiveselect = 0;
-                    ultimateselect = 0;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
-                }
-            }
         }
 
     private void Ward(UIMouseEvent evt, UIElement listeningElement)
     {
-            if (swordinstance != null)
-            {
-                if ((ab2 == 0 || ab2 == 3) && swordinstance.level >= 5)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    activeselect = active3ability;
-                    passiveselect = 0;
-                    ultimateselect = 0;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
-                }
-            }
 
-            if (spearinstance != null)
-            {
-                if ((ab2 == 0 || ab2 == 3) && spearinstance.level >= 5)
+                if ((ab2 == 0 || ab2 == 3) && level >= 5)
                 {
                     Main.PlaySound(SoundID.MenuTick);
                     activeselect = active3ability;
@@ -548,42 +496,23 @@ class Upgradeui : UIState
                 {
                     Main.PlaySound(SoundID.Unlock);
                 }
-            }
+           
 
         }
 
     private void Aura(UIMouseEvent evt, UIElement listeningElement)
     {
-            if (swordinstance != null)
-            {
 
-                if ((ab3 == 0 || ab3 == 1) && swordinstance.level >= 8)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    activeselect = 0;
-                    passiveselect = 0;
-                    ultimateselect = ultimate1ability;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
-                }
+            if ((ab3 == 0 || ab3 == 1) && level >= 8)
+            {
+                Main.PlaySound(SoundID.MenuTick);
+                activeselect = 0;
+                passiveselect = 0;
+                ultimateselect = ultimate1ability;
             }
-
-            if (spearinstance != null)
+            else
             {
-
-                if ((ab3 == 0 || ab3 == 1) && spearinstance.level >= 8)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    activeselect = 0;
-                    passiveselect = 0;
-                    ultimateselect = ultimate1ability;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
-                }
+                Main.PlaySound(SoundID.Unlock);
             }
 
         }
@@ -1030,6 +959,231 @@ class Upgradeui : UIState
                 }
 
                 else if (ab3 == 0 && spearinstance.level < 8)
+                {
+                    ultimate1.SetImage(lockimage);
+                }
+
+                else if (ab3 == 1)
+                {
+                    ultimate1.SetImage(energyvampireimage);
+                }
+
+                //------------------------------------------------------------------------
+            }
+
+            if (guninstance != null)
+            {
+                backdrop.BackgroundColor = new Color(90, 85, 40, 190);
+                backdrop.BorderColor = new Color(20, 20, 10, 230);
+
+                statwindow.BackgroundColor = new Color(100, 95, 60, 170);
+                statwindow.BorderColor = new Color(30, 30, 25, 230);
+
+                settingswindow.BackgroundColor = new Color(100, 95, 60, 170);
+                settingswindow.BorderColor = new Color(30, 30, 25, 230);
+
+                settingstext.SetText("Circle");
+
+                if (guninstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleon);
+                }
+
+                if (!guninstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleoff);
+                }
+
+                if (passiveselect != 0)
+                {
+                    if (passiveselect == passive1ability) //passive text sets
+                    {
+                        line1.SetText("Config: Shotgun");
+                        line2.SetText("Your shots deal less");
+                        line3.SetText("damage, but split");
+                        line4.SetText("into 4 pellets");
+                        line5.SetText("");
+                        line6.SetText("");
+                        line7.SetText("");
+
+                        passive1frame.SetImage(frame2);
+                        passive2frame.SetImage(frame);
+                    }
+                    else if (passiveselect == passive2ability)
+                    {
+                        line1.SetText("Config: Sniper");
+                        line2.SetText("Your shots travel");
+                        line3.SetText("faster and hitting");
+                        line4.SetText("the same target again");
+                        line5.SetText("deals " + (10 + guninstance.level) +" extra damage,");
+                        line6.SetText("stacking up to 5 times");
+                        line7.SetText("");
+
+
+                        passive1frame.SetImage(frame);
+                        passive2frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    passive1frame.SetImage(frame);
+                    passive2frame.SetImage(frame);
+                }
+
+                if (activeselect != 0)
+                {
+                    if (activeselect == active1ability) //active text sets
+                    {
+                        line1.SetText("Angel's Wings");
+                        line2.SetText("Increase your flash");
+                        line3.SetText("Range to 50 blocks");
+                        line4.SetText("and heal " + (20 + level) + " HP");
+                        line5.SetText("in an area on");
+                        line6.SetText("arrival");
+                        line7.SetText("4 second cooldown");
+
+                        active1frame.SetImage(frame2);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active2ability)
+                    {
+                        line1.SetText("Piercing Bolt");
+                        line2.SetText("Become invincible");
+                        line3.SetText("and deal " + (250 + level * 10)+ " damage");
+                        line4.SetText("to all enemies in");
+                        line5.SetText("your way when you");
+                        line6.SetText("flash");
+                        line7.SetText("3 second cooldown");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame2);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active3ability)
+                    {
+                        line1.SetText("Daredevil");
+                        line2.SetText("Store up to 2 quick");
+                        line3.SetText("recharging flashes");
+                        line4.SetText("at a time, which");
+                        line5.SetText("INSERT TEXT HERE");
+                        line6.SetText("INSERT TEXT HERE");
+                        line7.SetText("1.5 second cooldown each");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    active1frame.SetImage(frame);
+                    active2frame.SetImage(frame);
+                    active3frame.SetImage(frame);
+                }
+
+                if (ultimateselect != 0)
+                {
+                    if (ultimateselect == ultimate1ability) //ultimate text sets
+                    {
+                        line1.SetText("Energy Vampire");
+                        line2.SetText("Each regular jab");
+                        line3.SetText("of your spear grants");
+                        line4.SetText("30 energy per hit.");
+                        line5.SetText("");
+                        line6.SetText("");
+                        line7.SetText("");
+
+                        ultimate1frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    ultimate1frame.SetImage(frame);
+                }
+
+
+                if (activeselect == 0 && passiveselect == 0 && ultimateselect == 0)
+                {
+                    line1.SetText("HX-17 Sigma Upgrades");
+                    line2.SetText("Click an ability to");
+                    line3.SetText("see details, click");
+                    line4.SetText("the check button");
+                    line5.SetText("to confirm your");
+                    line6.SetText("selection.");
+                    line7.SetText("");
+                }
+
+                //------------------------------------------------------------------------
+                //------------------------------------------------------------------------
+
+                if (ab1 == 0 && guninstance.level >= 2)
+                {
+                    passive1.SetImage(shotgunimage);
+                    passive2.SetImage(sniperimage);
+                }
+
+                else if (ab1 == 0 && guninstance.level < 2)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive1ability)
+                {
+                    passive1.SetImage(shotgunimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive2ability)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(sniperimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab2 == 0 && guninstance.level >= 5)
+                {
+                    active1.SetImage(wingsimage);
+                    active2.SetImage(boltimage);
+                    active3.SetImage(dareimage);
+                }
+                else if (ab2 == 0 && guninstance.level < 5)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+                else if (ab2 == active1ability)
+                {
+                    active1.SetImage(wingsimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active2ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(boltimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active3ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(dareimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab3 == 0 && guninstance.level >= 8)
+                {
+                    ultimate1.SetImage(energyvampireimage);
+                }
+
+                else if (ab3 == 0 && guninstance.level < 8)
                 {
                     ultimate1.SetImage(lockimage);
                 }
