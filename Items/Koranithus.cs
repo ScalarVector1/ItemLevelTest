@@ -80,17 +80,17 @@ namespace ItemLevelTest.Items
             item.autoReuse = true;
         }
 
-        public override void GetWeaponDamage(Player player, ref int damage) //these methods adjust the damage, critical hit chance, and knockback of the weapon with it's level.
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
-            damage = 10 + level * dmgScale;
+            add += level * dmgScale;
         }
         public override void GetWeaponCrit(Player player, ref int crit)
         {
-            crit = item.crit = 0 + level * critScale;
+            crit += level * critScale;
         }
         public override void GetWeaponKnockback(Player player, ref float knockback)
         {
-            knockback = 1f + level * kbScale;
+            knockback += level * kbScale;
         }
 
         public void Leveler() //the method that adjusts the properties of the item with the level of the weapon appropriately, also handles events that occur on levelup

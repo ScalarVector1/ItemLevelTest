@@ -21,8 +21,8 @@ namespace ItemLevelTest.UI
         const int slagbuster = 1;
         const int slagburst = 2;
         const int slagward = 3;
-        //static Texture2D iconimg = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
-        UIImage Icon1 = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Blank"));
+        //static Texture2D iconimg = ModContent.GetTexture("ItemLevelTest/UI/Slagbuster");
+        UIImage Icon1 = new UIImage(ModContent.GetTexture("ItemLevelTest/UI/Blank"));
         Shade shade = new Shade();
         Exp exp = new Exp();
         public static Koranithus swordinstance;
@@ -43,8 +43,8 @@ namespace ItemLevelTest.UI
             abicon.BorderColor = new Color(0, 0, 0, 0);
             base.Append(abicon);
 
-            //Texture2D frame = ModLoader.GetTexture("ItemLevelTest/UI/Frame");
-            UIImage Frame = new UIImage(ModLoader.GetTexture("ItemLevelTest/UI/Frame"));
+            //Texture2D frame = ModContent.GetTexture("ItemLevelTest/UI/Frame");
+            UIImage Frame = new UIImage(ModContent.GetTexture("ItemLevelTest/UI/Frame"));
             Frame.Left.Set(0, 0f);
             Frame.Top.Set(0, 0f);
             Frame.Width.Set(66, 0f);
@@ -79,21 +79,21 @@ namespace ItemLevelTest.UI
             {
                 if (ability == none)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Blank"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Blank"));
                 }
                 else if (ability == slagbuster)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Slagbuster"));
 
                 }
                 else if (ability == slagburst)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagburst"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Slagburst"));
 
                 }
                 else if (ability == slagward)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagward"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Slagward"));
 
                 }
                 if (Koranithus.cd >= 1)
@@ -115,11 +115,11 @@ namespace ItemLevelTest.UI
             {
                 if (ability == none)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Default"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Default"));
                 }
                 else if (ability == slagbuster)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Phantombolt"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Phantombolt"));
                 }
 
                 if (Testbow.charging)
@@ -141,21 +141,21 @@ namespace ItemLevelTest.UI
             {
                 if (ability == none)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Blank"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Blank"));
                 }
                 else if (ability == 1)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Spears"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Spears"));
 
                 }
                 else if (ability == 2)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Whirl"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Whirl"));
 
                 }
                 /*else if (ability == slagward)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Slagward"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Slagward"));
 
                 }
                 */
@@ -178,24 +178,24 @@ namespace ItemLevelTest.UI
             {
                 if (ability == 0)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Default2"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Default2"));
                     maxcd = 120;
                 }
                 else if (ability == 1)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Wings"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Wings"));
                     maxcd = 240;
 
                 }
                 else if (ability == 2)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Bolt"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Bolt"));
                     maxcd = 180;
 
                 }
                 else if (ability == 3)
                 {
-                    Icon1.SetImage(ModLoader.GetTexture("ItemLevelTest/UI/Daredevil"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Daredevil"));
                     maxcd = 180;
 
                 }
@@ -223,12 +223,12 @@ namespace ItemLevelTest.UI
     class Shade : UIElement
     {
         public Color shadecolor = new Color(220, 220, 220, 255);
-        //private static Texture2D shadetexture = ModLoader.GetTexture("ItemLevelTest/UI/Shade");
+        //private static Texture2D shadetexture = ModContent.GetTexture("ItemLevelTest/UI/Shade");
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             CalculatedStyle dimensions = GetDimensions();
-            spriteBatch.Draw(ModLoader.GetTexture("ItemLevelTest/UI/Shade"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), shadecolor);
+            spriteBatch.Draw(ModContent.GetTexture("ItemLevelTest/UI/Shade"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), shadecolor);
         }
     }
 
@@ -237,7 +237,7 @@ namespace ItemLevelTest.UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             CalculatedStyle dimensions = GetDimensions();
-            spriteBatch.Draw(ModLoader.GetTexture("ItemLevelTest/UI/EXP"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), new Color(56,40,54));
+            spriteBatch.Draw(ModContent.GetTexture("ItemLevelTest/UI/EXP"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), new Color(56,40,54));
         }
     }  
 }

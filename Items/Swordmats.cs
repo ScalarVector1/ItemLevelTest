@@ -54,8 +54,8 @@ namespace ItemLevelTest.Items
         {
             for (int dustcounter = 0; dustcounter <= 40; dustcounter++)
             {
-                Dust.NewDustPerfect(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), mod.DustType("Sworddust2"), new Vector2(0, Main.rand.Next(500) * .01f + 0.1f), 0, default(Color), 1.05f);
-                Dust.NewDustPerfect(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), mod.DustType("Sworddust2"), new Vector2(0, -1 * (Main.rand.Next(500) * .01f + 0.1f)), 0, default(Color), 1.05f);
+                Dust.NewDustPerfect(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), mod.DustType("Sworddust2"), new Vector2(0, Main.rand.Next(500) * .01f + 0.1f), 0, default, 1.05f);
+                Dust.NewDustPerfect(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), mod.DustType("Sworddust2"), new Vector2(0, -1 * (Main.rand.Next(500) * .01f + 0.1f)), 0, default, 1.05f);
             }
 
             for (int soundcounter = 0; soundcounter <= 3; soundcounter++)
@@ -231,7 +231,7 @@ namespace ItemLevelTest.Items
         {
             for (int dustcounter = 0; dustcounter <= 120; dustcounter++)
             {
-                  Dust.NewDustPerfect(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), mod.DustType("Swordoredust2"), new Vector2(Main.rand.Next(-40, 40) * 0.1f, Main.rand.Next(-120,-30)*0.1f ), 0, default(Color), 2.1f);
+                  Dust.NewDustPerfect(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), mod.DustType("Swordoredust2"), new Vector2(Main.rand.Next(-40, 40) * 0.1f, Main.rand.Next(-120,-30)*0.1f ), 0, default, 2.1f);
                 
             }
 
@@ -276,16 +276,25 @@ namespace ItemLevelTest.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cinderplank");
-            Tooltip.SetDefault("[PH]Craft with crystalline obsidian");
+            Tooltip.SetDefault("");
         }
 
-        public override void AddRecipes()
+        /*public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.Wood, 200);
             recipe.AddIngredient(ItemID.RichMahogany, 200);
             recipe.AddIngredient(ItemID.Hellstone, 100);
+        }*/
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.DirtBlock);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
+
     }
     
     public class Swordlogadd1 : ModItem
@@ -302,6 +311,14 @@ namespace ItemLevelTest.Items
             item.height = 32;
             item.width = 32;
             item.rare = -11;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.DirtBlock);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 

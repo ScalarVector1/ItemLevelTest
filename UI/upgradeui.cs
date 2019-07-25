@@ -26,30 +26,30 @@ class Upgradeui : UIState
     public UIPanel statwindow;
     public UIPanel settingswindow;
 
-    public static Texture2D frame = ModLoader.GetTexture("ItemLEvelTest/UI/Frame2");
-    public static Texture2D check = ModLoader.GetTexture("ItemLEvelTest/UI/check");
-    public static Texture2D ex = ModLoader.GetTexture("ItemLEvelTest/UI/ex");
-    public static Texture2D frame2 = ModLoader.GetTexture("ItemLEvelTest/UI/Frame3");
-    public static Texture2D slagbusterimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
-    public static Texture2D slagburstimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagburst");
-    public static Texture2D slagwardimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagward");
-    public static Texture2D burningstrikeimage = ModLoader.GetTexture("ItemLevelTest/UI/burningstrike");
-    public static Texture2D fireboltsimage = ModLoader.GetTexture("ItemLevelTest/UI/firebolts");
-    public static Texture2D cinderauraimage = ModLoader.GetTexture("ItemLevelTest/UI/cinderaura");
-    public static Texture2D lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
-    public static Texture2D vfxtoggleon = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleon");
-        public static Texture2D thornsimage = ModLoader.GetTexture("ItemLevelTest/UI/Spears");
-        public static Texture2D greatspearimage = ModLoader.GetTexture("ItemLevelTest/UI/Whirl");
-        public static Texture2D energyvampireimage = ModLoader.GetTexture("ItemLevelTest/UI/Energy");
-        public static Texture2D wingsimage = ModLoader.GetTexture("ItemLevelTest/UI/Wings");
-        public static Texture2D boltimage = ModLoader.GetTexture("ItemLevelTest/UI/Bolt");
-        public static Texture2D dareimage = ModLoader.GetTexture("ItemLevelTest/UI/Daredevil");
-        public static Texture2D sniperimage = ModLoader.GetTexture("ItemLevelTest/UI/Sniper");
-        public static Texture2D shotgunimage = ModLoader.GetTexture("ItemLevelTest/UI/Shotgun");
-        public static Texture2D vfxtoggleoff = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
-        public static Texture2D vorb = ModLoader.GetTexture("ItemLevelTest/UI/Vorb");
+    public static Texture2D frame = ModContent.GetTexture("ItemLEvelTest/UI/Frame2");
+    public static Texture2D check = ModContent.GetTexture("ItemLEvelTest/UI/check");
+    public static Texture2D ex = ModContent.GetTexture("ItemLEvelTest/UI/ex");
+    public static Texture2D frame2 = ModContent.GetTexture("ItemLEvelTest/UI/Frame3");
+    public static Texture2D slagbusterimage = ModContent.GetTexture("ItemLevelTest/UI/Slagbuster");
+    public static Texture2D slagburstimage = ModContent.GetTexture("ItemLevelTest/UI/Slagburst");
+    public static Texture2D slagwardimage = ModContent.GetTexture("ItemLevelTest/UI/Slagward");
+    public static Texture2D burningstrikeimage = ModContent.GetTexture("ItemLevelTest/UI/burningstrike");
+    public static Texture2D fireboltsimage = ModContent.GetTexture("ItemLevelTest/UI/firebolts");
+    public static Texture2D cinderauraimage = ModContent.GetTexture("ItemLevelTest/UI/cinderaura");
+    public static Texture2D lockimage = ModContent.GetTexture("ItemLevelTest/UI/Blank");
+    public static Texture2D vfxtoggleon = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleon");
+    public static Texture2D thornsimage = ModContent.GetTexture("ItemLevelTest/UI/Spears");
+    public static Texture2D greatspearimage = ModContent.GetTexture("ItemLevelTest/UI/Whirl");
+    public static Texture2D energyvampireimage = ModContent.GetTexture("ItemLevelTest/UI/Energy");
+    public static Texture2D wingsimage = ModContent.GetTexture("ItemLevelTest/UI/Wings");
+    public static Texture2D boltimage = ModContent.GetTexture("ItemLevelTest/UI/Bolt");
+    public static Texture2D dareimage = ModContent.GetTexture("ItemLevelTest/UI/Daredevil");
+    public static Texture2D sniperimage = ModContent.GetTexture("ItemLevelTest/UI/Sniper");
+    public static Texture2D shotgunimage = ModContent.GetTexture("ItemLevelTest/UI/Shotgun");
+    public static Texture2D vfxtoggleoff = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
+    public static Texture2D vorb = ModContent.GetTexture("ItemLevelTest/UI/Vorb");
 
-        public UIImageButton passive1 = new UIImageButton(burningstrikeimage);
+    public UIImageButton passive1 = new UIImageButton(burningstrikeimage);
     public UIImageButton passive2 = new UIImageButton(fireboltsimage);
 
     public UIImageButton active1 = new UIImageButton(slagbusterimage);
@@ -1086,13 +1086,13 @@ class Upgradeui : UIState
                 {
                     if (ultimateselect == ultimate1ability) //ultimate text sets
                     {
-                        line1.SetText("Energy Vampire");
-                        line2.SetText("Each regular jab");
-                        line3.SetText("of your spear grants");
-                        line4.SetText("30 energy per hit.");
-                        line5.SetText("");
-                        line6.SetText("");
-                        line7.SetText("");
+                        line1.SetText("Null");
+                        line2.SetText("INSERT TEXT HERE");
+                        line3.SetText("INSERT TEXT HERE");
+                        line4.SetText("INSERT TEXT HERE");
+                        line5.SetText("INSERT TEXT HERE");
+                        line6.SetText("INSERT TEXT HERE");
+                        line7.SetText("INSERT TEXT HERE");
 
                         ultimate1frame.SetImage(frame2);
                     }
@@ -1180,7 +1180,7 @@ class Upgradeui : UIState
 
                 if (ab3 == 0 && guninstance.level >= 8)
                 {
-                    ultimate1.SetImage(energyvampireimage);
+                    ultimate1.SetImage(sniperimage);
                 }
 
                 else if (ab3 == 0 && guninstance.level < 8)
@@ -1190,7 +1190,7 @@ class Upgradeui : UIState
 
                 else if (ab3 == 1)
                 {
-                    ultimate1.SetImage(energyvampireimage);
+                    ultimate1.SetImage(sniperimage);
                 }
 
                 //------------------------------------------------------------------------

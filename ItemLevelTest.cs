@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using Terraria.UI;
 using ItemLevelTest.UI;
-
+using ItemLevelTest.Items;
 
 namespace ItemLevelTest
 {
@@ -13,8 +13,6 @@ namespace ItemLevelTest
         public Upgradeui upui;
         private UserInterface customResources;
         private UserInterface customResourcesupgrade;
-        private UserInterface customResourcescharge;
-        private UserInterface customResourcesenergy;
         
 
         public ItemLevelTest()
@@ -63,25 +61,32 @@ namespace ItemLevelTest
             if (!Main.dedServ)
             {
 
-                Upgradeui.frame = ModLoader.GetTexture("ItemLEvelTest/UI/Frame2");
-                Upgradeui.check = ModLoader.GetTexture("ItemLEvelTest/UI/check");
-                Upgradeui.ex = ModLoader.GetTexture("ItemLEvelTest/UI/ex");
-                Upgradeui.frame2 = ModLoader.GetTexture("ItemLEvelTest/UI/Frame3");
-                Upgradeui.slagbusterimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagbuster");
-                Upgradeui.slagburstimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagburst");
-                Upgradeui.slagwardimage = ModLoader.GetTexture("ItemLevelTest/UI/Slagward");
-                Upgradeui.burningstrikeimage = ModLoader.GetTexture("ItemLevelTest/UI/burningstrike");
-                Upgradeui.fireboltsimage = ModLoader.GetTexture("ItemLevelTest/UI/firebolts");
-                Upgradeui.cinderauraimage = ModLoader.GetTexture("ItemLevelTest/UI/cinderaura");
-                Upgradeui.lockimage = ModLoader.GetTexture("ItemLevelTest/UI/Blank");
-                Upgradeui.vfxtoggleoff = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
-                Upgradeui.vfxtoggleon = ModLoader.GetTexture("ItemLevelTest/UI/vfxtoggleon");
-                Upgradeui.vorb = ModLoader.GetTexture("ItemLevelTest/UI/Vorb");
+                    Upgradeui.frame = ModContent.GetTexture("ItemLEvelTest/UI/Frame2");
+                    Upgradeui.check = ModContent.GetTexture("ItemLEvelTest/UI/check");
+                    Upgradeui.ex = ModContent.GetTexture("ItemLEvelTest/UI/ex");
+                    Upgradeui.frame2 = ModContent.GetTexture("ItemLEvelTest/UI/Frame3");
+                    Upgradeui.slagbusterimage = ModContent.GetTexture("ItemLevelTest/UI/Slagbuster");
+                    Upgradeui.slagburstimage = ModContent.GetTexture("ItemLevelTest/UI/Slagburst");
+                    Upgradeui.slagwardimage = ModContent.GetTexture("ItemLevelTest/UI/Slagward");
+                    Upgradeui.burningstrikeimage = ModContent.GetTexture("ItemLevelTest/UI/burningstrike");
+                    Upgradeui.fireboltsimage = ModContent.GetTexture("ItemLevelTest/UI/firebolts");
+                    Upgradeui.cinderauraimage = ModContent.GetTexture("ItemLevelTest/UI/cinderaura");
+                    Upgradeui.lockimage = ModContent.GetTexture("ItemLevelTest/UI/Blank");
+                    Upgradeui.vfxtoggleon = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleon");
+                    Upgradeui.thornsimage = ModContent.GetTexture("ItemLevelTest/UI/Spears");
+                    Upgradeui.greatspearimage = ModContent.GetTexture("ItemLevelTest/UI/Whirl");
+                    Upgradeui.energyvampireimage = ModContent.GetTexture("ItemLevelTest/UI/Energy");
+                    Upgradeui.wingsimage = ModContent.GetTexture("ItemLevelTest/UI/Wings");
+                    Upgradeui.boltimage = ModContent.GetTexture("ItemLevelTest/UI/Bolt");
+                    Upgradeui.dareimage = ModContent.GetTexture("ItemLevelTest/UI/Daredevil");
+                    Upgradeui.sniperimage = ModContent.GetTexture("ItemLevelTest/UI/Sniper");
+                    Upgradeui.shotgunimage = ModContent.GetTexture("ItemLevelTest/UI/Shotgun");
+                    Upgradeui.vfxtoggleoff = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
+                    Upgradeui.vorb = ModContent.GetTexture("ItemLevelTest/UI/Vorb");
 
-                customResources = new UserInterface();
+
+        customResources = new UserInterface();
                 customResourcesupgrade = new UserInterface();
-                customResourcescharge = new UserInterface();
-                customResourcesenergy = new UserInterface();
                 cdui = new CDUI();
                 upui = new Upgradeui();
 
@@ -110,16 +115,37 @@ namespace ItemLevelTest
                     Upgradeui.fireboltsimage = null;
                     Upgradeui.cinderauraimage = null;
                     Upgradeui.lockimage = null;
+                    Upgradeui.thornsimage = null;
+                    Upgradeui.greatspearimage = null;
+                    Upgradeui.energyvampireimage = null;
+                    Upgradeui.wingsimage = null;
+                    Upgradeui.boltimage = null;
+                    Upgradeui.dareimage = null;
+                    Upgradeui.sniperimage = null;
+                    Upgradeui.shotgunimage = null;
                     Upgradeui.vfxtoggleoff = null;
                     Upgradeui.vfxtoggleon = null;
                     Upgradeui.vorb = null;
 
                 customResources = null;
                 customResourcesupgrade = null;
-                customResourcescharge = null;
-                customResourcesenergy = null;
                 cdui = null;
                 upui = null;
+
+                CDUI.swordinstance = null;
+                CDUI.bowinstance = null;
+                CDUI.spearinstance = null;
+                CDUI.guninstance = null;
+                Upgradeui.swordinstance = null;
+                Upgradeui.bowinstance = null;
+                Upgradeui.guninstance = null;
+                Upgradeui.spearinstance = null;
+
+                Flashhandler.instance = null;
+                Terraria.DataStructures.TileEntity.ByID = null;
+                Terraria.DataStructures.TileEntity.ByPosition = null;
+
+
 
             }         
         }

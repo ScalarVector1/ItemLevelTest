@@ -22,19 +22,19 @@ namespace ItemLevelTest.Tiles
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(mod.GetTileEntity<AltarEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.newTile.Width = 13;//Width of the tile in blocks
             TileObjectData.newTile.Height = 5;//Height of the tile in blocks
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16 };
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);//should not have to change
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 18 };
+            //TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);//should not have to change
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;//dont change
             TileObjectData.newTile.CoordinatePadding = 2;//dont change
-            TileObjectData.newTile.Origin = new Point16(0, 0);
+            //TileObjectData.newTile.Origin = new Point16(0, 0);
             TileObjectData.addTile(Type);
-
 
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Mysterious Altar");//Map name
             AddMapEntry(new Color(110, 175, 110), name);//Map color
+            dustType = mod.DustType("Pickdustaltar");
             disableSmartCursor = true;
 
 
@@ -52,7 +52,8 @@ namespace ItemLevelTest.Tiles
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            mod.GetTileEntity<AltarEntity>().Kill(i, j);
+            //mod.GetTileEntity<AltarEntity>().Kill(i, j);
+            fail = true;
         }
 
         public override void RightClick(int i, int j)
@@ -93,7 +94,9 @@ namespace ItemLevelTest.Tiles
                     player.HeldItem.stack--;
                     altarentity.slot4 = mod.ItemType("Swordlogadd1");
                 }
+
                 //-------------------------------------------------------------
+
                 if (player.HeldItem.type == mod.ItemType("Spear1") && altarentity.slot1 == 0)
                 {
                     player.HeldItem.stack--;
@@ -118,6 +121,33 @@ namespace ItemLevelTest.Tiles
                     altarentity.slot4 = mod.ItemType("Spear4");
                 }
 
+                //-------------------------------------------------------------
+
+                if (player.HeldItem.type == mod.ItemType("Gun1") && altarentity.slot1 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot1 = mod.ItemType("Gun1");
+                }
+
+                if (player.HeldItem.type == mod.ItemType("Gun2") && altarentity.slot2 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot2 = mod.ItemType("Gun2");
+                }
+
+                if (player.HeldItem.type == mod.ItemType("Gun3") && altarentity.slot3 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot3 = mod.ItemType("Gun3");
+                }
+
+                if (player.HeldItem.type == mod.ItemType("Gun4") && altarentity.slot4 == 0)
+                {
+                    player.HeldItem.stack--;
+                    altarentity.slot4 = mod.ItemType("Gun4");
+                }
+
+
                 if (player.HeldItem.type == 0)
                 {
                     if (altarentity.slot1 != 0)
@@ -126,6 +156,7 @@ namespace ItemLevelTest.Tiles
                         altarentity.slot1 = 0;
                         altarentity.swordItem1spawned = false;//find a better way to do this later
                         altarentity.spearItem1spawned = false;
+                        altarentity.gunItem1spawned = false;
                     }
 
                     if (altarentity.slot2 != 0)
@@ -134,6 +165,7 @@ namespace ItemLevelTest.Tiles
                         altarentity.slot2 = 0;
                         altarentity.swordItem2spawned = false;//find a better way to do this later
                         altarentity.spearItem2spawned = false;
+                        altarentity.gunItem2spawned = false;
                     }
 
                     if (altarentity.slot3 != 0)
@@ -142,6 +174,7 @@ namespace ItemLevelTest.Tiles
                         altarentity.slot3 = 0;
                         altarentity.swordItem3spawned = false;//find a better way to do this later
                         altarentity.spearItem3spawned = false;
+                        altarentity.gunItem3spawned = false;
                     }
 
                     if (altarentity.slot4 != 0)
@@ -150,6 +183,7 @@ namespace ItemLevelTest.Tiles
                         altarentity.slot4 = 0;
                         altarentity.swordItem4spawned = false;//find a better way to do this later
                         altarentity.spearItem4spawned = false;
+                        altarentity.gunItem4spawned = false;
                     }
                 }
 
@@ -169,12 +203,12 @@ namespace ItemLevelTest.Tiles
             public bool crafting = false;
 
             public bool swordmade = false;
-            public bool bowmade = true;
-            public bool staffmade = true;
+            public bool bowmade = false;
+            public bool staffmade = false;
             public bool spearmade = false;
-            public bool gunmade = true;
-            public bool orbmade = true;
-            public bool pickmade = true;
+            public bool gunmade = false;
+            public bool orbmade = false;
+            public bool pickmade = false;
             //----------------------------------------------
             public bool swordItem1spawned = false;
             public int thisSword1Index;
@@ -199,18 +233,30 @@ namespace ItemLevelTest.Tiles
 
             public bool spearItem4spawned = false;
             public int thisSpear4Index;
+            //----------------------------------------------
+            public bool gunItem1spawned = false;
+            public int thisGun1Index;
+
+            public bool gunItem2spawned = false;
+            public int thisGun2Index;
+
+            public bool gunItem3spawned = false;
+            public int thisGun3Index;
+
+            public bool gunItem4spawned = false;
+            public int thisGun4Index;
 
             int timer = 0;
             public override void Update()
             {
                 Player player = Main.LocalPlayer;
-                
 
-                if(timer > 0)
+
+                if (timer > 0)
                 {
                     timer--;
                 }
-               
+
                 if (slot1 == mod.ItemType("Swordsteel1") && slot2 == mod.ItemType("Swordsoul1") && slot3 == mod.ItemType("Swordlog1") && slot4 == mod.ItemType("Swordlogadd1"))
                 {
                     crafting = true;
@@ -219,20 +265,20 @@ namespace ItemLevelTest.Tiles
                         timer = 300;
                         for (int dc = 0; dc < 30; dc++)
                         {
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 10), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"),0,0,0,default(Color), 0.4f);
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 50), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 182), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 142), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 10), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 50), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 182), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 142), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
                         }
                     }
-                    
+
                     if (timer > 1)
                     {
                         Dust.NewDust(new Vector2(((Position.X * 16) + 10) + (((300 - timer) / 300f) * 84), ((Position.Y * 16) - 9) + (((300 - timer) / 300f) * 66)), 6, 6, mod.DustType("Sworddust"));
                         Dust.NewDust(new Vector2(((Position.X * 16) + 50) + (((300 - timer) / 300f) * 49), ((Position.Y * 16) - 29) + (((300 - timer) / 300f) * 86)), 6, 6, mod.DustType("Sworddust"));
                         Dust.NewDust(new Vector2(((Position.X * 16) + 182) - (((300 - timer) / 300f) * 84), ((Position.Y * 16) - 9) + (((300 - timer) / 300f) * 66)), 6, 6, mod.DustType("Sworddust"));
                         Dust.NewDust(new Vector2(((Position.X * 16) + 142) - (((300 - timer) / 300f) * 49), ((Position.Y * 16) - 29) + (((300 - timer) / 300f) * 86)), 6, 6, mod.DustType("Sworddust"));
-                        
+
                     }
 
                     if (timer == 1)
@@ -277,51 +323,51 @@ namespace ItemLevelTest.Tiles
                             {
                                 yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
                             }
-                            Dust.NewDustPerfect(tilecenter, mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(8, 10) * 0.1f);
+                            Dust.NewDustPerfect(tilecenter, mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default, Main.rand.Next(8, 10) * 0.1f);
                             if (Main.rand.Next(2) == 0)
                             {
-                                Dust.NewDustPerfect(tilecenter, mod.DustType("Slagdust"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(12, 14) * 0.1f);
+                                Dust.NewDustPerfect(tilecenter, mod.DustType("Slagdust"), new Vector2(xvel, yvel), 0, default, Main.rand.Next(12, 14) * 0.1f);
                             }
                             //sound FX
                             Main.PlaySound(SoundID.Item37, player.Center);
                             Main.PlaySound(SoundID.Item45, player.Center);
                         }
-                    }                   
+                    }
                 }
 
                 if (slot1 == mod.ItemType("Swordsteel1"))
-                {                       
-                        if (!swordItem1spawned)//find a better way to do this later
-                        {
-                            thisSword1Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 15, Position.Y * 16), new Vector2(0, 0), mod.ProjectileType("Sword1"), 0, 0);
-                            Sword1 sword1 = Main.projectile[thisSword1Index].modProjectile as Sword1;
-                            sword1.instance = this;
-                            swordItem1spawned = true;
-                        }
-                        
-                    
+                {
+                    if (!swordItem1spawned)//find a better way to do this later
+                    {
+                        thisSword1Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 15, Position.Y * 16), new Vector2(0, 0), mod.ProjectileType("Sword1"), 0, 0);
+                        Sword1 sword1 = Main.projectile[thisSword1Index].modProjectile as Sword1;
+                        sword1.instance = this;
+                        swordItem1spawned = true;
+                    }
+
+
                 }
 
                 if (slot2 == mod.ItemType("Swordsoul1"))
                 {
-                        if (!swordItem2spawned)//find a better way to do this later
-                        {
-                            thisSword2Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 54, Position.Y * 16 - 20), new Vector2(0, 0), mod.ProjectileType("Sword2"), 0, 0);
-                            Sword2 sword2 = Main.projectile[thisSword2Index].modProjectile as Sword2;
-                            sword2.instance = this;
-                            swordItem2spawned = true;
-                        }                              
+                    if (!swordItem2spawned)//find a better way to do this later
+                    {
+                        thisSword2Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 54, Position.Y * 16 - 20), new Vector2(0, 0), mod.ProjectileType("Sword2"), 0, 0);
+                        Sword2 sword2 = Main.projectile[thisSword2Index].modProjectile as Sword2;
+                        sword2.instance = this;
+                        swordItem2spawned = true;
+                    }
                 }
 
                 if (slot3 == mod.ItemType("Swordlog1"))
                 {
-                        if (!swordItem3spawned)//find a better way to do this later
-                        {
-                            thisSword3Index = Projectile.NewProjectile(new Vector2(Position.X* 16 + 154, Position.Y* 16 - 20), new Vector2(0, 0), mod.ProjectileType("Sword3"), 0, 0);
-                            Sword3 sword3 = Main.projectile[thisSword3Index].modProjectile as Sword3;
-                            sword3.instance = this;
-                            swordItem3spawned = true;
-                        }
+                    if (!swordItem3spawned)//find a better way to do this later
+                    {
+                        thisSword3Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 154, Position.Y * 16 - 20), new Vector2(0, 0), mod.ProjectileType("Sword3"), 0, 0);
+                        Sword3 sword3 = Main.projectile[thisSword3Index].modProjectile as Sword3;
+                        sword3.instance = this;
+                        swordItem3spawned = true;
+                    }
                 }
 
                 if (slot4 == mod.ItemType("Swordlogadd1"))
@@ -345,10 +391,10 @@ namespace ItemLevelTest.Tiles
                         timer = 300;
                         for (int dc = 0; dc < 30; dc++)
                         {
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 10), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 50), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 182), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
-                            Dust.NewDust(new Vector2(((Position.X * 16) + 142), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default(Color), 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 10), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 50), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 182), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 142), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
                         }
                     }
 
@@ -403,7 +449,7 @@ namespace ItemLevelTest.Tiles
                             {
                                 yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
                             }
-                            Dust.NewDustPerfect(tilecenter, mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default(Color), Main.rand.Next(8, 10) * 0.1f);
+                            Dust.NewDustPerfect(tilecenter, mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default, Main.rand.Next(8, 10) * 0.1f);
 
                             //sound FX
                             Main.PlaySound(SoundID.Item37, player.Center);
@@ -456,11 +502,134 @@ namespace ItemLevelTest.Tiles
                     }
                 }
 
-                //next recipie here
+                //---------------------------------------------------
+
+                    if (slot1 == mod.ItemType("Gun1") && slot2 == mod.ItemType("Gun2") && slot3 == mod.ItemType("Gun3") && slot4 == mod.ItemType("Gun4"))
+                    {
+                        crafting = true;
+                        if (timer == 0)
+                        {
+                            timer = 300;
+                            for (int dc = 0; dc < 30; dc++)
+                            {
+                                Dust.NewDust(new Vector2(((Position.X * 16) + 10), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                                Dust.NewDust(new Vector2(((Position.X * 16) + 50), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                                Dust.NewDust(new Vector2(((Position.X * 16) + 182), (Position.Y * 16) - 9), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                                Dust.NewDust(new Vector2(((Position.X * 16) + 142), (Position.Y * 16) - 29), 10, 10, mod.DustType("Sworddust2"), 0, 0, 0, default, 0.4f);
+                            }
+                        }
+
+                        if (timer > 1)
+                        {
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 10) + (((300 - timer) / 300f) * 84), ((Position.Y * 16) - 9) + (((300 - timer) / 300f) * 66)), 6, 6, mod.DustType("Gundust"));
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 50) + (((300 - timer) / 300f) * 49), ((Position.Y * 16) - 29) + (((300 - timer) / 300f) * 86)), 6, 6, mod.DustType("Gundust"));
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 182) - (((300 - timer) / 300f) * 84), ((Position.Y * 16) - 9) + (((300 - timer) / 300f) * 66)), 6, 6, mod.DustType("Gundust"));
+                            Dust.NewDust(new Vector2(((Position.X * 16) + 142) - (((300 - timer) / 300f) * 49), ((Position.Y * 16) - 29) + (((300 - timer) / 300f) * 86)), 6, 6, mod.DustType("Gundust"));
+
+                        }
+
+                        if (timer == 1)
+                        {
+                            Vector2 tilecenter = new Vector2((Position.X * 16) + 114, (Position.Y * 16) + 50);
+                            Item.NewItem(tilecenter, new Vector2(1, 1), mod.ItemType("Testgun"));
+                            slot1 = 0;
+                            slot2 = 0;
+                            slot3 = 0;
+                            slot4 = 0;
+                            gunItem1spawned = false;
+                            gunItem2spawned = false;
+                            gunItem3spawned = false;
+                            gunItem4spawned = false;
+                            gunmade = true;
+                            crafting = false;
+
+                            string text = player.name + " Has Crafted HX-17 Sigma!";
+                            if (Main.netMode == 2) // Server
+                            {
+                                NetMessage.SendData(25, -1, -1, NetworkText.FromLiteral(text), 255, 255f, 255f, 150f, 0, 0, 0);
+                            }
+                            else if (Main.netMode == 0) // Client
+                            {
+                                Main.NewText(text, new Color(170, 140, 220));
+                                Main.NewText("Your body goes numb...", new Color(100, 100, 100));
+                            }
+
+                            //handles dust spawned on craft
+                            for (int dustcounter = 300; dustcounter >= 0; dustcounter--)
+                            {
+                                float yvel = 0;
+                                float xvel = 0;
+                                float hyp = 0;
+                                hyp = Main.rand.Next(0, 100) * 0.1f;
+                                xvel = Main.rand.Next(-400, 400) * .01f;
+                                if (Main.rand.Next(2) == 0)
+                                {
+                                    yvel = (float)Math.Sqrt(hyp - xvel * xvel);
+                                }
+                                else
+                                {
+                                    yvel = (float)Math.Sqrt(hyp - xvel * xvel) * -1;
+                                }
+                                Dust.NewDustPerfect(tilecenter, mod.DustType("Sworddust2"), new Vector2(xvel, yvel), 0, default, Main.rand.Next(8, 10) * 0.1f);
+
+                                //sound FX
+                                Main.PlaySound(SoundID.Item37, player.Center);
+                                Main.PlaySound(SoundID.Item45, player.Center);
+                            }
+                        }
+                    }
+
+                    if (slot1 == mod.ItemType("Gun1"))
+                    {
+                        if (!gunItem1spawned)//find a better way to do this later
+                        {
+                            thisGun1Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 15, Position.Y * 16), new Vector2(0, 0), mod.ProjectileType("Gun1"), 0, 0);
+                            Gun1 gun1 = Main.projectile[thisGun1Index].modProjectile as Gun1;
+                            gun1.instance = this;
+                            gunItem1spawned = true;
+                        }
+                    }
+
+                    if (slot2 == mod.ItemType("Gun2"))
+                    {
+                        if (!gunItem2spawned)//find a better way to do this later
+                        {
+                            thisGun2Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 54, Position.Y * 16 - 20), new Vector2(0, 0), mod.ProjectileType("Gun2"), 0, 0);
+                            Gun2 gun2 = Main.projectile[thisGun2Index].modProjectile as Gun2;
+                            gun2.instance = this;
+                            gunItem2spawned = true;
+                        }
+                    }
+
+                    if (slot3 == mod.ItemType("Gun3"))
+                    {
+                        if (!gunItem3spawned)//find a better way to do this later
+                        {
+                            thisGun3Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 154, Position.Y * 16 - 20), new Vector2(0, 0), mod.ProjectileType("Gun3"), 0, 0);
+                            Gun3 gun3 = Main.projectile[thisGun3Index].modProjectile as Gun3;
+                            gun3.instance = this;
+                            gunItem3spawned = true;
+                        }
+                    }
+
+                    if (slot4 == mod.ItemType("Gun4"))
+                    {
+                        if (!gunItem4spawned)//find a better way to do this later
+                        {
+                            thisGun4Index = Projectile.NewProjectile(new Vector2(Position.X * 16 + 193, Position.Y * 16), new Vector2(0, 0), mod.ProjectileType("Gun4"), 0, 0);
+                            Gun4 gun4 = Main.projectile[thisGun4Index].modProjectile as Gun4;
+                            gun4.instance = this;
+                            gunItem4spawned = true;
+                        }
+                    }
+
+                    //next recipie here
 
 
 
+                
             }
+
 
             public override bool ValidTile(int i, int j)
             {
@@ -477,6 +646,7 @@ namespace ItemLevelTest.Tiles
                     return -1;
                 }
                 return Place(i, j);
+
             }
 
             public override TagCompound Save()

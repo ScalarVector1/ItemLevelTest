@@ -19,8 +19,8 @@ namespace ItemLevelTest.Items
         public int expRequired = 50; //the exp required to reach the next level, this value sets the base
 
         public int level = 0; //the item's current level (this is saved)
-        public int dmgScale = 8; //changes the damage gain per level
-        int critScale = 1; //changes the critical strike chance gain per level
+        public int dmgScale = 6; //changes the damage gain per level
+        int critScale = 2; //changes the critical strike chance gain per level
         int spdScale = 1;
         float kbScale = 0.5f; //changes the knockback gained per level
         const float expScale = 1.4f; //Changes the multiplier for the amount of exp required for the next level after the previous
@@ -48,16 +48,18 @@ namespace ItemLevelTest.Items
         {
             item.damage = 40;
             item.useStyle = 5;
-            item.useAnimation = 25;
-            item.useTime = 25;
+            item.useAnimation = 27;
+            item.useTime = 27;
             item.knockBack = 6.5f;
             item.width = 94;
             item.height = 38;
             item.scale = 1f;
             item.rare = -12;
+            item.crit = 10;
             item.value = Item.sellPrice(silver: 10);
             item.useAmmo = AmmoID.Bullet;
-            
+            item.shoot = 10;
+
 
             item.ranged = true;
             item.noMelee = true;
@@ -65,6 +67,29 @@ namespace ItemLevelTest.Items
 
             item.UseSound = SoundID.Item91;
         }
+
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        {
+            if (ab1 != 1)
+            {
+                add += level * dmgScale;
+            }
+            else
+            {
+                add += level * (dmgScale/2);
+            }
+        }
+
+        public override void GetWeaponCrit(Player player, ref int crit)
+        {
+            crit += level * critScale;
+        }
+
+        public override void GetWeaponKnockback(Player player, ref float knockback)
+        {
+            knockback += level * kbScale;
+        }
+
         public override bool AltFunctionUse(Player player) //allows right click to be used
         {
             return true;
@@ -89,11 +114,14 @@ namespace ItemLevelTest.Items
             return new Vector2(-15, -2);
         }
 
+        bool loaded = false;
+        bool consumed = false;
         public override bool CanUseItem(Player player)
         {
-            bool loaded = false;
-            bool consumed = false;
-
+            loaded = false;
+            consumed = false;
+            if (player.altFunctionUse != 2)
+            {
                 for (int z = 54; z <= 57; z++)
                 {
                     if (player.inventory[z].ammo == AmmoID.Bullet && !consumed)
@@ -101,7 +129,10 @@ namespace ItemLevelTest.Items
                         if (player.inventory[z].stack > 0)
                         {
                             loaded = true;
-                            player.inventory[z].stack--;
+                            if (player.inventory[z].type != ItemID.EndlessMusketPouch)
+                            {
+                                player.inventory[z].stack--;
+                            }
                             consumed = true;
                         }
                         else
@@ -128,7 +159,12 @@ namespace ItemLevelTest.Items
                             if (player.inventory[z].stack > 0)
                             {
                                 loaded = true;
-                                player.inventory[z].stack--;
+
+                                if(player.inventory[z].type != ItemID.EndlessMusketPouch)
+                                {
+                                    player.inventory[z].stack--;
+                                }
+                                
                                 consumed = true;
                             }
                             else
@@ -148,14 +184,28 @@ namespace ItemLevelTest.Items
 
                     }
                 }
+            }         
+                          
 
+            if(loaded)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
             float R = 0;
             if (loaded && player.altFunctionUse != 2)
             {
                 if (ab1 != 1)
                 {
-                    float x = (Main.screenPosition.X + Main.mouseX) - player.position.X;
-                    float y = (Main.screenPosition.Y + Main.mouseY) - player.position.Y;
+                    float x = (Main.screenPosition.X + Main.mouseX - 20) - player.position.X;
+                    float y = (Main.screenPosition.Y + Main.mouseY - 20) - player.position.Y;
 
                     if (ab1 != 2)
                     {
@@ -169,42 +219,47 @@ namespace ItemLevelTest.Items
                     float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
                     float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
 
-                    int index = Projectile.NewProjectile(player.Center, new Vector2(xvel, yvel), mod.ProjectileType("Testbullet"), (10 + level * dmgScale), 0, Main.myPlayer);
+
+
+                    int index = Projectile.NewProjectile(player.Center, new Vector2(xvel, yvel), mod.ProjectileType("Testbullet"), (40 + level * dmgScale), 1f + level * kbScale, Main.myPlayer);
                     Testbullet proj = Main.projectile[index].modProjectile as Testbullet;
                     proj.instance = this;
-                    return true;
+
+                    Vector2 muzzleOffset = Vector2.Normalize(new Vector2(xvel, yvel)) * 68f;
+                    if (Collision.CanHit(Main.projectile[index].position, 0, 0, Main.projectile[index].position + muzzleOffset, 0, 0))
+                    {
+                        Main.projectile[index].position += muzzleOffset;
+                    }
+
                 }
 
-                if(ab1 == 1)
+                if (ab1 == 1)
                 {
                     for (int k = 0; k <= 2; k++)
                     {
-                        float x = (Main.screenPosition.X + Main.mouseX) - player.position.X;
-                        float y = (Main.screenPosition.Y + Main.mouseY) - player.position.Y;
+                        float x = (Main.screenPosition.X + Main.mouseX - 20) - player.position.X;
+                        float y = (Main.screenPosition.Y + Main.mouseY - 20) - player.position.Y;
 
                         R = (20);
 
                         float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
                         float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
 
-                        int index = Projectile.NewProjectile(player.Center, new Vector2(xvel + Main.rand.Next(-3, 3), yvel + Main.rand.Next(-3, 3)), mod.ProjectileType("Testbullet"), (10 + level * (dmgScale / 2)), 0, Main.myPlayer);
+                        int index = Projectile.NewProjectile(player.Center, new Vector2(xvel + Main.rand.Next(-3, 3), yvel + Main.rand.Next(-3, 3)), mod.ProjectileType("Testbullet"), (30 + level * (dmgScale / 2)), 1f + level * kbScale, Main.myPlayer);
                         Testbullet proj = Main.projectile[index].modProjectile as Testbullet;
-                        proj.instance = this;                
-                    }
-                    return true;
-                }
-                else
-                {
-                    return true;
-                }
-                
-            }
+                        proj.instance = this;
 
-            else
-            {
-                return false;
+                        Vector2 muzzleOffset = Vector2.Normalize(new Vector2(xvel, yvel)) * 68f;
+                        if (Collision.CanHit(Main.projectile[index].position, 0, 0, Main.projectile[index].position + muzzleOffset, 0, 0))
+                        {
+                            Main.projectile[index].position += muzzleOffset;
+                        }
+                    }
+
+                }
+
             }
-            
+                return false;
         }
 
         public void Expcalc() //calculates the exp of the item, and if it should be leveled up (this handles the actual increase to the level variable itself also)
@@ -225,8 +280,8 @@ namespace ItemLevelTest.Items
 
             if (item.useTime - spdScale >= 2) //adjusts the item's usetime and animation, ensures that it will never drop below 2 (this causes buggy animation)
             {
-                item.useTime = 25 - level * spdScale;
-                item.useAnimation = 25 - level * spdScale;
+                item.useTime = 27 - level * spdScale;
+                item.useAnimation = 27 - level * spdScale;
             }
             else
             {

@@ -57,6 +57,7 @@ namespace ItemLevelTest.Dusts
         {
             Player player = Main.LocalPlayer;
             dust.position += dust.velocity + player.velocity;
+            dust.position.Y -= 1.5f;
 
             dust.scale *= 0.92f;
 

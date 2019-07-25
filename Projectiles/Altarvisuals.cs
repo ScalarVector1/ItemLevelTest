@@ -500,5 +500,219 @@ namespace ItemLevelTest.Projectiles
             }
         }
     }
+
+    //------------------------------------------------------------------------------------------------
+
+    class Gun1 : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+            Main.projFrames[projectile.type] = 9;
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 30;
+            projectile.height = 234 / 9;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+
+
+        float timer = 0;
+
+        public override void AI()
+        {
+
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Gundust"));
+            }
+            if (instance.slot1 == mod.ItemType("Gun1") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot1 != mod.ItemType("Gun1") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+            if (++projectile.frameCounter >= 5)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 9)
+                {
+                    projectile.frame = 0;
+                }
+            }
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
+
+    class Gun2 : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+            Main.projFrames[projectile.type] = 5;
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 48;
+            projectile.height = 26;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+
+        float timer = 0;
+        public override void AI()
+        {
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Gundust"));
+            }
+            if (instance.slot2 == mod.ItemType("Gun2") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot2 != mod.ItemType("Gun2") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+            if (++projectile.frameCounter >= 5)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 5)
+                {
+                    projectile.frame = 0;
+                }
+            }
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
+
+    class Gun3 : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+            Main.projFrames[projectile.type] = 10;
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 40;
+            projectile.height = 28;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+
+
+        float timer = 0;
+        public override void AI()
+        {
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Gundust"));
+            }
+            if (instance.slot3 == mod.ItemType("Gun3") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot3 != mod.ItemType("Gun3") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+            if (++projectile.frameCounter >= 5)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 10)
+                {
+                    projectile.frame = 0;
+                }
+            }
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
+
+    class Gun4 : ModProjectile
+    {
+        public Tiles.Altar.AltarEntity instance;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+        }
+        public override void SetDefaults()
+        {
+            projectile.damage = 0;
+            projectile.width = 34;
+            projectile.height = 34;
+            projectile.friendly = true;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 2;
+            projectile.tileCollide = false;
+        }
+
+
+        float timer = 0;
+        public override void AI()
+        {
+            if (Main.rand.Next(3) == 0)
+            {
+                Dust.NewDust(projectile.position, 32, 32, mod.DustType("Gundust"));
+            }
+
+            if (instance.slot4 == mod.ItemType("Gun4") && !instance.crafting)
+            {
+                projectile.timeLeft = 30;
+            }
+            if (instance.slot4 != mod.ItemType("Gun4") || instance.crafting)
+            {
+                projectile.alpha += 255 / 30;
+            }
+
+            projectile.velocity.Y = (float)Math.Sin(timer) / 2;
+
+            timer += 0.1256f;
+            if (timer >= 6.28)
+            {
+                timer = 0;
+            }
+        }
+    }
 }
     

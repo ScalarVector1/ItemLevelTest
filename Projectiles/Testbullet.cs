@@ -25,6 +25,7 @@ namespace ItemLevelTest.Projectiles
             projectile.friendly = true;
             projectile.penetrate = 1;
             projectile.timeLeft = 60;
+            projectile.ranged = true;
 
         }
         public override Color? GetAlpha(Color lightColor)
@@ -64,6 +65,7 @@ namespace ItemLevelTest.Projectiles
         {
           
 
+
             if (instance.snipertarget != null && target == instance.snipertarget)
             {
                 if (instance.hits < 5)
@@ -93,6 +95,11 @@ namespace ItemLevelTest.Projectiles
             for (int dustcounter = 0; dustcounter <= 3; dustcounter++)
             {
                 Dust.NewDust(projectile.position, 10, 10, mod.DustType("Gundust3"), 0, 0, 0, new Color(255, 255, 255), 0.7f);
+            }
+
+            if(instance.ab1 == 2)
+            {
+                projectile.extraUpdates = 2;
             }
         }
     }

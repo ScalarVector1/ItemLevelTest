@@ -11,3 +11,5 @@ C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bi
 C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.csproj.CopyComplete
 C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.dll
 C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\obj\Debug\ItemLevelTest.pdb
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\ItemLevelTest.dll.CodeAnalysisLog.xml
+C:\Users\Alex\Documents\My Games\Terraria\ModLoader\Mod Sources\ItemLevelTest\bin\Debug\ItemLevelTest.dll.lastcodeanalysissucceeded
