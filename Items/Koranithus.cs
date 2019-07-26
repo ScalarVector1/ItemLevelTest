@@ -82,7 +82,7 @@ namespace ItemLevelTest.Items
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
-            add += level * dmgScale;
+            flat += level * dmgScale;
         }
         public override void GetWeaponCrit(Player player, ref int crit)
         {
@@ -205,15 +205,6 @@ namespace ItemLevelTest.Items
         {
             if (player.altFunctionUse == 2)
             {
-
-
-                if (ab2 == none) //no ability unlocked or selected
-                {
-                    Main.NewText("Active abilities unlock at level 5!");
-                    return false;
-                }
-
-
                 if (ab2 == slagbuster) //"slag buster" ability, fires a damaging explosive projectile
                 {
                     if (cd == 0) //only possible if cooldown isnt active

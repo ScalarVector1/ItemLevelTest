@@ -451,6 +451,7 @@ class Upgradeui : UIState
                     else
                     {
                         Main.PlaySound(SoundID.Unlock);
+                        Main.NewText("Passive abilities unlock at level 2!");
                     }              
         }
 
@@ -467,7 +468,8 @@ class Upgradeui : UIState
                 else
                 {
                     Main.PlaySound(SoundID.Unlock);
-                }
+                Main.NewText("Passive abilities unlock at level 2!");
+            }
 
         }
 
@@ -484,7 +486,8 @@ class Upgradeui : UIState
                 else
                 {
                     Main.PlaySound(SoundID.Unlock);
-                }
+                Main.NewText("Active abilities unlock at level 5!");
+            }
 
         }
 
@@ -500,7 +503,8 @@ class Upgradeui : UIState
                 else
                 {
                     Main.PlaySound(SoundID.Unlock);
-                }
+                Main.NewText("Active abilities unlock at level 5!");
+            }
         }
 
     private void Ward(UIMouseEvent evt, UIElement listeningElement)
@@ -516,7 +520,8 @@ class Upgradeui : UIState
                 else
                 {
                     Main.PlaySound(SoundID.Unlock);
-                }
+                Main.NewText("Active abilities unlock at level 5!");
+            }
            
 
         }
@@ -534,6 +539,7 @@ class Upgradeui : UIState
             else
             {
                 Main.PlaySound(SoundID.Unlock);
+                Main.NewText("Ultimate abilities unlock at level 8!");
             }
 
         }

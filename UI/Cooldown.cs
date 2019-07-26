@@ -17,6 +17,7 @@ namespace ItemLevelTest.UI
         public static bool visible = false;
         public static int ability = 0;
         public static int maxcd = 0;
+        public static int maxcdgun = 0;
         const int none = 0;
         const int slagbuster = 1;
         const int slagburst = 2;
@@ -179,29 +180,29 @@ namespace ItemLevelTest.UI
                 if (ability == 0)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Default2"));
-                    maxcd = 120;
+                    maxcdgun = 120;
                 }
                 else if (ability == 1)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Wings"));
-                    maxcd = 240;
+                    maxcdgun = 240;
 
                 }
                 else if (ability == 2)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Bolt"));
-                    maxcd = 180;
+                    maxcdgun = 180;
 
                 }
                 else if (ability == 3)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Daredevil"));
-                    maxcd = 180;
+                    maxcdgun = 180;
 
                 }
                 if (Flashhandler.cooldown >= 1)
                 {
-                    shade.Height.Set((float)(Flashhandler.cooldown * 38) / maxcd, 0);
+                    shade.Height.Set((float)(Flashhandler.cooldown * 38) / maxcdgun, 0);
                     Recalculate();
                 }
                 else

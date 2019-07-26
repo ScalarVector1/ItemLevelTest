@@ -72,11 +72,11 @@ namespace ItemLevelTest.Items
         {
             if (ab1 != 1)
             {
-                add += level * dmgScale;
+                flat += level * dmgScale;
             }
             else
             {
-                add += level * (dmgScale/2);
+                flat += level * (dmgScale/2);
             }
         }
 
