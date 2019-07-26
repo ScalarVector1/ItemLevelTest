@@ -47,7 +47,8 @@ class Upgradeui : UIState
     public static Texture2D sniperimage = ModContent.GetTexture("ItemLevelTest/UI/Sniper");
     public static Texture2D shotgunimage = ModContent.GetTexture("ItemLevelTest/UI/Shotgun");
     public static Texture2D vfxtoggleoff = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
-    public static Texture2D vorb = ModContent.GetTexture("ItemLevelTest/UI/Vorb");
+        public static Texture2D resetimage = ModContent.GetTexture("ItemLevelTest/UI/Reset");
+        public static Texture2D vorb = ModContent.GetTexture("ItemLevelTest/UI/Vorb");
 
     public UIImageButton passive1 = new UIImageButton(burningstrikeimage);
     public UIImageButton passive2 = new UIImageButton(fireboltsimage);
@@ -59,7 +60,8 @@ class Upgradeui : UIState
     public UIImageButton ultimate1 = new UIImageButton(cinderauraimage);
 
     public UIImageButton vfxtoggle = new UIImageButton(vfxtoggleon);
-        public UIImageButton reset = new UIImageButton(vorb);
+        public UIImageButton reset = new UIImageButton(resetimage);
+        public UIImage orb = new UIImage(vorb);
 
 
     public UIText line1 = new UIText("null");
@@ -70,7 +72,7 @@ class Upgradeui : UIState
     public UIText line6 = new UIText("null");
     public UIText line7 = new UIText("null");
         public UIText settingstext = new UIText("Fire Trail");
-        public UIText resettext = new UIText("x1   Reset Abilities");
+        public UIText resettext = new UIText("   Reset     x1");
 
         //frames
 
@@ -110,34 +112,40 @@ class Upgradeui : UIState
     {
         backdrop = new UIPanel();
         backdrop.SetPadding(0);
-        backdrop.Left.Set(750f, 0f);
-        backdrop.Top.Set(250f, 0f);
-        backdrop.Width.Set(400f, 0f);
-        backdrop.Height.Set(438f, 0f);
+        backdrop.Left.Set(-250, 0.5f);
+        backdrop.Top.Set(-150f, 0.5f);
+        backdrop.Width.Set(300f, 0f);
+        backdrop.Height.Set(300f, 0f);
         base.Append(backdrop);
 
         statwindow = new UIPanel();
         statwindow.SetPadding(0);
-        statwindow.Left.Set(401, 0);
+        statwindow.Left.Set(301, 0);
         statwindow.Top.Set(0, 0);
-        statwindow.Height.Set(220, 0);
+        statwindow.Height.Set(180, 0);
         statwindow.Width.Set(200, 0);
             backdrop.Append(statwindow);
 
             settingswindow = new UIPanel();
             settingswindow.SetPadding(0);
-            settingswindow.Left.Set(401 + 750, 0);
-            settingswindow.Top.Set(221 + 250, 0);
+            settingswindow.Left.Set(50, 0.5f);
+            settingswindow.Top.Set(31, 0.5f);
             settingswindow.Height.Set(36, 0);
             settingswindow.Width.Set(125, 0);
             base.Append(settingswindow);
 
-            reset.Left.Set(10, 0);
-            reset.Top.Set(408, 0);
-            reset.Width.Set(24, 0);
-            reset.Height.Set(24, 0);
+            reset.Left.Set(156, 0);
+            reset.Top.Set(20, 0);
+            reset.Width.Set(94, 0);
+            reset.Height.Set(26, 0);
             reset.OnClick += new MouseEvent(Reset);
             backdrop.Append(reset);
+
+            orb.Left.Set(256, 0);
+            orb.Top.Set(21, 0);
+            orb.Width.Set(24, 0);
+            orb.Height.Set(24, 0);
+            backdrop.Append(orb);
 
 
             UIImageButton selector = new UIImageButton(check);
@@ -164,46 +172,46 @@ class Upgradeui : UIState
             vfxtoggle.OnClick += new MouseEvent(VFXtoggle);
             settingswindow.Append(vfxtoggle);
 
-        passive1.Left.Set(150 - 19, 0);
-        passive1.Top.Set(100, 0);
+        passive1.Left.Set(110 - 19, 0);
+        passive1.Top.Set(80, 0);
         passive1.Height.Set(38, 0);
         passive1.Width.Set(38, 0);
         passive1.OnClick += new MouseEvent(Strike);
         backdrop.Append(passive1);
 
-        passive2.Left.Set(250 - 19, 0);
-        passive2.Top.Set(100, 0);
+        passive2.Left.Set(190 - 19, 0);
+        passive2.Top.Set(80, 0);
         passive2.Height.Set(38, 0);
         passive2.Width.Set(38, 0);
         passive2.OnClick += new MouseEvent(Bolts);
         backdrop.Append(passive2);
 
         //UIImageButton slagbuster = new UIImageButton(slagbusterimage);
-        active1.Left.Set(100 - 19, 0);
-        active1.Top.Set(200, 0);
+        active1.Left.Set(75 - 19, 0);
+        active1.Top.Set(155, 0);
         active1.Height.Set(38, 0);
         active1.Width.Set(38, 0);
         active1.OnClick += new MouseEvent(Buster);
         backdrop.Append(active1);
 
         //UIImageButton active2 = new UIImageButton(active2image);
-        active2.Left.Set(200 - 19, 0);
-        active2.Top.Set(200, 0);
+        active2.Left.Set(150 - 19, 0);
+        active2.Top.Set(155, 0);
         active2.Height.Set(38, 0);
         active2.Width.Set(38, 0);
         active2.OnClick += new MouseEvent(Burst);
         backdrop.Append(active2);
 
         //UIImageButton active3 = new UIImageButton(active3image);
-        active3.Left.Set(300 - 19, 0);
-        active3.Top.Set(200, 0);
+        active3.Left.Set(225 - 19, 0);
+        active3.Top.Set(155, 0);
         active3.Height.Set(38, 0);
         active3.Width.Set(38, 0);
         active3.OnClick += new MouseEvent(Ward);
         backdrop.Append(active3);
 
-        ultimate1.Left.Set(200 - 19, 0);
-        ultimate1.Top.Set(300, 0);
+        ultimate1.Left.Set(150 - 19, 0);
+        ultimate1.Top.Set(230, 0);
         ultimate1.Height.Set(38, 0);
         ultimate1.Width.Set(38, 0);
         ultimate1.OnClick += new MouseEvent(Aura);
@@ -283,8 +291,8 @@ class Upgradeui : UIState
             settingstext.Top.Set(10, 0);
             settingswindow.Append(settingstext);
 
-            resettext.Left.Set(38,0);
-            resettext.Top.Set(410, 0);
+            resettext.Left.Set(164,0);
+            resettext.Top.Set(25, 0);
             backdrop.Append(resettext);
 
 
@@ -296,8 +304,9 @@ class Upgradeui : UIState
             for (int z = 0; z <= 50; z++)
             {
  
-                if (player.inventory[z].type == Typefinder.vorbtype && !eatenorb)
+                if (player.inventory[z].type == Typefinder.vorbtype && !eatenorb && (ab1 != 0 || ab2 != 0 || ab3 != 0))
                 {
+                    Main.PlaySound(SoundID.Item29);
                     player.inventory[z].stack--;
                     ab1 = 0;
                     ab2 = 0;
@@ -322,8 +331,20 @@ class Upgradeui : UIState
                     }
                     eatenorb = true;
                 }
-
+                
             }
+
+            if ((ab1 != 0 || ab2 != 0 || ab3 != 0) && !eatenorb)
+            {
+                Main.NewText("You need a venerido orb to reset your abilities!");
+                Main.PlaySound(SoundID.Item16);
+            }
+            else if (!eatenorb)
+            {
+                Main.NewText("You must select an ability to be able to reset it!");
+                Main.PlaySound(SoundID.Item16);
+            }
+
             eatenorb = false;
         }
 
@@ -420,7 +441,7 @@ class Upgradeui : UIState
 
     private void Strike(UIMouseEvent evt, UIElement listeningElement)
     {
-                    if (ab1 == 0 || ab1 == 1 && level >= 2)
+                    if ((ab1 == 0 || ab1 == 1) && level >= 2)
                     {
                         Main.PlaySound(SoundID.MenuTick);
                         passiveselect = passive1ability;
@@ -436,7 +457,7 @@ class Upgradeui : UIState
     private void Bolts(UIMouseEvent evt, UIElement listeningElement)
     {
 
-                if (ab1 == 0 || ab1 == 2 && level >= 2)
+                if ((ab1 == 0 || ab1 == 2) && level >= 2)
                 {
                     Main.PlaySound(SoundID.MenuTick);
                     passiveselect = passive2ability;
@@ -517,7 +538,7 @@ class Upgradeui : UIState
 
         }
 
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+    protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (swordinstance != null)
             {
