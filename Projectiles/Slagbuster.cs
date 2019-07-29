@@ -88,6 +88,11 @@ namespace ItemLevelTest.Projectiles
     }
     class Slagboom : ModProjectile
     {
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
+
         public override void SetDefaults()
         {
             projectile.damage = 65;

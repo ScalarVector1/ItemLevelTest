@@ -29,7 +29,7 @@ namespace ItemLevelTest.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (instance.level < 10)
+            if (instance.level < 10 && target.type != NPCID.TargetDummy)
             {
                 if (damage >= 10)
                 {
@@ -40,6 +40,10 @@ namespace ItemLevelTest.Projectiles
                     instance.exp++;
                 }
                 instance.Expcalc();
+            }
+            else if (instance.level >= 10)
+            {
+                instance.exp = 0;
             }
         }
         public override void AI()

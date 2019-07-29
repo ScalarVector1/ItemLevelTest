@@ -26,10 +26,12 @@ namespace ItemLevelTest.UI
         UIImage Icon1 = new UIImage(ModContent.GetTexture("ItemLevelTest/UI/Blank"));
         Shade shade = new Shade();
         Exp exp = new Exp();
+        UIText tex = new UIText("ERROR");
         public static Koranithus swordinstance;
         public static Testbow bowinstance;
         public static Testspear spearinstance;
         public static Testgun guninstance;
+        public static Teststaff staffinstance;
 
 
         public override void OnInitialize()
@@ -70,6 +72,10 @@ namespace ItemLevelTest.UI
             exp.Height.Set(42, 0);
             Frame.Append(exp);
 
+            tex.Left.Set(0, 0);
+            tex.Top.Set(54, 0);
+            Frame.Append(tex);
+
 
 
         }
@@ -78,6 +84,12 @@ namespace ItemLevelTest.UI
         {
             if (swordinstance != null)
             {
+                tex.SetText((Koranithus.cd / 60 + 1) + "s");
+
+                if (Koranithus.cd == 0)
+                {
+                    tex.SetText("Ready");
+                }
                 if (ability == none)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Blank"));
@@ -114,6 +126,7 @@ namespace ItemLevelTest.UI
             
             if (bowinstance != null)
             {
+                tex.SetText((int)(Testbow.charge * 100) + "%");
                 if (ability == none)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Default"));
@@ -138,8 +151,47 @@ namespace ItemLevelTest.UI
                 Recalculate();
             }
 
-            if(spearinstance != null)
+            if (staffinstance != null)
             {
+                tex.SetText((Teststaff.primal) + "/50");
+                if (ability == none)
+                {
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Blank"));
+                }
+                else if (ability == 1)
+                {
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Boost"));
+
+                }
+                else if (ability == 2)
+                {
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Whirl"));
+
+                }
+                else if (ability == 3)
+                {
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Shield"));
+
+                }
+
+
+                //shade.Height.Set(0, (float)(Koranithus.cd / maxcd) * 100);
+                shade.Height.Set((float)((Teststaff.maxprimal - Teststaff.primal) * 38) / Teststaff.maxprimal, 0);
+                Recalculate();
+
+                if (Teststaff.primal == Teststaff.maxprimal)
+                {
+                    shade.Height.Set(0, 0);
+                    Recalculate();
+                }
+
+                exp.Height.Set(((staffinstance.expRequired - staffinstance.exp) * 42) / staffinstance.expRequired, 0);
+                Recalculate();
+            }
+
+            if (spearinstance != null)
+            {
+                tex.SetText(Testspear.energy + "/1000");
                 if (ability == none)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Blank"));
@@ -154,12 +206,12 @@ namespace ItemLevelTest.UI
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Whirl"));
 
                 }
-                /*else if (ability == slagward)
+                else if (ability == 3)
                 {
-                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Slagward"));
+                    Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Shield"));
 
                 }
-                */
+                
 
                 //shade.Height.Set(0, (float)(Koranithus.cd / maxcd) * 100);
                 shade.Height.Set((float)((Testspear.maxenergy - Testspear.energy) * 38) / Testspear.maxenergy, 0);
@@ -177,6 +229,11 @@ namespace ItemLevelTest.UI
 
             if(guninstance != null)
             {
+                tex.SetText((Flashhandler.cooldown / 60 + 1) + "s");
+                if(Flashhandler.cooldown == 0 && ability != 3)
+                {
+                    tex.SetText("Ready");
+                }
                 if (ability == 0)
                 {
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Default2"));
@@ -196,6 +253,17 @@ namespace ItemLevelTest.UI
                 }
                 else if (ability == 3)
                 {
+                    tex.SetText(((Flashhandler.cooldown/2) / 60 + 1) + "s");
+
+                    if(Flashhandler.cooldown <= 90)
+                    {
+                        tex.SetText((((Flashhandler.cooldown + 90) / 2) / 60 + 1) + "s, x1");
+                    }
+
+                    if (Flashhandler.cooldown == 0)
+                    {
+                        tex.SetText("Ready, x2");
+                    }
                     Icon1.SetImage(ModContent.GetTexture("ItemLevelTest/UI/Daredevil"));
                     maxcdgun = 180;
 
@@ -214,6 +282,8 @@ namespace ItemLevelTest.UI
                 exp.Height.Set(((guninstance.expRequired - guninstance.exp) * 42) / guninstance.expRequired, 0);
                 Recalculate();
             }
+
+            
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -240,5 +310,6 @@ namespace ItemLevelTest.UI
             CalculatedStyle dimensions = GetDimensions();
             spriteBatch.Draw(ModContent.GetTexture("ItemLevelTest/UI/EXP"), new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height), new Color(56,40,54));
         }
-    }  
+    }
+    
 }

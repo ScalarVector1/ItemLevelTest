@@ -19,6 +19,7 @@ public class UImanager : ModPlayer
             || player.HeldItem.type == mod.ItemType("Testbow") 
             || player.HeldItem.type == mod.ItemType("Testspear")
             || player.HeldItem.type == mod.ItemType("Testgun")
+            || player.HeldItem.type == mod.ItemType("Teststaff")
             ) && !Main.playerInventory)//when holding a legendary item
         {
             if (player.HeldItem != holding)//failsafe if holding nothing

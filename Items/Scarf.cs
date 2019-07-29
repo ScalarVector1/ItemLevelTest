@@ -10,19 +10,12 @@ using Terraria.ModLoader;
 namespace ItemLevelTest.Items
 {
   
-         class Scarf : ModItem
-        {
-            public override string Texture
-            {
-                get
-                {
-                    return "ItemLevelTest/Items/Scarf";
-                }
-            }
+  class Maxer : ModItem
+  {
             public override void SetStaticDefaults()
             {
-                DisplayName.SetDefault("Scarf tester");
-                Tooltip.SetDefault("Probably buggy and laggy");
+                DisplayName.SetDefault("DEV Item Maxer");
+                Tooltip.SetDefault("Maxes all items, testing only");
              
 
             }
@@ -30,21 +23,44 @@ namespace ItemLevelTest.Items
         {
             item.consumable = true;
             item.useStyle = 1;
-            item.useTime = 5;
-            item.useAnimation = 5;
+            item.useTime = 20;
+            item.useAnimation = 20;
         }
 
         public override bool CanUseItem(Player player)
+        {
+            for(int k = 0; k <= 54; k++)
             {
-                Dust root = Dust.NewDustPerfect(player.MountedCenter, mod.DustType("Scarftestroot"));
-                root.customData = player;
-                for (int u = 0; u <= 29; u++)
+                if(player.inventory[k].type == mod.ItemType("Koranithus"))
                 {
-                    Dust segment = Dust.NewDustPerfect(new Vector2(player.MountedCenter.X - u * 3, player.MountedCenter.Y), mod.DustType("Scarftest"));
-                    segment.customData = u;
+                    Koranithus sword = player.inventory[k].modItem as Koranithus;
+                    sword.level = 10;
+                    sword.exp = 0;
                 }
-                return true;
+
+                if (player.inventory[k].type == mod.ItemType("Testbow"))
+                {
+                    Testbow bow = player.inventory[k].modItem as Testbow;
+                    bow.level = 10;
+                    bow.exp = 0;
+                }
+
+                if (player.inventory[k].type == mod.ItemType("Testspear"))
+                {
+                    Testspear spear = player.inventory[k].modItem as Testspear;
+                    spear.level = 10;
+                    spear.exp = 0;
+                }
+
+                if (player.inventory[k].type == mod.ItemType("Testgun"))
+                {
+                    Testgun gun = player.inventory[k].modItem as Testgun;
+                    gun.level = 10;
+                    gun.exp = 0;
+                }
             }
+                return true;
+        }
         
-    }
+  }
 }

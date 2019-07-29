@@ -10,6 +10,11 @@ namespace ItemLevelTest.Projectiles
 {
     class Slagaura:ModProjectile
     {
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Aura of Cinders");

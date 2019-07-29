@@ -42,8 +42,7 @@ namespace ItemLevelTest.Dusts
                 if(dust.color.R <= 252)
                 {
                     dust.color.R += 3;
-                }
-                
+                }            
             }
              
                

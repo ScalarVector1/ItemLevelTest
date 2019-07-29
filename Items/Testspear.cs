@@ -75,24 +75,26 @@ namespace ItemLevelTest.Items
             {
                 return false;
             }
+            if (player.altFunctionUse != 2)
+            {
+                float x = (Main.screenPosition.X + Main.mouseX) - player.position.X;
+                float y = (Main.screenPosition.Y + Main.mouseY) - player.position.Y;
 
-            float x = (Main.screenPosition.X + Main.mouseX) - player.position.X;
-            float y = (Main.screenPosition.Y + Main.mouseY) - player.position.Y;
+                float R = (10); //the number here is the base velocity!!
 
-            float R = (10); //the number here is the base velocity!!
+                float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
+                float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
 
-            float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
-            float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
 
-            
-            int visualproj = Projectile.NewProjectile(new Vector2(player.MountedCenter.X - xvel * 7, player.MountedCenter.Y - yvel * 7), new Vector2(xvel, yvel), mod.ProjectileType("Testspearproj"), 1, 1); //visual projectile
-            int proj = Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(xvel, yvel), mod.ProjectileType("Testspearproj2"), 40 + level * dmgScale, 1, Main.myPlayer); //hitbox projectile
-            Testspearproj visualproj2 = Main.projectile[visualproj].modProjectile as Testspearproj;
-            Testspearproj2 proj2 = Main.projectile[proj].modProjectile as Testspearproj2;
-            proj2.instance = this;
-            visualproj2.instance = this;
+                int visualproj = Projectile.NewProjectile(new Vector2(player.MountedCenter.X - xvel * 7, player.MountedCenter.Y - yvel * 7), new Vector2(xvel, yvel), mod.ProjectileType("Testspearproj"), 1, 1); //visual projectile
+                int proj = Projectile.NewProjectile(new Vector2(player.MountedCenter.X, player.MountedCenter.Y), new Vector2(xvel, yvel), mod.ProjectileType("Testspearproj2"), 40 + level * dmgScale, 1, Main.myPlayer); //hitbox projectile
+                Testspearproj visualproj2 = Main.projectile[visualproj].modProjectile as Testspearproj;
+                Testspearproj2 proj2 = Main.projectile[proj].modProjectile as Testspearproj2;
+                proj2.instance = this;
+                visualproj2.instance = this;
+            }
 
-            return player.ownedProjectileCounts[proj] < 1;
+            return true;
 
 
             }
@@ -108,6 +110,7 @@ namespace ItemLevelTest.Items
             CDUI.swordinstance = null;
             CDUI.bowinstance = null;
             CDUI.guninstance = null;
+            CDUI.staffinstance = null;
 
             if (player.HeldItem.modItem == this)
             {
@@ -167,7 +170,27 @@ namespace ItemLevelTest.Items
                         }
 
                     }
-                    
+                    if (ab2 == 3 && energy >= 50)
+                    {
+                        if (timer > 1)
+                        {
+                            timer--;
+                        }
+                        if (timer == 0)
+                        {
+                            timer = 21;
+                            casting = true;
+                            for (int z = 1; z <= 5; z++)
+                            {
+                                Projectile.NewProjectile(player.MountedCenter - new Vector2(0, 0), new Vector2(0, 0), mod.ProjectileType("Spearshield" + z),level * 20, 2f, Main.myPlayer);
+                            }
+                        }
+                        if (timer == 1)
+                        {
+                            energy -= 1;
+                        }
+                    }
+
                 }
                 else
                 {
@@ -239,6 +262,7 @@ namespace ItemLevelTest.Items
                 Upgradeui.swordinstance = null;
                 Upgradeui.guninstance = null;
                 Upgradeui.bowinstance = null;
+                Upgradeui.staffinstance = null;
 
                 Upgradeui.spearinstance = this;
                 Upgradeui.visible = true; //open the UI

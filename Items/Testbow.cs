@@ -591,6 +591,7 @@ namespace ItemLevelTest.Items
             CDUI.swordinstance = null;
             CDUI.spearinstance = null;
             CDUI.guninstance = null;
+            CDUI.staffinstance = null;
         }
 
 

@@ -75,13 +75,17 @@ namespace ItemLevelTest
                     Upgradeui.vfxtoggleon = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleon");
                     Upgradeui.thornsimage = ModContent.GetTexture("ItemLevelTest/UI/Spears");
                     Upgradeui.greatspearimage = ModContent.GetTexture("ItemLevelTest/UI/Whirl");
+                    Upgradeui.shieldimage = ModContent.GetTexture("ItemLevelTest/UI/Shield");
                     Upgradeui.energyvampireimage = ModContent.GetTexture("ItemLevelTest/UI/Energy");
                     Upgradeui.wingsimage = ModContent.GetTexture("ItemLevelTest/UI/Wings");
                     Upgradeui.boltimage = ModContent.GetTexture("ItemLevelTest/UI/Bolt");
                     Upgradeui.dareimage = ModContent.GetTexture("ItemLevelTest/UI/Daredevil");
                     Upgradeui.sniperimage = ModContent.GetTexture("ItemLevelTest/UI/Sniper");
                     Upgradeui.shotgunimage = ModContent.GetTexture("ItemLevelTest/UI/Shotgun");
-                    Upgradeui.vfxtoggleoff = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
+                    Upgradeui.twistimage = ModContent.GetTexture("ItemLevelTest/UI/Twist");
+                    Upgradeui.volatileimage = ModContent.GetTexture("ItemLevelTest/UI/Volatile");
+                Upgradeui.boostimage = ModContent.GetTexture("ItemLevelTest/UI/Boost");
+                Upgradeui.vfxtoggleoff = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
                     Upgradeui.vorb = ModContent.GetTexture("ItemLevelTest/UI/Vorb");
 
 
@@ -117,12 +121,16 @@ namespace ItemLevelTest
                     Upgradeui.lockimage = null;
                     Upgradeui.thornsimage = null;
                     Upgradeui.greatspearimage = null;
+                    Upgradeui.shieldimage = null;
                     Upgradeui.energyvampireimage = null;
                     Upgradeui.wingsimage = null;
                     Upgradeui.boltimage = null;
                     Upgradeui.dareimage = null;
                     Upgradeui.sniperimage = null;
                     Upgradeui.shotgunimage = null;
+                    Upgradeui.twistimage = null;
+                    Upgradeui.volatileimage = null;
+                    Upgradeui.boostimage = null; 
                     Upgradeui.vfxtoggleoff = null;
                     Upgradeui.vfxtoggleon = null;
                     Upgradeui.vorb = null;

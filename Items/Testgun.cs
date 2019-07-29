@@ -108,99 +108,27 @@ namespace ItemLevelTest.Items
 
         public static bool flash;
 
-
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-15, -2);
         }
 
-        bool loaded = false;
-        bool consumed = false;
         public override bool CanUseItem(Player player)
         {
-            loaded = false;
-            consumed = false;
-            if (player.altFunctionUse != 2)
-            {
-                for (int z = 54; z <= 57; z++)
-                {
-                    if (player.inventory[z].ammo == AmmoID.Bullet && !consumed)
-                    {
-                        if (player.inventory[z].stack > 0)
-                        {
-                            loaded = true;
-                            if (player.inventory[z].type != ItemID.EndlessMusketPouch)
-                            {
-                                player.inventory[z].stack--;
-                            }
-                            consumed = true;
-                        }
-                        else
-                        {
-                            loaded = false;
-                        }
-                    }
-                    else if (loaded == true)
-                    {
-
-                    }
-                    else
-                    {
-                        loaded = false;
-                    }
-                }
-
-                if (!consumed)
-                {
-                    for (int z = 0; z <= 54; z++)
-                    {
-                        if (player.inventory[z].ammo == AmmoID.Bullet && !consumed)
-                        {
-                            if (player.inventory[z].stack > 0)
-                            {
-                                loaded = true;
-
-                                if(player.inventory[z].type != ItemID.EndlessMusketPouch)
-                                {
-                                    player.inventory[z].stack--;
-                                }
-                                
-                                consumed = true;
-                            }
-                            else
-                            {
-                                loaded = false;
-                            }
-
-                        }
-                        else if (loaded == true)
-                        {
-
-                        }
-                        else
-                        {
-                            loaded = false;
-                        }
-
-                    }
-                }
-            }         
-                          
-
-            if(loaded)
-            {
-                return true;
-            }
-            else
+            if (player.altFunctionUse == 2)
             {
                 return false;
             }
-            
+            else
+            {
+                return true;
+            }            
         }
+
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             float R = 0;
-            if (loaded && player.altFunctionUse != 2)
+            if (player.altFunctionUse != 2)
             {
                 if (ab1 != 1)
                 {
@@ -245,7 +173,7 @@ namespace ItemLevelTest.Items
                         float xvel = (R * x) / (float)Math.Sqrt(x * x + y * y);
                         float yvel = (R * y) / (float)Math.Sqrt(x * x + y * y);
 
-                        int index = Projectile.NewProjectile(player.Center, new Vector2(xvel + Main.rand.Next(-3, 3), yvel + Main.rand.Next(-3, 3)), mod.ProjectileType("Testbullet"), (30 + level * (dmgScale / 2)), 1f + level * kbScale, Main.myPlayer);
+                        int index = Projectile.NewProjectile(player.Center, new Vector2(xvel + Main.rand.Next(-3, 3), yvel + Main.rand.Next(-3, 3)), mod.ProjectileType("Testbullet"), (40 + level * (dmgScale / 2)), 1f + level * kbScale, Main.myPlayer);
                         Testbullet proj = Main.projectile[index].modProjectile as Testbullet;
                         proj.instance = this;
 
@@ -318,7 +246,6 @@ namespace ItemLevelTest.Items
 
         }
 
-
         public override void HoldItem(Player player)
         {
             Flashhandler.instance = this;
@@ -328,6 +255,7 @@ namespace ItemLevelTest.Items
             CDUI.swordinstance = null;
             CDUI.spearinstance = null;
             CDUI.bowinstance = null;
+            CDUI.staffinstance = null;
 
             if ((ab2 != 1 && Flashhandler.cooldown == 0) || (ab2 == 3 && Flashhandler.cooldown <= 90))
             {
@@ -425,8 +353,17 @@ namespace ItemLevelTest.Items
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip4")
                 {
-                    line.text = "+" + dmgScale + " Ranged damage (" + dmgScale * level + ")";
-                    line.overrideColor = new Color(255, 218, 75);
+                    if (ab1 != 1)
+                    {
+                        line.text = "+" + dmgScale + " Ranged damage (" + dmgScale * level + ")";
+                    }
+                    else
+                    {
+                        line.text = "+" + (dmgScale / 2) + " Ranged damage (" + (dmgScale / 2 * level) + ")";
+                    }
+
+
+                        line.overrideColor = new Color(255, 218, 75);
                 }
                 if (line.mod == "Terraria" && line.Name == "Tooltip5")
                 {
@@ -483,12 +420,12 @@ namespace ItemLevelTest.Items
                     }
                     else if (ab1 == 1)
                     {
-                        line.text = "Config: Shotgun (" + level * 1 + "-" + ((level * 1) + 1) + "s)";
+                        line.text = "Config: Shotgun";
                         line.overrideColor = new Color(250, 250, 200);
                     }
                     else if (ab1 == 2)
                     {
-                        line.text = "Config: Sniper (+" + (10 + level) + "/ hit)";
+                        line.text = "Config: Sniper (+" + (15 + level * 2) + "/ hit)";
                         line.overrideColor = new Color(250, 250, 200);
                     }
                 }
@@ -585,6 +522,7 @@ namespace ItemLevelTest.Items
                 Upgradeui.swordinstance = null;
                 Upgradeui.spearinstance = null;
                 Upgradeui.bowinstance = null;
+                Upgradeui.staffinstance = null;
 
                 Upgradeui.guninstance = this;
                 Upgradeui.visible = true; //open the UI

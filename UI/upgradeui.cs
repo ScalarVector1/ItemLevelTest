@@ -40,13 +40,17 @@ class Upgradeui : UIState
     public static Texture2D vfxtoggleon = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleon");
     public static Texture2D thornsimage = ModContent.GetTexture("ItemLevelTest/UI/Spears");
     public static Texture2D greatspearimage = ModContent.GetTexture("ItemLevelTest/UI/Whirl");
-    public static Texture2D energyvampireimage = ModContent.GetTexture("ItemLevelTest/UI/Energy");
+        public static Texture2D shieldimage = ModContent.GetTexture("ItemLevelTest/UI/Shield");
+        public static Texture2D energyvampireimage = ModContent.GetTexture("ItemLevelTest/UI/Energy");
     public static Texture2D wingsimage = ModContent.GetTexture("ItemLevelTest/UI/Wings");
     public static Texture2D boltimage = ModContent.GetTexture("ItemLevelTest/UI/Bolt");
     public static Texture2D dareimage = ModContent.GetTexture("ItemLevelTest/UI/Daredevil");
     public static Texture2D sniperimage = ModContent.GetTexture("ItemLevelTest/UI/Sniper");
     public static Texture2D shotgunimage = ModContent.GetTexture("ItemLevelTest/UI/Shotgun");
-    public static Texture2D vfxtoggleoff = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
+        public static Texture2D twistimage = ModContent.GetTexture("ItemLevelTest/UI/Twist");
+        public static Texture2D volatileimage = ModContent.GetTexture("ItemLevelTest/UI/Volatile");
+        public static Texture2D boostimage = ModContent.GetTexture("ItemLevelTest/UI/Boost");
+        public static Texture2D vfxtoggleoff = ModContent.GetTexture("ItemLevelTest/UI/vfxtoggleoff");
         public static Texture2D resetimage = ModContent.GetTexture("ItemLevelTest/UI/Reset");
         public static Texture2D vorb = ModContent.GetTexture("ItemLevelTest/UI/Vorb");
 
@@ -88,7 +92,7 @@ class Upgradeui : UIState
     public static int activeselect = 0;
     public static int ultimateselect = 0;
 
-    public static int ab1; //set by the sword that calls this UI each time
+    public static int ab1; //set by the item that calls this UI each time
     public static int ab2;
     public static int ab3;
     public static int level;
@@ -97,6 +101,7 @@ class Upgradeui : UIState
     public static Testspear spearinstance = null;
     public static Testbow bowinstance = null;
     public static Testgun guninstance = null;
+    public static Teststaff staffinstance = null;
 
 
         const int passive1ability = 1; //constants to deobfuscate
@@ -385,6 +390,18 @@ class Upgradeui : UIState
                     guninstance.VFXstate = false;
                 }
             }
+
+            if (staffinstance != null)
+            {
+                if (staffinstance.VFXstate == false)
+                {
+                    staffinstance.VFXstate = true;
+                }
+                else if (staffinstance.VFXstate == true)
+                {
+                    staffinstance.VFXstate = false;
+                }
+            }
         }
 
     private void Exit(UIMouseEvent evt, UIElement listeningElement)
@@ -434,6 +451,13 @@ class Upgradeui : UIState
                 guninstance.ab3 = ab3;
             }
 
+            if (staffinstance != null)
+            {
+                staffinstance.ab1 = ab1;
+                staffinstance.ab2 = ab2;
+                staffinstance.ab3 = ab3;
+            }
+
             passiveselect = 0;
         activeselect = 0;
         ultimateselect = 0;
@@ -441,18 +465,23 @@ class Upgradeui : UIState
 
     private void Strike(UIMouseEvent evt, UIElement listeningElement)
     {
-                    if ((ab1 == 0 || ab1 == 1) && level >= 2)
-                    {
-                        Main.PlaySound(SoundID.MenuTick);
-                        passiveselect = passive1ability;
-                        activeselect = 0;
-                        ultimateselect = 0;
-                    }
-                    else
-                    {
-                        Main.PlaySound(SoundID.Unlock);
-                        Main.NewText("Passive abilities unlock at level 2!");
-                    }              
+            if ((ab1 == 0 || ab1 == 1) && level >= 2)
+            {
+                Main.PlaySound(SoundID.MenuTick);
+                passiveselect = passive1ability;
+                activeselect = 0;
+                ultimateselect = 0;
+            }
+            else if (ab1 == 0)
+            {
+                Main.PlaySound(SoundID.Unlock);
+                Main.NewText("Passive abilities unlock at level 2!");
+            }
+            else
+            {
+                Main.PlaySound(SoundID.Unlock);
+                Main.NewText("You can only select one passive ability!");
+            }
         }
 
     private void Bolts(UIMouseEvent evt, UIElement listeningElement)
@@ -465,10 +494,15 @@ class Upgradeui : UIState
                     activeselect = 0;
                     ultimateselect = 0;
                 }
-                else
+                else if (ab1 == 0)
                 {
                     Main.PlaySound(SoundID.Unlock);
                 Main.NewText("Passive abilities unlock at level 2!");
+            }
+            else
+            {
+                Main.PlaySound(SoundID.Unlock);
+                Main.NewText("You can only select one passive ability!");
             }
 
         }
@@ -483,29 +517,39 @@ class Upgradeui : UIState
                     passiveselect = 0;
                     ultimateselect = 0;
                 }
-                else
+                else  if(ab2 == 0)
                 {
                     Main.PlaySound(SoundID.Unlock);
                 Main.NewText("Active abilities unlock at level 5!");
+            }
+            else
+            {
+                Main.PlaySound(SoundID.Unlock);
+                Main.NewText("You can only select one active ability!");
             }
 
         }
 
     private void Burst(UIMouseEvent evt, UIElement listeningElement)
     {
-                if ((ab2 == 0 || ab2 == 2) && level >= 5)
-                {
-                    Main.PlaySound(SoundID.MenuTick);
-                    activeselect = active2ability;
-                    passiveselect = 0;
-                    ultimateselect = 0;
-                }
-                else
-                {
-                    Main.PlaySound(SoundID.Unlock);
+            if ((ab2 == 0 || ab2 == 2) && level >= 5)
+            {
+                Main.PlaySound(SoundID.MenuTick);
+                activeselect = active2ability;
+                passiveselect = 0;
+                ultimateselect = 0;
+            }
+            else if (ab2 == 0)
+            {
+                Main.PlaySound(SoundID.Unlock);
                 Main.NewText("Active abilities unlock at level 5!");
             }
-        }
+            else
+            {
+                Main.PlaySound(SoundID.Unlock);
+                Main.NewText("You can only select one active ability!");
+            }
+    }
 
     private void Ward(UIMouseEvent evt, UIElement listeningElement)
     {
@@ -517,12 +561,17 @@ class Upgradeui : UIState
                     passiveselect = 0;
                     ultimateselect = 0;
                 }
-                else
+                else if (ab2 == 0)
                 {
                     Main.PlaySound(SoundID.Unlock);
                 Main.NewText("Active abilities unlock at level 5!");
             }
-           
+            else
+            {
+                Main.PlaySound(SoundID.Unlock);
+                Main.NewText("You can only select one active ability!");
+            }
+
 
         }
 
@@ -536,10 +585,15 @@ class Upgradeui : UIState
                 passiveselect = 0;
                 ultimateselect = ultimate1ability;
             }
-            else
+            else if (ab3 == 0)
             {
                 Main.PlaySound(SoundID.Unlock);
                 Main.NewText("Ultimate abilities unlock at level 8!");
+            }
+            else
+            {
+                Main.PlaySound(SoundID.Unlock);
+                Main.NewText("You can only select one ultimate ability!");
             }
 
         }
@@ -864,13 +918,13 @@ class Upgradeui : UIState
                     }
                     else if (activeselect == active3ability)
                     {
-                        line1.SetText("Slag Ward");
-                        line2.SetText("Creates 3 shields");
-                        line3.SetText("around you, blocking");
-                        line4.SetText("projectiles and");
-                        line5.SetText("exploding on impact");
-                        line6.SetText("for " + ((10 + level * 5) * 5) + " damage.");
-                        line7.SetText("30 second cooldown");
+                        line1.SetText("Crescent Bastion");
+                        line2.SetText("Creates A shield that");
+                        line3.SetText("destroys projectiles");
+                        line4.SetText("and knocks back foes");
+                        line5.SetText("for 50 energy per hit.");
+                        line6.SetText("deals " + (level * 20) + " damage");
+                        line7.SetText("uses 60 energy /s");
 
                         active1frame.SetImage(frame);
                         active2frame.SetImage(frame);
@@ -949,7 +1003,7 @@ class Upgradeui : UIState
                 {
                     active1.SetImage(thornsimage);
                     active2.SetImage(greatspearimage);
-                    active3.SetImage(slagwardimage);
+                    active3.SetImage(shieldimage);
                 }
                 else if (ab2 == 0 && spearinstance.level < 5)
                 {
@@ -975,7 +1029,7 @@ class Upgradeui : UIState
                 {
                     active1.SetImage(lockimage);
                     active2.SetImage(lockimage);
-                    active3.SetImage(slagwardimage);
+                    active3.SetImage(shieldimage);
                 }
 
                 //------------------------------------------------------------------------
@@ -1211,6 +1265,231 @@ class Upgradeui : UIState
                 }
 
                 else if (ab3 == 0 && guninstance.level < 8)
+                {
+                    ultimate1.SetImage(lockimage);
+                }
+
+                else if (ab3 == 1)
+                {
+                    ultimate1.SetImage(sniperimage);
+                }
+
+                //------------------------------------------------------------------------
+            }
+
+            if (staffinstance != null)
+            {
+                backdrop.BackgroundColor = new Color(70, 50, 100, 190);
+                backdrop.BorderColor = new Color(20, 20, 10, 230);
+
+                statwindow.BackgroundColor = new Color(80, 50, 90, 170);
+                statwindow.BorderColor = new Color(30, 30, 25, 230);
+
+                settingswindow.BackgroundColor = new Color(80, 50, 90, 170);
+                settingswindow.BorderColor = new Color(30, 30, 25, 230);
+
+                settingstext.SetText("Wisps");
+
+                if (staffinstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleon);
+                }
+
+                if (!staffinstance.VFXstate)
+                {
+                    vfxtoggle.SetImage(vfxtoggleoff);
+                }
+
+                if (passiveselect != 0)
+                {
+                    if (passiveselect == passive1ability) //passive text sets
+                    {
+                        line1.SetText("Spell Twister");
+                        line2.SetText("Your bolts deal " + (staffinstance.level * 5) );
+                        line3.SetText("more damage and");
+                        line4.SetText("pierce up to 7 ");
+                        line5.SetText("targets, you now fire");
+                        line6.SetText(" two bolts at once");
+                        line7.SetText("");
+
+                        passive1frame.SetImage(frame2);
+                        passive2frame.SetImage(frame);
+                    }
+                    else if (passiveselect == passive2ability)
+                    {
+                        line1.SetText("Volatile Magic");
+                        line2.SetText("Your shots no longer");
+                        line3.SetText("pierce but become");
+                        line4.SetText("volatile and explode");
+                        line5.SetText("on impact for");
+                        line6.SetText((50 + staffinstance.level * 5) + " damage");
+                        line7.SetText("");
+
+
+                        passive1frame.SetImage(frame);
+                        passive2frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    passive1frame.SetImage(frame);
+                    passive2frame.SetImage(frame);
+                }
+
+                if (activeselect != 0)
+                {
+                    if (activeselect == active1ability) //active text sets
+                    {
+                        line1.SetText("Mana Infusion");
+                        line2.SetText("Infuse your staff With");
+                        line3.SetText("the power of Twisted");
+                        line4.SetText("mana, and gain");
+                        line5.SetText("1 extra damage per");
+                        line6.SetText("point of twisted mana");
+                        line7.SetText("");
+
+                        active1frame.SetImage(frame2);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active2ability)
+                    {
+                        line1.SetText("Piercing Bolt");
+                        line2.SetText("Become invincible");
+                        line3.SetText("and deal " + (250 + level * 10) + " damage");
+                        line4.SetText("to all enemies in");
+                        line5.SetText("your way when you");
+                        line6.SetText("flash");
+                        line7.SetText("3 second cooldown");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame2);
+                        active3frame.SetImage(frame);
+                    }
+                    else if (activeselect == active3ability)
+                    {
+                        line1.SetText("Daredevil");
+                        line2.SetText("Store up to 2 quick");
+                        line3.SetText("recharging flashes");
+                        line4.SetText("at a time, which");
+                        line5.SetText("INSERT TEXT HERE");
+                        line6.SetText("INSERT TEXT HERE");
+                        line7.SetText("1.5 second cooldown each");
+
+                        active1frame.SetImage(frame);
+                        active2frame.SetImage(frame);
+                        active3frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    active1frame.SetImage(frame);
+                    active2frame.SetImage(frame);
+                    active3frame.SetImage(frame);
+                }
+
+                if (ultimateselect != 0)
+                {
+                    if (ultimateselect == ultimate1ability) //ultimate text sets
+                    {
+                        line1.SetText("Null");
+                        line2.SetText("INSERT TEXT HERE");
+                        line3.SetText("INSERT TEXT HERE");
+                        line4.SetText("INSERT TEXT HERE");
+                        line5.SetText("INSERT TEXT HERE");
+                        line6.SetText("INSERT TEXT HERE");
+                        line7.SetText("INSERT TEXT HERE");
+
+                        ultimate1frame.SetImage(frame2);
+                    }
+                }
+                else
+                {
+                    ultimate1frame.SetImage(frame);
+                }
+
+
+                if (activeselect == 0 && passiveselect == 0 && ultimateselect == 0)
+                {
+                    line1.SetText("STAFFNAME Upgrades");
+                    line2.SetText("Click an ability to");
+                    line3.SetText("see details, click");
+                    line4.SetText("the check button");
+                    line5.SetText("to confirm your");
+                    line6.SetText("selection.");
+                    line7.SetText("");
+                }
+
+                //------------------------------------------------------------------------
+                //------------------------------------------------------------------------
+
+                if (ab1 == 0 && level >= 2)
+                {
+                    passive1.SetImage(twistimage);
+                    passive2.SetImage(volatileimage);
+                }
+
+                else if (ab1 == 0 && level < 2)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive1ability)
+                {
+                    passive1.SetImage(twistimage);
+                    passive2.SetImage(lockimage);
+                }
+
+                else if (ab1 == passive2ability)
+                {
+                    passive1.SetImage(lockimage);
+                    passive2.SetImage(volatileimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab2 == 0 && level >= 5)
+                {
+                    active1.SetImage(boostimage);
+                    active2.SetImage(boltimage);
+                    active3.SetImage(dareimage);
+                }
+                else if (ab2 == 0 && level < 5)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+                else if (ab2 == active1ability)
+                {
+                    active1.SetImage(boostimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active2ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(boltimage);
+                    active3.SetImage(lockimage);
+                }
+
+                else if (ab2 == active3ability)
+                {
+                    active1.SetImage(lockimage);
+                    active2.SetImage(lockimage);
+                    active3.SetImage(dareimage);
+                }
+
+                //------------------------------------------------------------------------
+
+                if (ab3 == 0 && level >= 8)
+                {
+                    ultimate1.SetImage(sniperimage);
+                }
+
+                else if (ab3 == 0 && level < 8)
                 {
                     ultimate1.SetImage(lockimage);
                 }

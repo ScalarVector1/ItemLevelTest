@@ -73,7 +73,13 @@ namespace ItemLevelTest.Projectiles
         class Testspearproj2 : ModProjectile
         {
             public Testspear instance;
-            public override void SetStaticDefaults()
+
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
+
+        public override void SetStaticDefaults()
             {
                 DisplayName.SetDefault("Testspear");
             }
@@ -91,7 +97,7 @@ namespace ItemLevelTest.Projectiles
 
             public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
             {
-                if (instance.level < 10)
+                if (instance.level < 10 && target.type != NPCID.TargetDummy)
                 {
                     if (damage >= 10)
                     {
@@ -101,9 +107,15 @@ namespace ItemLevelTest.Projectiles
                     {
                         instance.exp++;
                     }
-                    instance.Expcalc();
+
+                instance.Expcalc();
                 }
-                if(instance.ab3 == 1)
+                else if(instance.level >= 10)
+                {
+                    instance.exp = 0;
+                }
+
+                if(instance.ab3 == 1 && target.type != NPCID.TargetDummy)
                 {
                 Testspear.energy += 30;
 
@@ -147,6 +159,11 @@ namespace ItemLevelTest.Projectiles
 
     class Testspearproj3 : ModProjectile
     {
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Testspear");

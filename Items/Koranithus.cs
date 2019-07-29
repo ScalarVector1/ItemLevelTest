@@ -151,7 +151,7 @@ namespace ItemLevelTest.Items
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
         {
-            if (level < 10) //This section calculates the EXP gained on hitting an enemy, and adds it to the exp variable
+            if (level < 10 && target.type != NPCID.TargetDummy) //This section calculates the EXP gained on hitting an enemy, and adds it to the exp variable
             {
                 if (damage >= 10)
                 {
@@ -164,7 +164,7 @@ namespace ItemLevelTest.Items
                     Expcalc();
                 }
             }
-            else
+            else if (level >= 10)
             {
                 exp = 0;
             }
@@ -308,7 +308,6 @@ namespace ItemLevelTest.Items
             else
             {
                 //corrects values for damage and shoot if the appropriate ability is not selected
-                item.damage = 10 + level * dmgScale;
                 item.shoot = 0;
                 return true;
             }
@@ -349,6 +348,8 @@ namespace ItemLevelTest.Items
                 Upgradeui.spearinstance = null;
                 Upgradeui.bowinstance = null;
                 Upgradeui.guninstance = null;
+                Upgradeui.staffinstance = null;
+
                 Upgradeui.visible = true; //open the UI
 
             }
@@ -364,6 +365,7 @@ namespace ItemLevelTest.Items
             CDUI.bowinstance = null;
             CDUI.spearinstance = null;
             CDUI.guninstance = null;
+            CDUI.staffinstance = null;
 
 
             if (ab3 == cinderaura)//Handles the ultimate ability "Aura of Cinders"

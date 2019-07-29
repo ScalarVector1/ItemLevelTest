@@ -10,6 +10,11 @@ namespace ItemLevelTest.Projectiles
 {
     class Slagburst:ModProjectile
     {
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slagburst");
@@ -55,6 +60,11 @@ namespace ItemLevelTest.Projectiles
     }
     class Slagburstspawner : ModProjectile
     {
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
+
         public override void SetDefaults()
         {
             projectile.damage = 0;
@@ -98,6 +108,11 @@ namespace ItemLevelTest.Projectiles
     }
     class Slagburstouch : ModProjectile
     {
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
+
         public override void SetDefaults()
         {
             projectile.damage = 15;

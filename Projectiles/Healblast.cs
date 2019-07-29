@@ -10,6 +10,10 @@ namespace ItemLevelTest.Projectiles
 {
     class Healblast : ModProjectile
     {
+        public override string Texture
+        {
+            get { return "ItemLevelTest/Projectiles/Invisible"; }
+        }
 
         public override void SetStaticDefaults()
         {
