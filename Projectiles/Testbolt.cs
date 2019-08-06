@@ -31,7 +31,6 @@ namespace ItemLevelTest.Projectiles
             projectile.friendly = true;
             projectile.magic = true;
             projectile.penetrate = 3;
-
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -54,10 +53,16 @@ namespace ItemLevelTest.Projectiles
             }
         }
         float timer = (float)Math.PI / 2;
-
+        bool set = false;
         public override void AI()
         {
             float rot = projectile.velocity.ToRotation();
+
+            if (instance.ab1 == 1 && !set)
+            {
+                projectile.penetrate = 7;
+                set = true;
+            }
 
             if (!invert)
             {
@@ -66,17 +71,18 @@ namespace ItemLevelTest.Projectiles
 
                 for (int dustcounter = 0; dustcounter <= 2; dustcounter++)
                 {
-                    Dust.NewDust(projectile.position, 16, 16, mod.DustType("Staffdust"), 0, 0, 0, new Color(255, 255, 255));
-
+                    if(instance.ab1 != 2)
+                    {
+                        Dust.NewDust(projectile.position, 16, 16, mod.DustType("Staffdust"), 0, 0, 0, new Color(255, 255, 255));
+                    }
+                    
                     if(instance.ab1 == 2)
                     {
-                        Dust.NewDust(projectile.position, 16, 16, mod.DustType("Staffdust3"), 0, 0, 0, new Color(255, 255, 255), 0.4f);
+                        Dust.NewDust(projectile.position, 16, 16, mod.DustType("Staffdust"), 0, 0, 0, new Color(255, 255, 255), 1.2f);
+                        Dust.NewDust(projectile.position, 16, 16, mod.DustType("Staffdust3"), 0, Main.rand.Next(-15, 15), Main.rand.Next(-15, 15), new Color(255, 255, 255), 0.8f);
                         projectile.penetrate = 1;
                     }
-                    if (instance.ab1 == 1)
-                    {
-                        projectile.penetrate = 7;
-                    }
+
                 }
             }
             else
@@ -127,14 +133,25 @@ namespace ItemLevelTest.Projectiles
                     }
                     Main.PlaySound(SoundID.Item38, projectile.Center);               
                 }
+                int dam = 50 + instance.level * 5;
+                if(instance.ab2 == 1)
+                {
+                    dam += Teststaff.primal;
+                }
 
-                Projectile.NewProjectile(projectile.position, new Vector2(0, 0), mod.ProjectileType("Boltboom"), 50 + instance.level * 5, 2.5f, projectile.owner);
+                int index = Projectile.NewProjectile(projectile.position, new Vector2(0, 0), mod.ProjectileType("Boltboom"), dam , 2.5f, projectile.owner);
+                Boltboom boom = Main.projectile[index].modProjectile as Boltboom;
+                boom.instance = instance;
+
             }
         }
+
     }
 
     class Boltboom : ModProjectile
     {
+        public Teststaff instance;
+
         public override string Texture
         {
             get { return "ItemLevelTest/Projectiles/Invisible"; }
@@ -147,6 +164,25 @@ namespace ItemLevelTest.Projectiles
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.timeLeft = 5;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (instance.level < 10 && target.type != NPCID.TargetDummy)
+            {
+                if (damage >= 10)
+                {
+                    instance.exp += (damage / 10);
+                }
+                else
+                {
+                    instance.exp++;
+                }
+                instance.Expcalc();
+            }
+            else if (instance.level >= 10)
+            {
+                instance.exp = 0;
+            }
         }
     }
 }

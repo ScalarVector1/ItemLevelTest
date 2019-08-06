@@ -29,7 +29,7 @@ namespace ItemLevelTest.Items
         const float expScale = 1.4f; //Changes the multiplier for the amount of exp required for the next level after the previous
 
         //ability variables
-        public int ab1 = 2; //passive
+        public int ab1 = 0; //passive
         public int ab2 = 0; //active
         public int ab3 = 0; //ultimate
         public bool VFXstate = true; //VFX toggle
@@ -67,7 +67,7 @@ namespace ItemLevelTest.Items
             item.noMelee = true;
             item.autoReuse = true;
 
-            item.UseSound = SoundID.Item91;
+            item.UseSound = SoundID.Item42;
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
@@ -126,6 +126,7 @@ namespace ItemLevelTest.Items
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             float R = 0;
+            Main.PlaySound(SoundID.Item45);
             if (player.altFunctionUse != 2)
             {
                 float x = (Main.screenPosition.X + Main.mouseX - 20) - player.position.X;
